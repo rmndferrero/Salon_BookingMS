@@ -108,14 +108,21 @@
                 </div>
             </div>
             <div class="flex items-center gap-6">
-                <button class="text-white font-label font-medium hover:opacity-80 transition-opacity">Login</button>
-                <button class="bg-white text-[#b5106a] px-6 py-2 rounded-full font-label font-semibold text-sm hover:scale-95 transition-transform duration-200">Register</button>
+                <a href="{{ route('login') }}" class="text-white font-label font-medium hover:opacity-80 transition-opacity">Login</a>
+                
+                <a href="{{ route('register') }}" class="bg-white text-[#b5106a] px-6 py-2 rounded-full font-label font-semibold text-sm hover:scale-95 transition-transform duration-200 inline-block">Register</a>
             </div>
         </div>
     </nav>
 
     <main class="pt-24">
-
+        @if(session('success'))
+            <div class="max-w-screen-2xl mx-auto px-8 mt-4">
+                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                    <span class="block sm:inline">{{ session('success') }}</span>
+                </div>
+            </div>
+        @endif
         <!-- Hero Section -->
 <section class="relative min-h-[921px] flex items-center px-8 md:px-24 overflow-hidden">
 <div class="max-w-4xl z-10">
@@ -127,13 +134,14 @@
                    At Sibs Style Beauty Lounge, we believe beauty starts with a moment of peace. Step into our curated sanctuary for a personalized experience that refreshes your look and restores your spirit. From signature styling to rejuvenating treatments, let us pamper you from head to toe.
                 </p>
 <div class="flex gap-6 items-center">
-<button class="bg-gradient-to-r from-primary to-primary-container text-white px-10 py-4 rounded-full font-label font-bold text-lg hover:shadow-2xl hover:shadow-primary/20 transition-all">
-                        Book an Appointment
-                    </button>
-<button class="text-on-surface font-label font-semibold flex items-center gap-2 group">
-                        View Lookbook 
-                        <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
-</button>
+    <a href="{{ route('book') }}" class="bg-gradient-to-r from-primary to-primary-container text-white px-10 py-4 rounded-full font-label font-bold text-lg hover:shadow-2xl hover:shadow-primary/20 transition-all inline-block">
+        Book an Appointment
+    </a>
+    
+    <button class="text-on-surface font-label font-semibold flex items-center gap-2 group">
+        View Lookbook 
+        <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+    </button>
 </div>
 </div>
 <!-- Hero Visual Composition (Asymmetric) -->
@@ -307,6 +315,5 @@
         </div>
     </footer>
 
-</body>
-
+    </body>
 </html>
