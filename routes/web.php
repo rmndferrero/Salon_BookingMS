@@ -1,18 +1,19 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
 
 Route::get('/', function () {
-    return redirect('/login');
-});
+    return view('homepage');
+})->name('homepage');
 
-Route::get('/login',[AuthController::class,'showLogin']);
-Route::post('/login',[AuthController::class,'login']);
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
 
-Route::get('/register',[AuthController::class,'showRegister']);
-Route::post('/register',[AuthController::class,'register']);
+Route::get('/services', function () {
+    return view('services');
+})->name('services');
 
-Route::get('/dashboard',[AuthController::class,'dashboard'])->middleware('auth');
-
-Route::post('/logout',[AuthController::class,'logout']);
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
