@@ -35,3 +35,4 @@ Route::get('/register', function () {
 Route::post('/booking/process-user', [BookingAuthController::class, 'processUser']);
 Route::post('/login', [BookingAuthController::class, 'login']);
 Route::post('/register', [App\Http\Controllers\BookingAuthController::class, 'register']);
+Route::post('/logout', [BookingAuthController::class, 'logout'])->name('logout');

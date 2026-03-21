@@ -83,7 +83,7 @@ class BookingAuthController extends Controller
             'phone_number' => 'The provided credentials do not match our records.',
         ]);
     }
-    
+
     public function register(Request $request)
     {
         // 1. Validate the incoming data
@@ -122,5 +122,15 @@ class BookingAuthController extends Controller
 
         // 6. Redirect to homepage with success message
         return redirect()->route('homepage')->with('success', 'Account created successfully!');
+    }
+
+        public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/')->with('success', 'You have been logged out.');
     }
 }

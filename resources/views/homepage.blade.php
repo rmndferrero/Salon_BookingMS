@@ -108,10 +108,26 @@
                 </div>
             </div>
             <div class="flex items-center gap-6">
-                <a href="{{ route('login') }}" class="text-white font-label font-medium hover:opacity-80 transition-opacity">Login</a>
-                
-                <a href="{{ route('register') }}" class="bg-white text-[#b5106a] px-6 py-2 rounded-full font-label font-semibold text-sm hover:scale-95 transition-transform duration-200 inline-block">Register</a>
-            </div>
+    @auth
+        <span class="text-white font-label font-medium">Hello, {{ Auth::user()->first_name }}</span>
+        
+        <form action="{{ route('logout') }}" method="POST" class="inline">
+            @csrf
+            <button type="submit" class="text-white/80 font-label font-medium hover:text-white transition-colors">
+                Logout
+            </button>
+        </form>
+    @endauth
+
+    @guest
+        <a href="{{ route('login') }}" class="text-white font-label font-medium hover:opacity-80 transition-opacity">
+            Login
+        </a>
+        <a href="{{ route('register') }}" class="bg-white text-[#b5106a] px-6 py-2 rounded-full font-label font-semibold text-sm hover:scale-95 transition-transform duration-200 inline-block">
+            Register
+        </a>
+    @endguest
+</div>
         </div>
     </nav>
 
