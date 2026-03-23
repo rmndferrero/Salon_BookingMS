@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookingAuthController;
+use App\Http\Controllers\ManagerServiceController;
 
 Route::get('/', function () {
     return view('homepage');
@@ -30,6 +31,19 @@ Route::get('/login', function () {
 Route::get('/register', function () {
     return view('register');
 })->name('register');
+
+// --- Manager Routes ---
+Route::middleware(['auth', 'manager'])->group(function () {
+    
+    Route::get('/manager/dashboard', function () {
+        return view('manager.dashboard');
+    })->name('manager.dashboard');
+    
+    Route::get('/manager/services', [ManagerServiceController::class, 'index'])->name('manager.services.index');
+    Route::post('/manager/services', [ManagerServiceController::class, 'store'])->name('manager.services.store');
+    Route::put('/manager/services/{service}', [ManagerServiceController::class, 'update'])->name('manager.services.update');
+    Route::delete('/manager/services/{service}', [ManagerServiceController::class, 'destroy'])->name('manager.services.destroy');
+});
 
 // Process the form submissions
 Route::post('/booking/process-user', [BookingAuthController::class, 'processUser']);

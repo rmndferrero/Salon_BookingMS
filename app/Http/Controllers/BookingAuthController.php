@@ -72,10 +72,12 @@ class BookingAuthController extends Controller
         if (Auth::attempt(['phone_number' => $cleanPhone, 'password' => $request->password])) {
             $request->session()->regenerate();
             
-            // ==========================================
-            // CHANGED: Redirect to the homepage after successful login
-            // (Using 'intended' will send them back to where they were trying to go before logging in, or default to '/')
-            // ==========================================
+            // Check if the user is a manager
+            if (Auth::user()->role === 'manager') {
+                return redirect()->route('manager.dashboard')->with('success', 'Welcome to the Manager Dashboard.');
+            }
+            
+            // Regular customer redirect
             return redirect()->intended('/')->with('success', 'You are now logged in!');
         }
 
@@ -119,6 +121,7 @@ class BookingAuthController extends Controller
 
         // 5. Log the user in
         Auth::login($user);
+
 
         // 6. Redirect to homepage with success message
         return redirect()->route('homepage')->with('success', 'Account created successfully!');
