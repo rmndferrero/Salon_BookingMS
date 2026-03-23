@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookingAuthController;
 use App\Http\Controllers\ManagerServiceController;
+use App\Http\Controllers\CustomerBookingController;
 
 Route::get('/', function () {
     return view('homepage');
@@ -44,6 +45,10 @@ Route::middleware(['auth', 'manager'])->group(function () {
     Route::put('/manager/services/{service}', [ManagerServiceController::class, 'update'])->name('manager.services.update');
     Route::delete('/manager/services/{service}', [ManagerServiceController::class, 'destroy'])->name('manager.services.destroy');
 });
+
+// Remove the Auth middleware from these two lines!
+Route::get('/book', [CustomerBookingController::class, 'index'])->name('book');
+Route::post('/book', [CustomerBookingController::class, 'store'])->name('booking.store');
 
 // Process the form submissions
 Route::post('/booking/process-user', [BookingAuthController::class, 'processUser']);

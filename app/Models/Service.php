@@ -23,4 +23,8 @@ class Service extends Model
             'is_package' => 'boolean',
         ];
     }
+
+    public function bookings() {
+        return $this->belongsToMany(Booking::class);
+    }
 }
