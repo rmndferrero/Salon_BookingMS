@@ -6,7 +6,6 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script id="tailwind-config">
         tailwind.config = {
@@ -71,6 +70,35 @@
                 },
             },
         }
+
+        function toggleModal() {
+            document.getElementById('loginModal').classList.toggle('hidden');
+        }
+
+        function toggleRegisterModal() {
+            document.getElementById('registerModal').classList.toggle('hidden');
+        }
+
+        function switchToLogin() {
+            document.getElementById('registerModal').classList.add('hidden');
+            document.getElementById('loginModal').classList.remove('hidden');
+        }
+
+        window.addEventListener('click', function(event) {
+            const loginModal = document.getElementById('loginModal');
+            const regModal = document.getElementById('registerModal');
+
+            if (event.target === loginModal) toggleModal();
+            if (event.target === regModal) toggleRegisterModal();
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            @if(old('first_name'))
+                document.getElementById('registerModal').classList.remove('hidden');
+            @elseif($errors->has('phone_number') || $errors->has('password'))
+                document.getElementById('loginModal').classList.remove('hidden');
+            @endif
+        });
     </script>
     <style>
         body {
@@ -97,7 +125,7 @@
         <div class="flex justify-between items-center px-8 py-4 max-w-screen-2xl mx-auto">
             <div class="flex items-center gap-8">
                 <a class="flex items-center" href="#">
-                    <img class="h-10 w-auto invert brightness-0" data-alt="Sib Style minimalist luxury beauty logo" src="{{ asset('sibs22.png') }}"/>
+                    <img class="h-10 w-auto invert brightness-0" alt="Sib Style minimalist luxury beauty logo" src="{{ asset('sibs22.png') }}"/>
                     <span class="ml-4 text-2xl font-serif italic text-white tracking-tight"> Style Beauty Lounge</span>
                 </a>
                 <div class="hidden md:flex gap-10 absolute left-1/2 transform -translate-x-1/2">
@@ -120,12 +148,12 @@
     @endauth
 
     @guest
-        <a href="{{ route('login') }}" class="text-white font-label font-medium hover:opacity-80 transition-opacity">
+        <button onclick="toggleModal()" class="text-white font-label font-medium hover:opacity-80 transition-opacity outline-none">
             Login
-        </a>
-        <a href="{{ route('register') }}" class="bg-white text-[#b5106a] px-6 py-2 rounded-full font-label font-semibold text-sm hover:scale-95 transition-transform duration-200 inline-block">
+        </button>
+        <button onclick="toggleRegisterModal()" class="bg-white text-[#b5106a] px-6 py-2 rounded-full font-label font-semibold text-sm hover:scale-95 transition-transform duration-200">
             Register
-        </a>
+        </button>
     @endguest
 </div>
         </div>
@@ -153,21 +181,16 @@
     <a href="{{ route('book') }}" class="bg-gradient-to-r from-primary to-primary-container text-white px-10 py-4 rounded-full font-label font-bold text-lg hover:shadow-2xl hover:shadow-primary/20 transition-all inline-block">
         Book an Appointment
     </a>
-    
-    <button class="text-on-surface font-label font-semibold flex items-center gap-2 group">
-        View Lookbook 
-        <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
-    </button>
 </div>
 </div>
 <!-- Hero Visual Composition (Asymmetric) -->
 <div class="absolute right-0 top-1/2 -translate-y-1/2 w-1/2 h-[80%] hidden lg:block">
 <div class="relative w-full h-full">
 <div class="absolute top-0 right-10 w-2/3 h-2/3 rounded-xl overflow-hidden  ">
-<img class="w-full h-full object-cover" data-alt="High-end beauty salon interior minimalist" src="{{ asset('sibs1.png') }}"/>
+<img class="w-full h-full object-cover" alt="High-end beauty salon interior minimalist" src="{{ asset('sibs1.png') }}"/>
 </div>
 <div class="absolute bottom-10 left-0 w-1/2 h-1/2 rounded-xl overflow-hidden shadow-2xl z-10 transform -rotate-3">
-<img class="w-full h-full object-cover" data-alt="Close up of glowy skin and hair" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5eMbIlDDj25jAGfAoe2FPfx0mb6nsgbNVSkipS9KpSfeCR1wU-DUjt4LM5CY0Cyrl_OTUGBZD4ZLhNLf2gcQYfEke-fNr6nINKRYBzRL5d4XQwXp1IOf38RSPA0y5q0LawcxeUrQr5ZvUXrtms78vQIWopfwzW1XfX7wcXPrugln5M36SwztXjdErDOGWxcBoydabHhO8fR5hn37yUmXdOf88BgIjya-2f6c4mkv04LhqOW32MagxwXBoywX2Ncy6iNkwrLdU9SY"/>
+<img class="w-full h-full object-cover" alt="Close up of glowy skin and hair" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5eMbIlDDj25jAGfAoe2FPfx0mb6nsgbNVSkipS9KpSfeCR1wU-DUjt4LM5CY0Cyrl_OTUGBZD4ZLhNLf2gcQYfEke-fNr6nINKRYBzRL5d4XQwXp1IOf38RSPA0y5q0LawcxeUrQr5ZvUXrtms78vQIWopfwzW1XfX7wcXPrugln5M36SwztXjdErDOGWxcBoydabHhO8fR5hn37yUmXdOf88BgIjya-2f6c4mkv04LhqOW32MagxwXBoywX2Ncy6iNkwrLdU9SY"/>
 </div>
 <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-secondary rounded-full opacity-10 blur-3xl"></div>
 </div>
@@ -190,7 +213,7 @@
                 <!-- Service Card 1 -->
                 <div class="group relative bg-white p-2 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-500 h-[500px]">
                     <div class="h-3/4 rounded-lg overflow-hidden relative">
-                        <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="Professional eyelash extensions application" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAUaatBbDer6-E1joCcLg-IAteUP6t1UdpLutc1Xbj2prunMCYtImRUVvgjXZV9dSfsc_hKO62dckRnv02SK_rY41B3rbt2PciYesV6a2y5-yZ97lKCcC2dNi8I0fJqWRPB2u7_oQY1KQhC-3I8Lw7A9fxGo53Le7CXt4D-UGEBYFCN7hEeM87R_-KtGQZfHC-H_8iD3EGaLbE9Xv35McymnIfhXmbJxEZtYridXM8MOX0k5LQcyvDui3463F_xTVgyQY7e7jd5BI" />
+                        <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Professional eyelash extensions application" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAUaatBbDer6-E1joCcLg-IAteUP6t1UdpLutc1Xbj2prunMCYtImRUVvgjXZV9dSfsc_hKO62dckRnv02SK_rY41B3rbt2PciYesV6a2y5-yZ97lKCcC2dNi8I0fJqWRPB2u7_oQY1KQhC-3I8Lw7A9fxGo53Le7CXt4D-UGEBYFCN7hEeM87R_-KtGQZfHC-H_8iD3EGaLbE9Xv35McymnIfhXmbJxEZtYridXM8MOX0k5LQcyvDui3463F_xTVgyQY7e7jd5BI" />
                         <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     </div>
                     <div class="p-6">
@@ -205,7 +228,7 @@
                 <!-- Service Card 2 (Offset/Tall) -->
                 <div class="group relative bg-white p-2 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-500 h-[560px] md:-mt-12">
                     <div class="h-[82%] rounded-lg overflow-hidden relative">
-                        <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="Minimalist nail art design" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuYHRJALgiL0RLTaQqgS1Dyhfg0FwsrnMC4O8CRvkxbAkDhnOKxHc_j0mGK4GAuxZ24pocdSjixjsTFRyNHNJv_R16iA-CQumnXNPmeCc6YAa2Mvh_0ygcitaVuQ8I5Kswxdo7Ngncefbk-IAgnZdLxrt_LWjGZz3f46cAcKvCrpimJEgzdW5hFK99S2ZsWi3WQkiYdtM9nfTXB2MeQabtGTAKyItwydj97_sZd1Ac_mUGulYyBrT3eq0xWOVI4wQDSNhREIGkvAk" />
+                        <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Minimalist nail art design" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuYHRJALgiL0RLTaQqgS1Dyhfg0FwsrnMC4O8CRvkxbAkDhnOKxHc_j0mGK4GAuxZ24pocdSjixjsTFRyNHNJv_R16iA-CQumnXNPmeCc6YAa2Mvh_0ygcitaVuQ8I5Kswxdo7Ngncefbk-IAgnZdLxrt_LWjGZz3f46cAcKvCrpimJEgzdW5hFK99S2ZsWi3WQkiYdtM9nfTXB2MeQabtGTAKyItwydj97_sZd1Ac_mUGulYyBrT3eq0xWOVI4wQDSNhREIGkvAk" />
                         <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     </div>
                     <div class="p-6">
@@ -220,7 +243,7 @@
                 <!-- Service Card 3 -->
                 <div class="group relative bg-white p-2 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-500 h-[500px]">
                     <div class="h-3/4 rounded-lg overflow-hidden relative">
-                        <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="Rejuvenating facial therapy session" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCziUI9bAxj1i82T9eped-pdaOTn_LJRXOXEcml_JME-svyrP-v6VQ1ct5-u2e0Fc2cbI6VYoWJfED3-FLmwT5Tv1JQpT0tSHfB-ZruDK5X5apa1BjBgT9bBob7d15-XYiObyhesf0WXkd26u00IVH5rlean-HOk8ALvn0uSHmxZW7LOa-cnISGtIYTnoH7A3KUnfZOZnrQYOO4ZMlsV1B-x29oXzdmQElHVZdEkLfsKsNu6kQfSsl1E2RDetDLItun-alCmrmhvOU" />
+                        <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Rejuvenating facial therapy session" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCziUI9bAxj1i82T9eped-pdaOTn_LJRXOXEcml_JME-svyrP-v6VQ1ct5-u2e0Fc2cbI6VYoWJfED3-FLmwT5Tv1JQpT0tSHfB-ZruDK5X5apa1BjBgT9bBob7d15-XYiObyhesf0WXkd26u00IVH5rlean-HOk8ALvn0uSHmxZW7LOa-cnISGtIYTnoH7A3KUnfZOZnrQYOO4ZMlsV1B-x29oXzdmQElHVZdEkLfsKsNu6kQfSsl1E2RDetDLItun-alCmrmhvOU" />
                         <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     </div>
                     <div class="p-6">
@@ -259,24 +282,12 @@
                     <button class="self-start text-primary font-label font-bold uppercase tracking-tighter border-b-2 border-primary pb-1">View Full Portfolio</button>
                 </div>
                 <div class="lg:col-span-1 space-y-8">
-                    <img class="w-full aspect-square object-cover rounded-xl grayscale hover:grayscale-0 transition-all duration-700" data-alt="Aesthetic beauty products layout" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVFuibStSbmf3u10suZrkk79WTWLvU80GU6fmSIqfyD_u0E0p1aNLhUydHCL4CBOaiNRe8e3SF-u0_4uM5XWPzx5JubXjHM9Mbizq0Dv_MpDtw2-Mmh424I_j_72cjGaWSoEY1nMw-xCga_GVlY-xsCAFmSJxokVZ1fdKM_UH01WDbue3N3jh5WalHJkBcdQEhyBBNHSXzS0BOWXIdwtS_cRILtRbrbFALyKMoexd-9jhT-WJSo2iQMNX8FtaYPQ2hLqKuNWkqbpU" />
-                    <img class="w-full aspect-[3/4] object-cover rounded-xl shadow-lg" data-alt="Model with elegant makeup and jewelry" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBULu3O8gSpGYVzZ3escEYFR3NDcjJHAHqNGSIhDkBEtPILn5fDHymK-PC7PKuf4cyys0OH83lAf6S7a_fSxo0WwX2SKpKzW2O13arbk9s1vgEC_Iv5erzsdmwJp2TRN0A6skpTNYXGX0qxyaMOpMfIlAWuLim9gO-fi3h_c-9n5o995bzXrpbaw7sgB7MY8zZjAJzLSg42nkENIEvzkinA-hiXcKVm25nvoDfPKyFu_IlyyWHCrmc2cTTnororxOK1AyKhwa3p8GI" />
+                    <img class="w-full aspect-square object-cover rounded-xl grayscale hover:grayscale-0 transition-all duration-700" alt="Aesthetic beauty products layout" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVFuibStSbmf3u10suZrkk79WTWLvU80GU6fmSIqfyD_u0E0p1aNLhUydHCL4CBOaiNRe8e3SF-u0_4uM5XWPzx5JubXjHM9Mbizq0Dv_MpDtw2-Mmh424I_j_72cjGaWSoEY1nMw-xCga_GVlY-xsCAFmSJxokVZ1fdKM_UH01WDbue3N3jh5WalHJkBcdQEhyBBNHSXzS0BOWXIdwtS_cRILtRbrbFALyKMoexd-9jhT-WJSo2iQMNX8FtaYPQ2hLqKuNWkqbpU" />
+                    <img class="w-full aspect-[3/4] object-cover rounded-xl shadow-lg" alt="Model with elegant makeup and jewelry" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBULu3O8gSpGYVzZ3escEYFR3NDcjJHAHqNGSIhDkBEtPILn5fDHymK-PC7PKuf4cyys0OH83lAf6S7a_fSxo0WwX2SKpKzW2O13arbk9s1vgEC_Iv5erzsdmwJp2TRN0A6skpTNYXGX0qxyaMOpMfIlAWuLim9gO-fi3h_c-9n5o995bzXrpbaw7sgB7MY8zZjAJzLSg42nkENIEvzkinA-hiXcKVm25nvoDfPKyFu_IlyyWHCrmc2cTTnororxOK1AyKhwa3p8GI" />
                 </div>
                 <div class="lg:col-span-1 pt-24">
-                    <img class="w-full aspect-[2/3] object-cover rounded-xl shadow-lg" data-alt="Soft aesthetic salon treatment room" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB485b4C6_uGFb1qFIvskCQArc3VusEAhgycqWpA84x86ej9qry9SV_EA2UzJyscj0vMFdaTWeyRIMKRa6uEN2odxvBPi2DlRq7XzZsdRCde6eET0H_Wm34X256ukZLJyCaABzEj1inCZTVvSkDu0VTu4h6FZ0uR1FdBaXP0CV5tYyCV9PkZnD7GCScQEExkNafLyNtUI3OR0U9VPvI-GuulGBySzqmL35Ad__mHoIKNeJz752vMB49Drugor5YVwK6PcPL-ei4j_0" />
+                    <img class="w-full aspect-[2/3] object-cover rounded-xl shadow-lg" alt="Soft aesthetic salon treatment room" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB485b4C6_uGFb1qFIvskCQArc3VusEAhgycqWpA84x86ej9qry9SV_EA2UzJyscj0vMFdaTWeyRIMKRa6uEN2odxvBPi2DlRq7XzZsdRCde6eET0H_Wm34X256ukZLJyCaABzEj1inCZTVvSkDu0VTu4h6FZ0uR1FdBaXP0CV5tYyCV9PkZnD7GCScQEExkNafLyNtUI3OR0U9VPvI-GuulGBySzqmL35Ad__mHoIKNeJz752vMB49Drugor5YVwK6PcPL-ei4j_0" />
                 </div>
-            </div>
-        </section>
-
-        <!-- Newsletter / Contact CTA -->
-        <section class="py-32 px-8 max-w-4xl mx-auto text-center" id="contact">
-            <div class="bg-white rounded-3xl p-16 shadow-sm">
-                <h2 class="font-headline text-4xl text-on-surface mb-4">Join the Collective</h2>
-                <p class="font-body text-on-surface-variant mb-10">Receive exclusive access to seasonal rituals and priority booking.</p>
-                <form class="flex flex-col md:flex-row gap-4 max-w-md mx-auto">
-                    <input class="flex-grow bg-surface-container-low border-none rounded-full px-8 py-4 focus:ring-2 focus:ring-primary/20 font-body outline-none" placeholder="Email Address" type="email" />
-                    <button class="bg-primary text-white px-8 py-4 rounded-full font-label font-bold text-xs uppercase tracking-widest hover:opacity-90 transition-opacity">Subscribe</button>
-                </form>
             </div>
         </section>
 
@@ -330,6 +341,119 @@
             </p>
         </div>
     </footer>
+
+        <!--Login Modal-->
+
+        <div id="loginModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-black/60 backdrop-blur-sm px-4">
+        <div class="bg-white w-full max-w-md rounded-3xl overflow-hidden shadow-2xl transform transition-all">
+            <div class="p-8 relative">
+                <button onclick="toggleModal()" class="absolute top-6 right-6 text-on-surface-variant hover:text-primary transition-colors">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+
+                <div class="text-center mb-8">
+                    <h2 class="font-headline text-3xl text-on-surface mb-2">Welcome Back</h2>
+                    <p class="font-body text-on-surface-variant text-sm">Enter your details to access the sanctuary.</p>
+                </div>
+
+                <form action="{{ route('login') }}" method="POST" class="space-y-6">
+                    @csrf
+                    <div>
+                        <label for="phone_number" class="block font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Phone Number</label>
+                        <input type="text" id="phone_number" name="phone_number" value="{{ old('phone_number') }}" 
+                            class="w-full bg-surface-container-low border-none rounded-full px-6 py-3 focus:ring-2 focus:ring-primary/20 outline-none font-body" required>
+                        @error('phone_number') <span class="text-error text-xs mt-1 block">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div>
+                        <label for="password" class="block font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Password</label>
+                        <input type="password" id="password" name="password" 
+                            class="w-full bg-surface-container-low border-none rounded-full px-6 py-3 focus:ring-2 focus:ring-primary/20 outline-none font-body" required>
+                        @error('password') <span class="text-error text-xs mt-1 block">{{ $message }}</span> @enderror
+                    </div>
+
+                    <button type="submit" class="w-full bg-primary text-white py-4 rounded-full font-label font-bold text-xs uppercase tracking-widest hover:opacity-90 transition-all shadow-lg shadow-primary/20">
+                        Log In
+                    </button>
+                </form>
+
+                <div class="mt-8 text-center">
+                    <p class="text-sm text-on-surface-variant font-body">
+                        New to Sibs? <a href="{{ route('register') }}" class="text-primary font-bold hover:underline">Create an account</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!--Login Modal-->
+
+        <!--Register Modal-->
+
+        <div id="registerModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-black/60 backdrop-blur-sm px-4">
+        <div class="bg-white w-full max-w-lg rounded-3xl overflow-hidden shadow-2xl transform transition-all max-h-[90vh] overflow-y-auto">
+            <div class="p-8 relative">
+                <button onclick="toggleRegisterModal()" class="absolute top-6 right-6 text-on-surface-variant hover:text-primary transition-colors">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+
+                <div class="text-center mb-8">
+                    <h2 class="font-headline text-3xl text-on-surface mb-2">Create an Account</h2>
+                    <p class="font-body text-on-surface-variant text-sm">Join the Sibs Collective for a curated beauty experience.</p>
+                </div>
+
+                <form action="{{ route('register') }}" method="POST" class="space-y-4">
+                    @csrf
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label for="reg_first_name" class="block font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">First Name</label>
+                            <input type="text" id="reg_first_name" name="first_name" value="{{ old('first_name') }}" 
+                                class="w-full bg-surface-container-low border-none rounded-full px-6 py-3 focus:ring-2 focus:ring-primary/20 outline-none font-body text-sm" required>
+                            @error('first_name') <span class="text-error text-[10px] mt-1 block">{{ $message }}</span> @enderror
+                        </div>
+                        <div>
+                            <label for="reg_last_name" class="block font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Last Name</label>
+                            <input type="text" id="reg_last_name" name="last_name" value="{{ old('last_name') }}" 
+                                class="w-full bg-surface-container-low border-none rounded-full px-6 py-3 focus:ring-2 focus:ring-primary/20 outline-none font-body text-sm" required>
+                            @error('last_name') <span class="text-error text-[10px] mt-1 block">{{ $message }}</span> @enderror
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="reg_phone_number" class="block font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Phone Number</label>
+                        <input type="text" id="reg_phone_number" name="phone_number" value="{{ old('phone_number') }}" 
+                            class="w-full bg-surface-container-low border-none rounded-full px-6 py-3 focus:ring-2 focus:ring-primary/20 outline-none font-body text-sm" required>
+                        @error('phone_number') <span class="text-error text-[10px] mt-1 block">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div>
+                        <label for="reg_password" class="block font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Password (Min. 8)</label>
+                        <input type="password" id="reg_password" name="password" 
+                            class="w-full bg-surface-container-low border-none rounded-full px-6 py-3 focus:ring-2 focus:ring-primary/20 outline-none font-body text-sm" required>
+                        @error('password') <span class="text-error text-[10px] mt-1 block">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div>
+                        <label for="password_confirmation" class="block font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Confirm Password</label>
+                        <input type="password" id="password_confirmation" name="password_confirmation" 
+                            class="w-full bg-surface-container-low border-none rounded-full px-6 py-3 focus:ring-2 focus:ring-primary/20 outline-none font-body text-sm" required>
+                    </div>
+
+                    <button type="submit" class="w-full bg-primary text-white py-4 mt-4 rounded-full font-label font-bold text-xs uppercase tracking-widest hover:opacity-90 transition-all shadow-lg shadow-primary/20">
+                        Register
+                    </button>
+                </form>
+
+                <div class="mt-6 text-center">
+                    <p class="text-sm text-on-surface-variant font-body">
+                        Already have an account? <button onclick="switchToLogin()" class="text-primary font-bold hover:underline">Log in here</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Register Modal-->
 
     </body>
 </html>
