@@ -113,106 +113,133 @@
             </div>
         </div>
     </nav>
-<main class="pt-24">
-<!-- Hero Section: Our Story -->
-<section class="px-8 py-20 md:py-32 max-w-7xl mx-auto overflow-hidden">
-<div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
-<div class="md:col-span-7 space-y-8">
-<span class="text-primary font-label tracking-[0.3em] uppercase text-xs font-bold">The Heritage</span>
-<h1 class="text-5xl md:text-7xl font-serif text-on-surface leading-tight italic">
-                        The Curated <br/> Sanctuary.
-                    </h1>
-<div class="max-w-xl space-y-6">
-<p class="text-lg text-on-surface-variant font-body leading-relaxed">
-                            Founded on the principle that beauty is a sensory dialogue, Sib Style Beauty Lounge emerged as a rebellion against the clinical and the hurried. Our vision was to create a space where time slows down—a boutique environment that honors the art of the individual.
-                        </p>
-<p class="text-lg text-on-surface-variant font-body leading-relaxed">
-                            Every curve of our interiors, every botanical essence in our treatments, and every rhythmic stroke of our stylists is designed to transport you from the noise of the world into a realm of intentional grace.
-                        </p>
+    <main class="pt-32 pb-24 px-6 md:px-12 lg:px-24 max-w-5xl mx-auto">
+<!-- Hero Section -->
+<header class="mb-20 text-center">
+<h1 class="font-headline text-5xl md:text-7xl text-primary mb-6 tracking-tight leading-tight italic">
+            Connect with <br/> the Sanctuary
+        </h1>
+<p class="font-body text-on-surface-variant text-lg max-w-2xl mx-auto leading-relaxed opacity-80">
+            Experience a new standard of beauty curation. Our concierge team is ready to tailor your next visit to your unique aesthetic journey.
+        </p>
+</header>
+<!-- Restructured Content Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 items-start">
+<!-- Left: Contact Details & Hours -->
+<div class="space-y-12">
+<!-- Direct Contact Information -->
+<section>
+<h3 class="font-headline text-3xl text-secondary mb-8 border-b border-secondary/10 pb-4">Contact Details</h3>
+<div class="space-y-8">
+<div class="flex items-start gap-6 group">
+<span class="material-symbols-outlined text-secondary pt-1">location_on</span>
+<div>
+<h4 class="font-label text-xs uppercase tracking-widest text-on-surface-variant mb-2">Location</h4>
+<address class="not-italic font-headline text-xl text-on-surface leading-snug">
+                                455 North Canon Drive,<br/>Beverly Hills, CA 90210
+                            </address>
 </div>
 </div>
-<div class="md:col-span-5 relative">
-<div class="aspect-[4/5] bg-surface-container rounded-xl overflow-hidden shadow-2xl">
-<img alt="Interior of a luxury salon lounge" class="w-full h-full object-cover grayscale-[20%] hover:scale-105 transition-transform duration-700" data-alt="Luxurious minimalist salon interior with warm lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOdbGUxKEZgHkExeeyQnWSBEu8CE7SgSJFGyKj2eDIly3KCKZtUr8IbxDIcp9fZ0eCIZDsqbj42RlyI8Dtm2Ra-f7NPCBImuqO10ARQVkr8Kt0VP9ro8GIHFk5pPfZqCFa5610EUfpxRhS_dCGmecXxRCphHJ7Hrth5qt2orovxOkr6Qjnm5uJp6d_pctePgXgPCIpvs5p5_ZZyqj8KDLkq8skXaO0k_OunYEvZ44c8c_QiwekdUWDapn4MbOJycOLVdCv4Xl5eGU"/>
-</div>
-<div class="absolute -bottom-8 -left-8 bg-secondary-fixed p-8 rounded-xl hidden lg:block shadow-lg">
-<p class="font-serif italic text-2xl text-on-secondary-fixed">Est. 2012</p>
-</div>
+<div class="flex items-start gap-6 group">
+<span class="material-symbols-outlined text-secondary pt-1">call</span>
+<div>
+<h4 class="font-label text-xs uppercase tracking-widest text-on-surface-variant mb-2">Reservations</h4>
+<p class="font-headline text-xl text-on-surface leading-snug">+1 (310) 555-0198</p>
 </div>
 </div>
-</section>
-<!-- Values Section: Asymmetric Minimalist (Our Philosophy) -->
-<section class="bg-surface-container-low py-24 px-8">
-<div class="max-w-7xl mx-auto">
-<div class="grid grid-cols-1 md:grid-cols-3 gap-16">
-<div class="space-y-4 border-l border-outline-variant/30 pl-8">
-<span class="text-secondary font-bold text-2xl italic font-serif">01</span>
-<h3 class="text-xl font-serif font-bold text-primary">Intentional Care</h3>
-<p class="text-on-surface-variant text-sm leading-relaxed">We don't just provide services; we curate experiences tailored to your unique biological and aesthetic needs.</p>
-</div>
-<div class="space-y-4 border-l border-outline-variant/30 pl-8 md:mt-12">
-<span class="text-secondary font-bold text-2xl italic font-serif">02</span>
-<h3 class="text-xl font-serif font-bold text-primary">Artisan Excellence</h3>
-<p class="text-on-surface-variant text-sm leading-relaxed">Our stylists are masters of craft, blending classic heritage techniques with modern editorial innovation.</p>
-</div>
-<div class="space-y-4 border-l border-outline-variant/30 pl-8 md:mt-24">
-<span class="text-secondary font-bold text-2xl italic font-serif">03</span>
-<h3 class="text-xl font-serif font-bold text-primary">Sensory Calm</h3>
-<p class="text-on-surface-variant text-sm leading-relaxed">From the acoustics of our lounge to the weight of our linens, every detail is tuned for your tranquility.</p>
+<div class="flex items-start gap-6 group">
+<span class="material-symbols-outlined text-secondary pt-1">mail</span>
+<div>
+<h4 class="font-label text-xs uppercase tracking-widest text-on-surface-variant mb-2">Digital Concierge</h4>
+<p class="font-headline text-xl text-on-surface leading-snug">concierge@sibstyle.com</p>
 </div>
 </div>
 </div>
 </section>
-<!-- Detailed Team Section: The Architects of Style -->
-<section class="py-32 px-8 max-w-7xl mx-auto bg-[#FFECF0]">
-<div class="mb-24 text-center">
-<h2 class="text-5xl md:text-6xl font-serif italic text-on-surface">The Architects of Style</h2>
-<div class="h-px w-24 bg-primary mx-auto mt-8 mb-4"></div>
-<p class="text-on-surface-variant font-body uppercase tracking-[0.4em] text-xs font-semibold">A collective of visionaries</p>
+<!-- Hours of Operation -->
+<section class="bg-white/40 backdrop-blur-sm p-8 rounded-xl shadow-sm border border-white/20">
+<h3 class="font-headline text-2xl text-secondary mb-6 italic">Salon Hours</h3>
+<div class="space-y-4">
+<div class="flex justify-between items-center border-b border-outline-variant/20 pb-2">
+<span class="font-label text-sm uppercase tracking-wider text-on-surface-variant">Monday — Friday</span>
+<span class="font-body font-semibold text-on-surface">9:00 AM — 8:00 PM</span>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-x-12 gap-y-24">
-<!-- Team Member 1 -->
-<div class="group flex flex-col items-center md:items-start">
-<div class="aspect-[3/4] w-full overflow-hidden rounded-xl bg-surface-container-high mb-8 relative shadow-sm">
-<img alt="Elena Siba - Creative Director" class="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105" data-alt="Portrait of Elena Siba" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOdbGUxKEZgHkExeeyQnWSBEu8CE7SgSJFGyKj2eDIly3KCKZtUr8IbxDIcp9fZ0eCIZDsqbj42RlyI8Dtm2Ra-f7NPCBImuqO10ARQVkr8Kt0VP9ro8GIHFk5pPfZqCFa5610EUfpxRhS_dCGmecXxRCphHJ7Hrth5qt2orovxOkr6Qjnm5uJp6d_pctePgXgPCIpvs5p5_ZZyqj8KDLkq8skXaO0k_OunYEvZ44c8c_QiwekdUWDapn4MbOJycOLVdCv4Xl5eGU"/>
+<div class="flex justify-between items-center border-b border-outline-variant/20 pb-2">
+<span class="font-label text-sm uppercase tracking-wider text-on-surface-variant">Saturday</span>
+<span class="font-body font-semibold text-on-surface">10:00 AM — 6:00 PM</span>
 </div>
-<div class="space-y-4 text-center md:text-left px-4 md:px-0">
-<h4 class="text-3xl font-serif text-on-surface italic">Elena Siba</h4>
-<p class="text-primary font-label text-xs uppercase tracking-widest font-bold">Creative Director &amp; Founder</p>
-<p class="text-on-surface-variant text-sm leading-relaxed font-body font-light">
-                            With over fifteen years in haute couture styling, Elena founded Sib Style to bridge the gap between runway aesthetics and personal wellness. Her philosophy centers on the transformative power of silhouette and texture.
-                        </p>
-</div>
-</div>
-<!-- Team Member 2 -->
-<div class="group flex flex-col items-center md:items-start md:pt-12">
-<div class="aspect-[3/4] w-full overflow-hidden rounded-xl bg-surface-container-high mb-8 relative shadow-sm">
-<img alt="Julian Marc - Master Colorist" class="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105" data-alt="Portrait of Julian Marc" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOdbGUxKEZgHkExeeyQnWSBEu8CE7SgSJFGyKj2eDIly3KCKZtUr8IbxDIcp9fZ0eCIZDsqbj42RlyI8Dtm2Ra-f7NPCBImuqO10ARQVkr8Kt0VP9ro8GIHFk5pPfZqCFa5610EUfpxRhS_dCGmecXxRCphHJ7Hrth5qt2orovxOkr6Qjnm5uJp6d_pctePgXgPCIpvs5p5_ZZyqj8KDLkq8skXaO0k_OunYEvZ44c8c_QiwekdUWDapn4MbOJycOLVdCv4Xl5eGU"/>
-</div>
-<div class="space-y-4 text-center md:text-left px-4 md:px-0">
-<h4 class="text-3xl font-serif text-on-surface italic">Julian Marc</h4>
-<p class="text-primary font-label text-xs uppercase tracking-widest font-bold">Master Colorist</p>
-<p class="text-on-surface-variant text-sm leading-relaxed font-body font-light">
-                            Julian is an alchemist of light. Specializing in bespoke balayage and corrective chemistry, he treats every head of hair as a unique canvas, ensuring every pigment choice honors the client's natural complexion.
-                        </p>
-</div>
-</div>
-<!-- Team Member 3 -->
-<div class="group flex flex-col items-center md:items-start md:pt-24">
-<div class="aspect-[3/4] w-full overflow-hidden rounded-xl bg-surface-container-high mb-8 relative shadow-sm">
-<img alt="Sophia Chen - Artisan Esthetician" class="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105" data-alt="Portrait of Sophia Chen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOdbGUxKEZgHkExeeyQnWSBEu8CE7SgSJFGyKj2eDIly3KCKZtUr8IbxDIcp9fZ0eCIZDsqbj42RlyI8Dtm2Ra-f7NPCBImuqO10ARQVkr8Kt0VP9ro8GIHFk5pPfZqCFa5610EUfpxRhS_dCGmecXxRCphHJ7Hrth5qt2orovxOkr6Qjnm5uJp6d_pctePgXgPCIpvs5p5_ZZyqj8KDLkq8skXaO0k_OunYEvZ44c8c_QiwekdUWDapn4MbOJycOLVdCv4Xl5eGU"/>
-</div>
-<div class="space-y-4 text-center md:text-left px-4 md:px-0">
-<h4 class="text-3xl font-serif text-on-surface italic">Sophia Chen</h4>
-<p class="text-primary font-label text-xs uppercase tracking-widest font-bold">Artisan Esthetician</p>
-<p class="text-on-surface-variant text-sm leading-relaxed font-body font-light">
-                            Trained in traditional lymphatic drainage and modern peptide therapy, Sophia focuses on skin health as a foundation for beauty. Her holistic approach combines botanical essences with clinical precision.
-                        </p>
-</div>
+<div class="flex justify-between items-center pb-2">
+<span class="font-label text-sm uppercase tracking-wider text-on-surface-variant">Sunday</span>
+<span class="font-body italic text-secondary font-medium">By Appointment Only</span>
 </div>
 </div>
 </section>
+</div>
+<!-- Right: Aesthetic Imagery -->
+<div class="h-full flex flex-col justify-center">
+<div class="aspect-[3/4] rounded-xl overflow-hidden shadow-2xl shadow-primary/10 border border-white/30">
+<img alt="Luxury Salon Interior" class="w-full h-full object-cover" data-alt="A minimalist high-end beauty salon interior with soft cream walls, gold accents, marble textures, and soft warm lighting for an editorial feel" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYlpB3saanfRyLMW00wShahLPDOViOz6AGM5HxrlYYdiCwZOATS3s3kF22-JYHMamGtBhUgu2U61K_43CgrA6bhoWyDjk61GSuPF2v0gd0HkFRk8IPqeRDJJk73PA-zf0xXtczatnz2ztLNFk2vO1W6FbncyjF82YLeS2FiPV8iDDJEM-IZC_BVjN8JBp2wrawNgDjBRKjWFHtHw8eZbLFPQbiY1eBPaFJrnoULIXpJ6MwnCQxGWrjvbmMzR6DbxrQzcwkA8tl_4o"/>
+</div>
+<p class="mt-6 text-center font-serif italic text-primary/60 text-sm tracking-wide">Refined elegance at every corner.</p>
+</div>
+</div>
+</main>
 
+<!-- Visit the Sanctuary: Redesigned Map Section -->
+<section class="relative bg-[#FFECF0] py-24 md:py-48 px-8 overflow-hidden">
+<div class="max-w-[1440px] mx-auto relative h-[800px]">
+<!-- Framed Map -->
+<div class="absolute inset-0 md:inset-x-20 md:inset-y-0 bg-white shadow-2xl overflow-hidden rounded-sm">
+<div class="w-full h-full map-container">
+<iframe allowfullscreen="" class="w-full h-full border-0 grayscale saturate-50 contrast-125" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3304.45330331047!2d-118.40242562344795!3d34.07073281675276!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2bc07545ca871%3A0x6a2c5108040a45e9!2s455%20N%20Canon%20Dr%2C%20Beverly%20Hills%2C%20CA%2090210!5e0!3m2!1sen!2sus!4v1715600000000!5m2!1sen!2sus&amp;iwloc=near&amp;hl=en" style="filter: hue-rotate(-20deg) brightness(1.1) contrast(0.85);">
+</iframe>
+</div>
+<!-- Subtle Overlays to mute UI -->
+<div class="absolute inset-0 pointer-events-none border-[32px] border-white/10"></div>
+</div>
+<!-- Floating Contact Card -->
+<div class="absolute top-1/2 left-4 md:left-0 -translate-y-1/2 z-20 w-full max-w-lg">
+<div class="bg-white p-12 md:p-16 shadow-2xl border-l-[12px] border-primary">
+<div class="space-y-10">
+<div class="space-y-4">
+<span class="text-primary font-label tracking-[0.5em] uppercase text-[10px] font-bold block">Arrival</span>
+<h2 class="text-5xl md:text-6xl font-serif italic text-on-surface leading-[1.1]">Visit the <br/> Sanctuary.</h2>
+</div>
+<div class="space-y-8">
+<div class="space-y-2">
+<h5 class="font-serif italic text-xl text-primary">Beverly Hills</h5>
+<address class="not-italic text-on-surface-variant leading-relaxed text-lg font-body font-light">
+                                        455 North Canon Drive<br/>
+                                        Beverly Hills, CA 90210
+                                    </address>
+</div>
+<div class="grid grid-cols-1 gap-4 pt-4 border-t border-primary/10">
+<div class="flex items-center gap-4 group">
+<span class="material-symbols-outlined text-primary text-xl">call</span>
+<span class="font-body text-sm font-medium tracking-wider text-on-surface">+1 (310) 555-0198</span>
+</div>
+<div class="flex items-center gap-4 group">
+<span class="material-symbols-outlined text-primary text-xl">mail</span>
+<span class="font-body text-sm font-medium tracking-wider text-on-surface">concierge@sibstyle.com</span>
+</div>
+</div>
+</div>
+<button class="w-full bg-[#b5106a] text-white px-8 py-5 text-sm font-bold uppercase tracking-[0.3em] hover:bg-black transition-all shadow-lg active:scale-95">
+                                Book Your Session
+                            </button>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<!-- Stylized Text Elements -->
+<div class="absolute top-12 right-12 z-10 hidden xl:block">
+<span class="vertical-text text-on-surface/5 font-serif italic text-9xl leading-none select-none">BEVERLY HILLS</span>
+</div>
+</div>
+</section>
+</main>
 <!-- Footer -->
     <footer class="bg-[#f4f3f2] pt-20 pb-10">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-12 px-12 max-w-7xl mx-auto">
@@ -304,4 +331,4 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> 

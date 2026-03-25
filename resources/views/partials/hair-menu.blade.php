@@ -7,22 +7,132 @@
     <div class="space-y-6">
         <div class="flex items-center justify-between p-4 hover:bg-white rounded-2xl transition-all group">
             <div>
-                <h4 class="font-headline text-xl group-hover:text-primary transition-colors">Signature Cut & Style</h4>
-                <p class="text-sm text-on-surface-variant italic">Includes a consultation, wash, and premium blowout.</p>
+                <h4 class="font-headline text-xl group-hover:text-primary transition-colors">Hair Wash & Dry</h4>
+                <p class="text-sm text-on-surface-variant italic">(Insert Details)</p>
             </div>
             <div class="flex items-center gap-4">
-                <span class="font-headline text-xl">$800</span>
+                <span class="font-headline text-xl">50د.إ</span>
                 <a href="{{ route('book') }}" class="bg-primary text-white px-4 py-2 rounded-full text-xs font-bold uppercase">Select</a>
             </div>
         </div>
 
         <div class="flex items-center justify-between p-4 hover:bg-white rounded-2xl transition-all group">
             <div>
-                <h4 class="font-headline text-xl group-hover:text-primary transition-colors">Full Color Transformation</h4>
-                <p class="text-sm text-on-surface-variant italic">Custom-blended shades to suit your skin tone.</p>
+                <h4 class="font-headline text-xl group-hover:text-primary transition-colors">Blow Dry & Iron</h4>
+                <p class="text-sm text-on-surface-variant italic">(Insert Details)</p>
             </div>
             <div class="flex items-center gap-4">
-                <span class="font-headline text-xl">$2,500+</span>
+                <span class="font-headline text-xl">80د.إ</span>
+                <a href="{{ route('book') }}" class="bg-primary text-white px-4 py-2 rounded-full text-xs font-bold uppercase">Select</a>
+            </div>
+        </div>
+    </div>
+    <div class="flex items-center justify-between p-4 hover:bg-white rounded-2xl transition-all group">
+            <div>
+                <h4 class="font-headline text-xl group-hover:text-primary transition-colors">Wave/Retro</h4>
+                <p class="text-sm text-on-surface-variant italic">(Insert Details)</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="font-headline text-xl">50د.إ</span>
+                <a href="{{ route('book') }}" class="bg-primary text-white px-4 py-2 rounded-full text-xs font-bold uppercase">Select</a>
+            </div>
+        </div>
+    </div>
+    <div class="flex items-center justify-between p-4 hover:bg-white rounded-2xl transition-all group">
+            <div>
+                <h4 class="font-headline text-xl group-hover:text-primary transition-colors">Hair Color</h4>
+                <p class="text-sm text-on-surface-variant italic">(Insert Details)</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="font-headline text-xl">150د.إ</span>
+                <a href="{{ route('book') }}" class="bg-primary text-white px-4 py-2 rounded-full text-xs font-bold uppercase">Select</a>
+            </div>
+        </div>
+    </div>
+    <div class="flex items-center justify-between p-4 hover:bg-white rounded-2xl transition-all group">
+            <div>
+                <h4 class="font-headline text-xl group-hover:text-primary transition-colors">Roots Color</h4>
+                <p class="text-sm text-on-surface-variant italic">(Insert Details)</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="font-headline text-xl">100د.إ</span>
+                <a href="{{ route('book') }}" class="bg-primary text-white px-4 py-2 rounded-full text-xs font-bold uppercase">Select</a>
+            </div>
+        </div>
+    </div>
+    <div class="flex items-center justify-between p-4 hover:bg-white rounded-2xl transition-all group">
+            <div>
+                <h4 class="font-headline text-xl group-hover:text-primary transition-colors">Highlights</h4>
+                <p class="text-sm text-on-surface-variant italic">(Insert Details)</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="font-headline text-xl">200د.إ</span>
+                <a href="{{ route('book') }}" class="bg-primary text-white px-4 py-2 rounded-full text-xs font-bold uppercase">Select</a>
+            </div>
+        </div>
+    </div>
+    <div class="flex items-center justify-between p-4 hover:bg-white rounded-2xl transition-all group">
+            <div>
+                <h4 class="font-headline text-xl group-hover:text-primary transition-colors">Balayage</h4>
+                <p class="text-sm text-on-surface-variant italic">(Insert Details)</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="font-headline text-xl">200د.إ</span>
+                <a href="{{ route('book') }}" class="bg-primary text-white px-4 py-2 rounded-full text-xs font-bold uppercase">Select</a>
+            </div>
+        </div>
+    </div>
+    <div class="flex items-center justify-between p-4 hover:bg-white rounded-2xl transition-all group">
+            <div>
+                <h4 class="font-headline text-xl group-hover:text-primary transition-colors">Keratin Treatment</h4>
+                <p class="text-sm text-on-surface-variant italic">(Insert Details)</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="font-headline text-xl">180د.إ</span>
+                <a href="{{ route('book') }}" class="bg-primary text-white px-4 py-2 rounded-full text-xs font-bold uppercase">Select</a>
+            </div>
+        </div>
+    </div>
+    <div class="flex items-center justify-between p-4 hover:bg-white rounded-2xl transition-all group">
+            <div>
+                <h4 class="font-headline text-xl group-hover:text-primary transition-colors">Protein Treatment</h4>
+                <p class="text-sm text-on-surface-variant italic">(Insert Details)</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="font-headline text-xl">180د.إ</span>
+                <a href="{{ route('book') }}" class="bg-primary text-white px-4 py-2 rounded-full text-xs font-bold uppercase">Select</a>
+            </div>
+        </div>
+    </div>
+    <div class="flex items-center justify-between p-4 hover:bg-white rounded-2xl transition-all group">
+            <div>
+                <h4 class="font-headline text-xl group-hover:text-primary transition-colors">Rebonding</h4>
+                <p class="text-sm text-on-surface-variant italic">(Insert Details)</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="font-headline text-xl">180د.إ</span>
+                <a href="{{ route('book') }}" class="bg-primary text-white px-4 py-2 rounded-full text-xs font-bold uppercase">Select</a>
+            </div>
+        </div>
+    </div>
+    <div class="flex items-center justify-between p-4 hover:bg-white rounded-2xl transition-all group">
+            <div>
+                <h4 class="font-headline text-xl group-hover:text-primary transition-colors">Haircut</h4>
+                <p class="text-sm text-on-surface-variant italic">(Insert Details)</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="font-headline text-xl">40د.إ</span>
+                <a href="{{ route('book') }}" class="bg-primary text-white px-4 py-2 rounded-full text-xs font-bold uppercase">Select</a>
+            </div>
+        </div>
+    </div>
+    <div class="flex items-center justify-between p-4 hover:bg-white rounded-2xl transition-all group">
+            <div>
+                <h4 class="font-headline text-xl group-hover:text-primary transition-colors">Hair Spa</h4>
+                <p class="text-sm text-on-surface-variant italic">(Insert Details)</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="font-headline text-xl">60د.إ</span>
                 <a href="{{ route('book') }}" class="bg-primary text-white px-4 py-2 rounded-full text-xs font-bold uppercase">Select</a>
             </div>
         </div>

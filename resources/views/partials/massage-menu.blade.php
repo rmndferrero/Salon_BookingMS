@@ -7,22 +7,33 @@
     <div class="space-y-6">
         <div class="flex items-center justify-between p-4 hover:bg-white rounded-2xl transition-all group">
             <div>
-                <h4 class="font-headline text-xl group-hover:text-primary transition-colors">Swedish Relaxation Massage</h4>
-                <p class="text-sm text-on-surface-variant italic">60 minutes of gentle pressure to ease muscle tension.</p>
+                <h4 class="font-headline text-xl group-hover:text-primary transition-colors">Full Body (1 Hour)</h4>
+                <p class="text-sm text-on-surface-variant italic">(Insert Details)</p>
             </div>
             <div class="flex items-center gap-4">
-                <span class="font-headline text-xl">$1,200</span>
+                <span class="font-headline text-xl">120د.إ</span>
                 <a href="{{ route('book') }}" class="bg-primary text-white px-4 py-2 rounded-full text-xs font-bold uppercase">Select</a>
             </div>
         </div>
 
         <div class="flex items-center justify-between p-4 hover:bg-white rounded-2xl transition-all group">
             <div>
-                <h4 class="font-headline text-xl group-hover:text-primary transition-colors">Hot Stone Therapy</h4>
-                <p class="text-sm text-on-surface-variant italic">Deep heat penetration for profound physical and mental relief.</p>
+                <h4 class="font-headline text-xl group-hover:text-primary transition-colors">Massage (15/30 min)</h4>
+                <p class="text-sm text-on-surface-variant italic">(Insert Details)</p>
             </div>
             <div class="flex items-center gap-4">
-                <span class="font-headline text-xl">$1,800</span>
+                <span class="font-headline text-xl">30/60د.إ</span>
+                <a href="{{ route('book') }}" class="bg-primary text-white px-4 py-2 rounded-full text-xs font-bold uppercase">Select</a>
+            </div>
+        </div>
+    </div>
+     <div class="flex items-center justify-between p-4 hover:bg-white rounded-2xl transition-all group">
+            <div>
+                <h4 class="font-headline text-xl group-hover:text-primary transition-colors">Head & Shoulder</h4>
+                <p class="text-sm text-on-surface-variant italic">(Insert Details)</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="font-headline text-xl">60د.إ</span>
                 <a href="{{ route('book') }}" class="bg-primary text-white px-4 py-2 rounded-full text-xs font-bold uppercase">Select</a>
             </div>
         </div>

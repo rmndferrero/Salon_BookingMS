@@ -297,9 +297,9 @@
     <footer class="bg-[#f4f3f2] pt-20 pb-10">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-12 px-12 max-w-7xl mx-auto">
             <div class="col-span-1">
-                <h2 class="text-xl font-serif text-[#b5106a] mb-6">Sib Style</h2>
+                <h2 class="text-xl font-serif text-[#b5106a] mb-6">Location</h2>
                 <p class="text-stone-500 font-body text-sm leading-relaxed">
-                    The Curated Sanctuary for those who value the intersection of wellness and high-aesthetic.
+                    Al Hashar Building - Salah Al Din St - Office no 301 - Main Road - next to Crown Plaza Hotel - Muteena - Deira , Dubai, United Arab Emirates, 0000
                 </p>
             </div>
             <div>

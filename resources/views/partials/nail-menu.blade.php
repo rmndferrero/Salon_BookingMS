@@ -7,11 +7,107 @@
     <div class="space-y-6">
         <div class="flex items-center justify-between p-4 hover:bg-white rounded-2xl transition-all">
             <div>
-                <h4 class="font-headline text-xl">Signature Gel Manicure</h4>
-                <p class="text-sm text-on-surface-variant">Includes nail shaping and gel polish.</p>
+                <h4 class="font-headline text-xl">Mani/Pedi with Foot Spa</h4>
+                <p class="text-sm text-on-surface-variant">(Insert Details)</p>
             </div>
             <div class="flex items-center gap-4">
-                <span class="font-headline text-xl">$550</span>
+                <span class="font-headline text-xl">د.إ40/60</span>
+                <a href="{{ route('book') }}" class="bg-primary text-white px-4 py-2 rounded-full text-xs font-bold uppercase">Select</a>
+            </div>
+        </div>
+        </div>
+        <div class="space-y-6">
+        <div class="flex items-center justify-between p-4 hover:bg-white rounded-2xl transition-all">
+            <div>
+                <h4 class="font-headline text-xl">Foot Spa</h4>
+                <p class="text-sm text-on-surface-variant">(Insert Details)</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="font-headline text-xl">د.إ30</span>
+                <a href="{{ route('book') }}" class="bg-primary text-white px-4 py-2 rounded-full text-xs font-bold uppercase">Select</a>
+            </div>
+        </div>
+        </div>
+         <div class="space-y-6">
+        <div class="flex items-center justify-between p-4 hover:bg-white rounded-2xl transition-all">
+            <div>
+                <h4 class="font-headline text-xl">Mani Gelish/Pedi Gelish w/ Foot Spa</h4>
+                <p class="text-sm text-on-surface-variant">(Insert Details)</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="font-headline text-xl">د.إ60/80</span>
+                <a href="{{ route('book') }}" class="bg-primary text-white px-4 py-2 rounded-full text-xs font-bold uppercase">Select</a>
+            </div>
+        </div>
+        </div>
+         <div class="space-y-6">
+        <div class="flex items-center justify-between p-4 hover:bg-white rounded-2xl transition-all">
+            <div>
+                <h4 class="font-headline text-xl">Soft Gel Extension</h4>
+                <p class="text-sm text-on-surface-variant">(Insert Details)</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="font-headline text-xl">د.إ120</span>
+                <a href="{{ route('book') }}" class="bg-primary text-white px-4 py-2 rounded-full text-xs font-bold uppercase">Select</a>
+            </div>
+        </div>
+        </div>
+         <div class="space-y-6">
+        <div class="flex items-center justify-between p-4 hover:bg-white rounded-2xl transition-all">
+            <div>
+                <h4 class="font-headline text-xl">Acrylic Extension</h4>
+                <p class="text-sm text-on-surface-variant">(Insert Details)</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="font-headline text-xl">د.إ200</span>
+                <a href="{{ route('book') }}" class="bg-primary text-white px-4 py-2 rounded-full text-xs font-bold uppercase">Select</a>
+            </div>
+        </div>
+        </div>
+         <div class="space-y-6">
+        <div class="flex items-center justify-between p-4 hover:bg-white rounded-2xl transition-all">
+            <div>
+                <h4 class="font-headline text-xl">Hard Gel Extension/Biab</h4>
+                <p class="text-sm text-on-surface-variant">(Insert Details)</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="font-headline text-xl">80/100د.إ</span>
+                <a href="{{ route('book') }}" class="bg-primary text-white px-4 py-2 rounded-full text-xs font-bold uppercase">Select</a>
+            </div>
+        </div>
+        </div>
+         <div class="space-y-6">
+        <div class="flex items-center justify-between p-4 hover:bg-white rounded-2xl transition-all">
+            <div>
+                <h4 class="font-headline text-xl">Refill Extension</h4>
+                <p class="text-sm text-on-surface-variant">(Insert Details)</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="font-headline text-xl">80-100د.إ</span>
+                <a href="{{ route('book') }}" class="bg-primary text-white px-4 py-2 rounded-full text-xs font-bold uppercase">Select</a>
+            </div>
+        </div>
+        </div>
+         <div class="space-y-6">
+        <div class="flex items-center justify-between p-4 hover:bg-white rounded-2xl transition-all">
+            <div>
+                <h4 class="font-headline text-xl">Removal (Gelish/Hard/Acrylic)</h4>
+                <p class="text-sm text-on-surface-variant">(Insert Details)</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="font-headline text-xl">10/30/80د.إ</span>
+                <a href="{{ route('book') }}" class="bg-primary text-white px-4 py-2 rounded-full text-xs font-bold uppercase">Select</a>
+            </div>
+        </div>
+        </div>
+         <div class="space-y-6">
+        <div class="flex items-center justify-between p-4 hover:bg-white rounded-2xl transition-all">
+            <div>
+                <h4 class="font-headline text-xl">Nail Art</h4>
+                <p class="text-sm text-on-surface-variant">(Insert Details)</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="font-headline text-xl">5-50د.إ</span>
                 <a href="{{ route('book') }}" class="bg-primary text-white px-4 py-2 rounded-full text-xs font-bold uppercase">Select</a>
             </div>
         </div>
