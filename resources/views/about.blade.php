@@ -1,307 +1,157 @@
-<!DOCTYPE html>
-<html class="scroll-smooth" lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "tertiary-container": "#9b687b",
-                        "error": "#ba1a1a",
-                        "primary": "#b5106a",
-                        "on-secondary-fixed-variant": "#574500",
-                        "on-secondary-container": "#725a00",
-                        "on-secondary": "#ffffff",
-                        "inverse-primary": "#ffb0cc",
-                        "surface-dim": "#dadad9",
-                        "outline": "#8b7078",
-                        "on-surface-variant": "#584048",
-                        "surface-container": "#eeeeed",
-                        "primary-fixed-dim": "#ffb0cc",
-                        "inverse-surface": "#2f3130",
-                        "surface-variant": "#e3e2e1",
-                        "on-secondary-fixed": "#241a00",
-                        "on-tertiary": "#ffffff",
-                        "on-primary-container": "#ffffff",
-                        "error-container": "#ffdad6",
-                        "secondary-fixed": "#ffe089",
-                        "on-primary-fixed-variant": "#8d0051",
-                        "tertiary-fixed": "#ffd9e4",
-                        "on-tertiary-container": "#ffffff",
-                        "on-background": "#1a1c1c",
-                        "primary-fixed": "#ffd9e4",
-                        "on-error": "#ffffff",
-                        "surface-container-highest": "#e3e2e1",
-                        "secondary-fixed-dim": "#eac243",
-                        "surface-bright": "#faf9f8",
-                        "on-primary-fixed": "#3e0020",
-                        "outline-variant": "#dfbec8",
-                        "surface-container-lowest": "#ffffff",
-                        "surface": "#faf9f8",
-                        "secondary-container": "#fcd353",
-                        "surface-tint": "#b5106b",
-                        "on-error-container": "#93000a",
-                        "background": "#faf9f8",
-                        "tertiary": "#805062",
-                        "primary-container": "#d63384",
-                        "on-tertiary-fixed": "#330f1f",
-                        "surface-container-low": "#f4f3f2",
-                        "surface-container-high": "#e9e8e7",
-                        "on-primary": "#ffffff",
-                        "secondary": "#745b00",
-                        "on-tertiary-fixed-variant": "#65394b",
-                        "on-surface": "#1a1c1c",
-                        "tertiary-fixed-dim": "#f2b6cb",
-                        "inverse-on-surface": "#f1f0f0"
-                    },
-                    fontFamily: {
-                        "headline": ["Noto Serif"],
-                        "body": ["Manrope"],
-                        "label": ["Manrope"]
-                    },
-                    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
-                },
-            },
-        }
-    </script>
-    <style>
-        body {
-            background-color: #FFECF0;
-            /* Requested page background */
-            font-family: 'Manrope', sans-serif;
-            color: #1a1c1c;
-        }
+@section('content')
 
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
-        }
-
-        .editorial-text-wrap {
-            shape-outside: circle(50%);
-        }
-    </style>
-</head>
-
-<body class="selection:bg-primary-fixed selection:text-on-primary-fixed">
-
-    <!-- TopNavBar -->
-    <nav class="fixed top-0 w-full z-50 bg-[#b5106a] backdrop-blur-xl">
-        <div class="flex justify-between items-center px-8 py-4 max-w-screen-2xl mx-auto">
-            <div class="flex items-center gap-8">
-                <a class="flex items-center" href="#">
-                    <img class="h-10 w-auto invert brightness-0" data-alt="Sib Style minimalist luxury beauty logo" src="{{ asset('sibs22.png') }}"/>
-                    <span class="ml-4 text-2xl font-serif italic text-white tracking-tight"> Style Beauty Lounge</span>
-                </a>
-                <div class="hidden md:flex gap-10 absolute left-1/2 transform -translate-x-1/2">
-                    <a class="text-white/90 font-medium hover:text-white transition-opacity duration-300" href="{{ route('homepage') }}">Home</a>
-                    <a class="text-white/90 font-medium hover:text-white transition-opacity duration-300" href="{{ route('services') }}">Services</a>
-                    <a class="text-white/90 font-medium hover:text-white transition-opacity duration-300" href="{{ route('about') }}">About</a>
-                    <a class="text-white/90 font-medium hover:text-white transition-opacity duration-300" href="{{ route('contact') }}">Contact</a>
-                </div>
-            </div>
-            <div class="flex items-center gap-6">
-                <button class="text-white font-label font-medium hover:opacity-80 transition-opacity">Login</button>
-                <button class="bg-white text-[#b5106a] px-6 py-2 rounded-full font-label font-semibold text-sm hover:scale-95 transition-transform duration-200">Register</button>
-            </div>
-        </div>
-    </nav>
-<main class="pt-24">
-<!-- Hero Section: Our Story -->
+<!-- HERO: OUR STORY -->
 <section class="px-8 py-20 md:py-32 max-w-7xl mx-auto overflow-hidden">
-<div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
-<div class="md:col-span-7 space-y-8">
-<span class="text-primary font-label tracking-[0.3em] uppercase text-xs font-bold">The Heritage</span>
-<h1 class="text-5xl md:text-7xl font-serif text-on-surface leading-tight italic">
-                        The Curated <br/> Sanctuary.
-                    </h1>
-<div class="max-w-xl space-y-6">
-<p class="text-lg text-on-surface-variant font-body leading-relaxed">
-                            Founded on the principle that beauty is a sensory dialogue, Sib Style Beauty Lounge emerged as a rebellion against the clinical and the hurried. Our vision was to create a space where time slows down—a boutique environment that honors the art of the individual.
-                        </p>
-<p class="text-lg text-on-surface-variant font-body leading-relaxed">
-                            Every curve of our interiors, every botanical essence in our treatments, and every rhythmic stroke of our stylists is designed to transport you from the noise of the world into a realm of intentional grace.
-                        </p>
-</div>
-</div>
-<div class="md:col-span-5 relative">
-<div class="aspect-[4/5] bg-surface-container rounded-xl overflow-hidden shadow-2xl">
-<img alt="Interior of a luxury salon lounge" class="w-full h-full object-cover grayscale-[20%] hover:scale-105 transition-transform duration-700" data-alt="Luxurious minimalist salon interior with warm lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOdbGUxKEZgHkExeeyQnWSBEu8CE7SgSJFGyKj2eDIly3KCKZtUr8IbxDIcp9fZ0eCIZDsqbj42RlyI8Dtm2Ra-f7NPCBImuqO10ARQVkr8Kt0VP9ro8GIHFk5pPfZqCFa5610EUfpxRhS_dCGmecXxRCphHJ7Hrth5qt2orovxOkr6Qjnm5uJp6d_pctePgXgPCIpvs5p5_ZZyqj8KDLkq8skXaO0k_OunYEvZ44c8c_QiwekdUWDapn4MbOJycOLVdCv4Xl5eGU"/>
-</div>
-<div class="absolute -bottom-8 -left-8 bg-secondary-fixed p-8 rounded-xl hidden lg:block shadow-lg">
-<p class="font-serif italic text-2xl text-on-secondary-fixed">Est. 2012</p>
-</div>
-</div>
-</div>
-</section>
-<!-- Values Section: Asymmetric Minimalist (Our Philosophy) -->
-<section class="bg-surface-container-low py-24 px-8">
-<div class="max-w-7xl mx-auto">
-<div class="grid grid-cols-1 md:grid-cols-3 gap-16">
-<div class="space-y-4 border-l border-outline-variant/30 pl-8">
-<span class="text-secondary font-bold text-2xl italic font-serif">01</span>
-<h3 class="text-xl font-serif font-bold text-primary">Intentional Care</h3>
-<p class="text-on-surface-variant text-sm leading-relaxed">We don't just provide services; we curate experiences tailored to your unique biological and aesthetic needs.</p>
-</div>
-<div class="space-y-4 border-l border-outline-variant/30 pl-8 md:mt-12">
-<span class="text-secondary font-bold text-2xl italic font-serif">02</span>
-<h3 class="text-xl font-serif font-bold text-primary">Artisan Excellence</h3>
-<p class="text-on-surface-variant text-sm leading-relaxed">Our stylists are masters of craft, blending classic heritage techniques with modern editorial innovation.</p>
-</div>
-<div class="space-y-4 border-l border-outline-variant/30 pl-8 md:mt-24">
-<span class="text-secondary font-bold text-2xl italic font-serif">03</span>
-<h3 class="text-xl font-serif font-bold text-primary">Sensory Calm</h3>
-<p class="text-on-surface-variant text-sm leading-relaxed">From the acoustics of our lounge to the weight of our linens, every detail is tuned for your tranquility.</p>
-</div>
-</div>
-</div>
-</section>
-<!-- Detailed Team Section: The Architects of Style -->
-<section class="py-32 px-8 max-w-7xl mx-auto bg-[#FFECF0]">
-<div class="mb-24 text-center">
-<h2 class="text-5xl md:text-6xl font-serif italic text-on-surface">The Architects of Style</h2>
-<div class="h-px w-24 bg-primary mx-auto mt-8 mb-4"></div>
-<p class="text-on-surface-variant font-body uppercase tracking-[0.4em] text-xs font-semibold">A collective of visionaries</p>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-x-12 gap-y-24">
-<!-- Team Member 1 -->
-<div class="group flex flex-col items-center md:items-start">
-<div class="aspect-[3/4] w-full overflow-hidden rounded-xl bg-surface-container-high mb-8 relative shadow-sm">
-<img alt="Elena Siba - Creative Director" class="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105" data-alt="Portrait of Elena Siba" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOdbGUxKEZgHkExeeyQnWSBEu8CE7SgSJFGyKj2eDIly3KCKZtUr8IbxDIcp9fZ0eCIZDsqbj42RlyI8Dtm2Ra-f7NPCBImuqO10ARQVkr8Kt0VP9ro8GIHFk5pPfZqCFa5610EUfpxRhS_dCGmecXxRCphHJ7Hrth5qt2orovxOkr6Qjnm5uJp6d_pctePgXgPCIpvs5p5_ZZyqj8KDLkq8skXaO0k_OunYEvZ44c8c_QiwekdUWDapn4MbOJycOLVdCv4Xl5eGU"/>
-</div>
-<div class="space-y-4 text-center md:text-left px-4 md:px-0">
-<h4 class="text-3xl font-serif text-on-surface italic">Elena Siba</h4>
-<p class="text-primary font-label text-xs uppercase tracking-widest font-bold">Creative Director &amp; Founder</p>
-<p class="text-on-surface-variant text-sm leading-relaxed font-body font-light">
-                            With over fifteen years in haute couture styling, Elena founded Sib Style to bridge the gap between runway aesthetics and personal wellness. Her philosophy centers on the transformative power of silhouette and texture.
-                        </p>
-</div>
-</div>
-<!-- Team Member 2 -->
-<div class="group flex flex-col items-center md:items-start md:pt-12">
-<div class="aspect-[3/4] w-full overflow-hidden rounded-xl bg-surface-container-high mb-8 relative shadow-sm">
-<img alt="Julian Marc - Master Colorist" class="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105" data-alt="Portrait of Julian Marc" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOdbGUxKEZgHkExeeyQnWSBEu8CE7SgSJFGyKj2eDIly3KCKZtUr8IbxDIcp9fZ0eCIZDsqbj42RlyI8Dtm2Ra-f7NPCBImuqO10ARQVkr8Kt0VP9ro8GIHFk5pPfZqCFa5610EUfpxRhS_dCGmecXxRCphHJ7Hrth5qt2orovxOkr6Qjnm5uJp6d_pctePgXgPCIpvs5p5_ZZyqj8KDLkq8skXaO0k_OunYEvZ44c8c_QiwekdUWDapn4MbOJycOLVdCv4Xl5eGU"/>
-</div>
-<div class="space-y-4 text-center md:text-left px-4 md:px-0">
-<h4 class="text-3xl font-serif text-on-surface italic">Julian Marc</h4>
-<p class="text-primary font-label text-xs uppercase tracking-widest font-bold">Master Colorist</p>
-<p class="text-on-surface-variant text-sm leading-relaxed font-body font-light">
-                            Julian is an alchemist of light. Specializing in bespoke balayage and corrective chemistry, he treats every head of hair as a unique canvas, ensuring every pigment choice honors the client's natural complexion.
-                        </p>
-</div>
-</div>
-<!-- Team Member 3 -->
-<div class="group flex flex-col items-center md:items-start md:pt-24">
-<div class="aspect-[3/4] w-full overflow-hidden rounded-xl bg-surface-container-high mb-8 relative shadow-sm">
-<img alt="Sophia Chen - Artisan Esthetician" class="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105" data-alt="Portrait of Sophia Chen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOdbGUxKEZgHkExeeyQnWSBEu8CE7SgSJFGyKj2eDIly3KCKZtUr8IbxDIcp9fZ0eCIZDsqbj42RlyI8Dtm2Ra-f7NPCBImuqO10ARQVkr8Kt0VP9ro8GIHFk5pPfZqCFa5610EUfpxRhS_dCGmecXxRCphHJ7Hrth5qt2orovxOkr6Qjnm5uJp6d_pctePgXgPCIpvs5p5_ZZyqj8KDLkq8skXaO0k_OunYEvZ44c8c_QiwekdUWDapn4MbOJycOLVdCv4Xl5eGU"/>
-</div>
-<div class="space-y-4 text-center md:text-left px-4 md:px-0">
-<h4 class="text-3xl font-serif text-on-surface italic">Sophia Chen</h4>
-<p class="text-primary font-label text-xs uppercase tracking-widest font-bold">Artisan Esthetician</p>
-<p class="text-on-surface-variant text-sm leading-relaxed font-body font-light">
-                            Trained in traditional lymphatic drainage and modern peptide therapy, Sophia focuses on skin health as a foundation for beauty. Her holistic approach combines botanical essences with clinical precision.
-                        </p>
-</div>
-</div>
-</div>
-</section>
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
 
-<!-- Footer -->
-    <footer class="bg-[#f4f3f2] pt-20 pb-10">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 px-12 max-w-7xl mx-auto">
-            <div class="col-span-1">
-                <h2 class="text-xl font-serif text-[#b5106a] mb-6">Location</h2>
-                <p class="text-stone-500 font-body text-sm leading-relaxed">
-                    Al Hashar Building - Salah Al Din St - Office no 301 - Main Road - next to Crown Plaza Hotel - Muteena - Deira , Dubai, United Arab Emirates, 0000
+        <div class="md:col-span-7 space-y-8">
+
+            <span class="text-primary font-label tracking-[0.3em] uppercase text-xs font-bold">
+                The Heritage
+            </span>
+
+            <h1 class="text-5xl md:text-7xl font-serif text-on-surface leading-tight italic">
+                The Curated <br /> Sanctuary.
+            </h1>
+
+            <div class="max-w-xl space-y-6">
+                <p class="text-lg text-on-surface-variant font-body leading-relaxed">
+                    Founded on the principle that beauty is a sensory dialogue, Sib Style Beauty Lounge emerged as a rebellion against the clinical and the hurried. Our vision was to create a space where time slows down—a boutique environment that honors the art of the individual.
+                </p>
+
+                <p class="text-lg text-on-surface-variant font-body leading-relaxed">
+                    Every curve of our interiors, every botanical essence in our treatments, and every rhythmic stroke of our stylists is designed to transport you from the noise of the world into a realm of intentional grace.
                 </p>
             </div>
-            <div>
-                <h4 class="font-label text-xs font-bold uppercase tracking-widest text-[#b5106a] mb-6">Navigation</h4>
-                <ul class="space-y-4">
-                    <li><a class="text-stone-500 text-sm hover:text-[#b5106a] transition-colors" href="#services">Services</a></li>
-                    <li><a class="text-stone-500 text-sm hover:text-[#b5106a] transition-colors" href="#gallery">Gallery</a></li>
-                    <li><a class="text-stone-500 text-sm hover:text-[#b5106a] transition-colors" href="#about">About</a></li>
-                    <li><a class="text-stone-500 text-sm hover:text-[#b5106a] transition-colors" href="#contact">Contact</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="font-label text-xs font-bold uppercase tracking-widest text-[#b5106a] mb-6">Legal</h4>
-                <ul class="space-y-4">
-                    <li><a class="text-stone-500 text-sm hover:text-[#b5106a] transition-colors" href="#">Privacy Policy</a></li>
-                    <li><a class="text-stone-500 text-sm hover:text-[#b5106a] transition-colors" href="#">Terms of Service</a></li>
-                    <li><a class="text-stone-500 text-sm hover:text-[#b5106a] transition-colors" href="#">Careers</a></li>
-                    <li><a class="text-stone-500 text-sm hover:text-[#b5106a] transition-colors" href="#">Sustainability</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="font-label text-xs font-bold uppercase tracking-widest text-[#b5106a] mb-6">Social</h4>
-                <div class="flex gap-4">
-                    <a class="h-10 w-10 rounded-full bg-white flex items-center justify-center text-primary shadow-sm hover:scale-110 transition-transform" href="#">
-                        <span class="material-symbols-outlined text-lg">public</span>
-                    </a>
-                    <a class="h-10 w-10 rounded-full bg-white flex items-center justify-center text-primary shadow-sm hover:scale-110 transition-transform" href="#">
-                        <span class="material-symbols-outlined text-lg">face</span>
-                    </a>
-                    <a class="h-10 w-10 rounded-full bg-white flex items-center justify-center text-primary shadow-sm hover:scale-110 transition-transform" href="#">
-                        <span class="material-symbols-outlined text-lg">camera</span>
-                    </a>
-                </div>
-            </div>
+
         </div>
-        <div class="mt-20 px-12 max-w-7xl mx-auto pt-8 border-t border-stone-200">
-            <p class="text-stone-400 font-label text-[10px] uppercase tracking-[0.2em] text-center">
-                © 2024 Sib Style Beauty Lounge. The Curated Sanctuary.
-            </p>
-        </div>
-    </footer>
 
-        <!--Login Modal-->
+        <div class="md:col-span-5 relative">
 
-        <div id="loginModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-black/60 backdrop-blur-sm px-4">
-        <div class="bg-white w-full max-w-md rounded-3xl overflow-hidden shadow-2xl transform transition-all">
-            <div class="p-8 relative">
-                <button onclick="toggleModal()" class="absolute top-6 right-6 text-on-surface-variant hover:text-primary transition-colors">
-                    <span class="material-symbols-outlined">close</span>
-                </button>
-
-                <div class="text-center mb-8">
-                    <h2 class="font-headline text-3xl text-on-surface mb-2">Welcome Back</h2>
-                    <p class="font-body text-on-surface-variant text-sm">Enter your details to access the sanctuary.</p>
-                </div>
-
-                <form action="{{ route('login') }}" method="POST" class="space-y-6">
-                    @csrf
-                    <div>
-                        <label for="phone_number" class="block font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Phone Number</label>
-                        <input type="text" id="phone_number" name="phone_number" value="{{ old('phone_number') }}" 
-                            class="w-full bg-surface-container-low border-none rounded-full px-6 py-3 focus:ring-2 focus:ring-primary/20 outline-none font-body" required>
-                        @error('phone_number') <span class="text-error text-xs mt-1 block">{{ $message }}</span> @enderror
-                    </div>
-
-                    <div>
-                        <label for="password" class="block font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Password</label>
-                        <input type="password" id="password" name="password" 
-                            class="w-full bg-surface-container-low border-none rounded-full px-6 py-3 focus:ring-2 focus:ring-primary/20 outline-none font-body" required>
-                        @error('password') <span class="text-error text-xs mt-1 block">{{ $message }}</span> @enderror
-                    </div>
-
-                    <button type="submit" class="w-full bg-primary text-white py-4 rounded-full font-label font-bold text-xs uppercase tracking-widest hover:opacity-90 transition-all shadow-lg shadow-primary/20">
-                        Log In
-                    </button>
-                </form>
-
-                <div class="mt-8 text-center">
-                    <p class="text-sm text-on-surface-variant font-body">
-                        New to Sibs? <a href="{{ route('register') }}" class="text-primary font-bold hover:underline">Create an account</a>
-                    </p>
-                </div>
+            <div class="aspect-[4/5] bg-surface-container rounded-xl overflow-hidden shadow-2xl">
+                <img
+                    class="w-full h-full object-cover grayscale-[20%] hover:scale-105 transition-transform duration-700"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOdbGUxKEZgHkExeeyQnWSBEu8CE7SgSJFGyKj2eDIly3KCKZtUr8IbxDIcp9fZ0eCIZDsqbj42RlyI8Dtm2Ra-f7NPCBImuqO10ARQVkr8Kt0VP9ro8GIHFk5pPfZqCFa5610EUfpxRhS_dCGmecXxRCphHJ7Hrth5qt2orovxOkr6Qjnm5uJp6d_pctePgXgPCIpvs5p5_ZZyqj8KDLkq8skXaO0k_OunYEvZ44c8c_QiwekdUWDapn4MbOJycOLVdCv4Xl5eGU"
+                />
             </div>
+
+            <div class="absolute -bottom-8 -left-8 bg-secondary-fixed p-8 rounded-xl hidden lg:block shadow-lg">
+                <p class="font-serif italic text-2xl text-on-secondary-fixed">
+                    Est. 2012
+                </p>
+            </div>
+
         </div>
+
     </div>
+</section>
+
+<!-- VALUES -->
+<section class="bg-surface-container-low py-24 px-8">
+    <div class="max-w-7xl mx-auto">
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-16">
+
+            <div class="space-y-4 border-l border-outline-variant/30 pl-8">
+                <span class="text-secondary font-bold text-2xl italic font-serif">01</span>
+                <h3 class="text-xl font-serif font-bold text-primary">Intentional Care</h3>
+                <p class="text-on-surface-variant text-sm leading-relaxed">
+                    We don't just provide services; we curate experiences tailored to your unique biological and aesthetic needs.
+                </p>
+            </div>
+
+            <div class="space-y-4 border-l border-outline-variant/30 pl-8 md:mt-12">
+                <span class="text-secondary font-bold text-2xl italic font-serif">02</span>
+                <h3 class="text-xl font-serif font-bold text-primary">Artisan Excellence</h3>
+                <p class="text-on-surface-variant text-sm leading-relaxed">
+                    Our stylists are masters of craft, blending classic heritage techniques with modern editorial innovation.
+                </p>
+            </div>
+
+            <div class="space-y-4 border-l border-outline-variant/30 pl-8 md:mt-24">
+                <span class="text-secondary font-bold text-2xl italic font-serif">03</span>
+                <h3 class="text-xl font-serif font-bold text-primary">Sensory Calm</h3>
+                <p class="text-on-surface-variant text-sm leading-relaxed">
+                    From the acoustics of our lounge to the weight of our linens, every detail is tuned for your tranquility.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- TEAM -->
+<section class="py-32 px-8 max-w-7xl mx-auto bg-[#FFECF0]">
+
+    <div class="mb-24 text-center">
+
+        <h2 class="text-5xl md:text-6xl font-serif italic text-on-surface">
+            The Architects of Style
+        </h2>
+
+        <div class="h-px w-24 bg-primary mx-auto mt-8 mb-4"></div>
+
+        <p class="text-on-surface-variant font-body uppercase tracking-[0.4em] text-xs font-semibold">
+            A collective of visionaries
+        </p>
+
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-x-12 gap-y-24">
+
+        <!-- MEMBER 1 -->
+        <div class="group flex flex-col items-center md:items-start">
+            <div class="aspect-[3/4] w-full overflow-hidden rounded-xl mb-8 shadow-sm">
+                <img class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOdbGUxKEZgHkExeeyQnWSBEu8CE7SgSJFGyKj2eDIly3KCKZtUr8IbxDIcp9fZ0eCIZDsqbj42RlyI8Dtm2Ra-f7NPCBImuqO10ARQVkr8Kt0VP9ro8GIHFk5pPfZqCFa5610EUfpxRhS_dCGmecXxRCphHJ7Hrth5qt2orovxOkr6Qjnm5uJp6d_pctePgXgPCIpvs5p5_ZZyqj8KDLkq8skXaO0k_OunYEvZ44c8c_QiwekdUWDapn4MbOJycOLVdCv4Xl5eGU"/>
+            </div>
+
+            <div class="space-y-4 text-center md:text-left">
+                <h4 class="text-3xl font-serif italic">Elena Siba</h4>
+                <p class="text-primary text-xs uppercase font-bold">Creative Director & Founder</p>
+                <p class="text-sm font-light">
+                    With over fifteen years in haute couture styling, Elena founded Sib Style to bridge the gap between runway aesthetics and personal wellness.
+                </p>
+            </div>
+        </div>
+
+        <!-- MEMBER 2 -->
+        <div class="group flex flex-col items-center md:items-start md:pt-12">
+            <div class="aspect-[3/4] w-full overflow-hidden rounded-xl mb-8 shadow-sm">
+                <img class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOdbGUxKEZgHkExeeyQnWSBEu8CE7SgSJFGyKj2eDIly3KCKZtUr8IbxDIcp9fZ0eCIZDsqbj42RlyI8Dtm2Ra-f7NPCBImuqO10ARQVkr8Kt0VP9ro8GIHFk5pPfZqCFa5610EUfpxRhS_dCGmecXxRCphHJ7Hrth5qt2orovxOkr6Qjnm5uJp6d_pctePgXgPCIpvs5p5_ZZyqj8KDLkq8skXaO0k_OunYEvZ44c8c_QiwekdUWDapn4MbOJycOLVdCv4Xl5eGU"/>
+            </div>
+
+            <div class="space-y-4 text-center md:text-left">
+                <h4 class="text-3xl font-serif italic">Julian Marc</h4>
+                <p class="text-primary text-xs uppercase font-bold">Master Colorist</p>
+                <p class="text-sm font-light">
+                    Julian is an alchemist of light, specializing in bespoke balayage and corrective chemistry.
+                </p>
+            </div>
+        </div>
+
+        <!-- MEMBER 3 -->
+        <div class="group flex flex-col items-center md:items-start md:pt-24">
+            <div class="aspect-[3/4] w-full overflow-hidden rounded-xl mb-8 shadow-sm">
+                <img class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOdbGUxKEZgHkExeeyQnWSBEu8CE7SgSJFGyKj2eDIly3KCKZtUr8IbxDIcp9fZ0eCIZDsqbj42RlyI8Dtm2Ra-f7NPCBImuqO10ARQVkr8Kt0VP9ro8GIHFk5pPfZqCFa5610EUfpxRhS_dCGmecXxRCphHJ7Hrth5qt2orovxOkr6Qjnm5uJp6d_pctePgXgPCIpvs5p5_ZZyqj8KDLkq8skXaO0k_OunYEvZ44c8c_QiwekdUWDapn4MbOJycOLVdCv4Xl5eGU"/>
+            </div>
+
+            <div class="space-y-4 text-center md:text-left">
+                <h4 class="text-3xl font-serif italic">Sophia Chen</h4>
+                <p class="text-primary text-xs uppercase font-bold">Artisan Esthetician</p>
+                <p class="text-sm font-light">
+                    Sophia focuses on skin health as a foundation for beauty through holistic and clinical techniques.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+@endsection
