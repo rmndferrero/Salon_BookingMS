@@ -35,7 +35,6 @@ Route::get('/register', function () {
 
 // --- Manager Routes ---
 Route::middleware(['auth', 'manager'])->group(function () {
-    
     Route::get('/manager/dashboard', function () {
         return view('manager.dashboard');
     })->name('manager.dashboard');
@@ -46,14 +45,17 @@ Route::middleware(['auth', 'manager'])->group(function () {
     Route::delete('/manager/services/{service}', [ManagerServiceController::class, 'destroy'])->name('manager.services.destroy');
 });
 
-// Remove the Auth middleware from these two lines!
-
+// --- BOOKING ROUTES (Publicly accessible) ---
 Route::get('/book', [CustomerBookingController::class, 'index'])->name('book');
-Route::post('/book', [CustomerBookingController::class, 'store'])->name('booking.store');
-// Add this right next to your other booking routes
-Route::get('/api/availability', [\App\Http\Controllers\CustomerBookingController::class, 'getAvailability'])->name('api.availability');
-// Process the form submissions
+
+// THIS IS THE ROUTE LARAVEL IS LOOKING FOR:
+Route::post('/book', [CustomerBookingController::class, 'store'])->name('booking.store'); 
+
+// THIS IS THE API ROUTE WE JUST ADDED:
+Route::get('/api/availability', [CustomerBookingController::class, 'getAvailability'])->name('api.availability');
+
+// --- AUTH ROUTES ---
 Route::post('/booking/process-user', [BookingAuthController::class, 'processUser']);
 Route::post('/login', [BookingAuthController::class, 'login']);
-Route::post('/register', [App\Http\Controllers\BookingAuthController::class, 'register']);
+Route::post('/register', [BookingAuthController::class, 'register']);
 Route::post('/logout', [BookingAuthController::class, 'logout'])->name('logout');
