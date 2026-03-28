@@ -100,7 +100,6 @@
         </div>
     </div>
     @endforeach
-
 </main>
 
 <script>
@@ -112,6 +111,109 @@
     function closeModal(id) {
         document.getElementById(id).classList.add('hidden');
         document.body.style.overflow = 'auto'; // Re-enable scrolling
+    }
+</script>
+
+<div id="floating-cart" class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 shadow-[0_-20px_40px_rgba(0,0,0,0.08)] transform translate-y-full transition-transform duration-300 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+        
+        <div class="flex items-center gap-6 text-[#1a1c1c]">
+            <div>
+                <span id="cart-count" class="font-headline text-xl font-bold">0</span> 
+                <span class="text-sm text-gray-500 uppercase tracking-widest">Services</span>
+            </div>
+            <div class="w-px h-8 bg-gray-300"></div>
+            <div>
+                <span class="text-sm text-gray-500 uppercase tracking-widest block text-[10px]">Total Time</span>
+                <span id="cart-duration" class="font-bold">0 mins</span>
+            </div>
+            <div class="w-px h-8 bg-gray-300 hidden md:block"></div>
+            <div class="hidden md:block">
+                <span class="text-sm text-gray-500 uppercase tracking-widest block text-[10px]">Total Price</span>
+                <span id="cart-price" class="font-bold text-[#b5106a] text-lg">د.إ0.00</span>
+            </div>
+        </div>
+
+        <button onclick="openCalendarModal()" class="w-full md:w-auto bg-[#b5106a] text-white px-10 py-4 rounded-full font-bold uppercase tracking-widest hover:scale-105 transition-transform shadow-lg shadow-pink-500/30">
+            Choose Time →
+        </button>
+    </div>
+</div>
+
+<script>
+    let cart = [];
+
+    function toggleCartItem(button) {
+        // Extract data from the clicked button
+        const id = button.getAttribute('data-id');
+        const name = button.getAttribute('data-name');
+        const price = parseFloat(button.getAttribute('data-price'));
+        const duration = parseInt(button.getAttribute('data-duration'));
+
+        // Check if the item is already in the cart
+        const existingIndex = cart.findIndex(item => item.id === id);
+
+        if (existingIndex > -1) {
+            // REMOVE from cart
+            cart.splice(existingIndex, 1);
+            
+            // Revert button styling to unselected
+            button.innerText = 'Select';
+            button.classList.remove('bg-[#b5106a]', 'text-white');
+            button.classList.add('text-[#b5106a]');
+        } else {
+            // ADD to cart
+            cart.push({ id, name, price, duration });
+            
+            // Update button styling to show it's selected
+            button.innerText = '✓ Selected';
+            button.classList.remove('text-[#b5106a]');
+            button.classList.add('bg-[#b5106a]', 'text-white');
+        }
+
+        updateCartUI();
+    }
+
+    function updateCartUI() {
+        const floatingCart = document.getElementById('floating-cart');
+        const cartCount = document.getElementById('cart-count');
+        const cartDuration = document.getElementById('cart-duration');
+        const cartPrice = document.getElementById('cart-price');
+
+        if (cart.length === 0) {
+            // Hide the bar if cart is empty
+            floatingCart.classList.add('translate-y-full');
+        } else {
+            // Show the bar and update the math
+            floatingCart.classList.remove('translate-y-full');
+            
+            let totalDuration = 0;
+            let totalPrice = 0;
+
+            cart.forEach(item => {
+                totalDuration += item.duration;
+                totalPrice += item.price;
+            });
+
+            cartCount.innerText = cart.length;
+            
+            // Format duration nicely (e.g., 90 mins -> 1 hr 30 mins)
+            if (totalDuration >= 60) {
+                let hours = Math.floor(totalDuration / 60);
+                let mins = totalDuration % 60;
+                cartDuration.innerText = mins > 0 ? `${hours} hr ${mins} mins` : `${hours} hr`;
+            } else {
+                cartDuration.innerText = `${totalDuration} mins`;
+            }
+            
+            cartPrice.innerText = `د.إ${totalPrice.toFixed(2)}`;
+        }
+    }
+
+    // Placeholder for Step 4
+    function openCalendarModal() {
+        console.log("Preparing to open calendar with total duration:", cart.reduce((sum, item) => sum + item.duration, 0));
+        alert("Cart logic is working! Total Duration: " + cart.reduce((sum, item) => sum + item.duration, 0) + " minutes. Ready for Step 4: The Calendar Modal!");
     }
 </script>
 

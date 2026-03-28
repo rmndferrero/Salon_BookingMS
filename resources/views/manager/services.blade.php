@@ -33,14 +33,34 @@
 
                 <form action="{{ route('manager.services.store') }}" method="POST">
                     @csrf
+                    
                     <div class="mb-4">
                         <label class="block text-sm font-bold text-gray-700 mb-2">Service Name</label>
                         <input type="text" name="name" required class="w-full border-gray-300 rounded p-2 border focus:outline-none focus:border-[#b5106a]">
                     </div>
 
                     <div class="mb-4">
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Category</label>
+                        <select name="category" required class="w-full border-gray-300 rounded p-2 border focus:outline-none focus:border-[#b5106a] bg-white">
+                            <option value="" disabled selected>Select a category</option>
+                            <option value="Nail Care">Nail Care</option>
+                            <option value="Eyelashing">Eyelashing</option>
+                            <option value="Facial & Threading">Facial & Threading</option>
+                            <option value="Hair Services">Hair Services</option>
+                            <option value="Waxing">Waxing</option>
+                            <option value="Relaxing Massage">Relaxing Massage</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
                         <label class="block text-sm font-bold text-gray-700 mb-2">Price (AED)</label>
                         <input type="number" step="0.01" name="price" required class="w-full border-gray-300 rounded p-2 border focus:outline-none focus:border-[#b5106a]">
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Duration (Minutes)</label>
+                        <input type="number" step="15" name="duration_minutes" value="60" required class="w-full border-gray-300 rounded p-2 border focus:outline-none focus:border-[#b5106a]">
+                        <p class="text-xs text-gray-500 mt-1">Example: 60 for 1 hour, 90 for 1.5 hours.</p>
                     </div>
 
                     <div class="mb-4">
@@ -62,18 +82,25 @@
         <div class="lg:col-span-2">
             <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                 <h2 class="text-xl font-bold mb-6">Active Services</h2>
-                
                 <div class="space-y-4">
                     @foreach($services as $service)
                         <div class="flex justify-between items-start border-b border-gray-100 pb-4">
                             <div>
-                                <div class="flex items-center gap-2">
+                                <div class="flex items-center gap-2 mb-1">
                                     <h3 class="font-bold text-lg">{{ $service->name }}</h3>
                                     @if($service->is_package)
                                         <span class="bg-pink-100 text-[#b5106a] text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider">Package</span>
                                     @endif
                                 </div>
-                                <p class="text-sm text-gray-500 mt-1 max-w-md">{{ $service->description }}</p>
+                                <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">{{ $service->category }}</span>
+                                <p class="text-sm text-gray-500 mt-2 max-w-md">{{ $service->description }}</p>
+                            </div>
+
+                            <div class="flex gap-2 items-center">
+                                    <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">{{ $service->category }}</span>
+                                    <span class="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded flex items-center gap-1">
+                                        ⏱ {{ $service->duration_minutes }} mins
+                                    </span>
                             </div>
                             
                             <div class="flex flex-col items-end gap-2">
@@ -94,8 +121,6 @@
                 </div>
             </div>
         </div>
-
     </main>
-
 </body>
 </html>

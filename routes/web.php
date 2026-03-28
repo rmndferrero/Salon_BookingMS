@@ -47,9 +47,11 @@ Route::middleware(['auth', 'manager'])->group(function () {
 });
 
 // Remove the Auth middleware from these two lines!
+
 Route::get('/book', [CustomerBookingController::class, 'index'])->name('book');
 Route::post('/book', [CustomerBookingController::class, 'store'])->name('booking.store');
-
+// Add this right next to your other booking routes
+Route::get('/api/availability', [\App\Http\Controllers\CustomerBookingController::class, 'getAvailability'])->name('api.availability');
 // Process the form submissions
 Route::post('/booking/process-user', [BookingAuthController::class, 'processUser']);
 Route::post('/login', [BookingAuthController::class, 'login']);

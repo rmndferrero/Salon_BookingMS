@@ -84,4 +84,20 @@ class CustomerBookingController extends Controller
 
         return redirect()->route('homepage')->with('success', 'Your sanctuary appointment has been successfully booked!');
     }
+
+    // API Endpoint for the Javascript Calendar
+    public function getAvailability(Request $request)
+    {
+        $request->validate([
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+        ]);
+
+        // Fetch all bookings within this week that are NOT cancelled
+        $bookings = Booking::whereBetween('appointment_date', [$request->start_date, $request->end_date])
+            ->whereIn('status', ['pending', 'confirmed'])
+            ->get(['appointment_date', 'start_time', 'end_time']);
+
+        return response()->json($bookings);
+    }
 }
