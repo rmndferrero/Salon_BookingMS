@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookingAuthController;
 use App\Http\Controllers\ManagerServiceController;
 use App\Http\Controllers\CustomerBookingController;
+use App\Http\Controllers\ManagerBookingController;
 
 Route::get('/', function () {
     return view('homepage');
@@ -35,10 +36,15 @@ Route::get('/register', function () {
 
 // --- Manager Routes ---
 Route::middleware(['auth', 'manager'])->group(function () {
-    Route::get('/manager/dashboard', function () {
-        return view('manager.dashboard');
-    })->name('manager.dashboard');
     
+    // NEW: Dashboard Route pointing to the controller
+    Route::get('/manager/dashboard', [ManagerBookingController::class, 'dashboard'])->name('manager.dashboard');
+    
+    // NEW: Booking Action Routes
+    Route::post('/manager/bookings/{booking}/confirm', [ManagerBookingController::class, 'confirm'])->name('manager.bookings.confirm');
+    Route::post('/manager/bookings/{booking}/decline', [ManagerBookingController::class, 'decline'])->name('manager.bookings.decline');
+    
+    // Existing Service Management Routes
     Route::get('/manager/services', [ManagerServiceController::class, 'index'])->name('manager.services.index');
     Route::post('/manager/services', [ManagerServiceController::class, 'store'])->name('manager.services.store');
     Route::put('/manager/services/{service}', [ManagerServiceController::class, 'update'])->name('manager.services.update');
