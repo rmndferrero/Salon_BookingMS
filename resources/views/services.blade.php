@@ -23,60 +23,87 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
         <!-- NAIL -->
-        <div onclick="openModal('nail-modal')" class="cursor-pointer group relative block h-[450px] overflow-hidden rounded-2xl bg-surface-container shadow-sm">
-            <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=800&auto=format&fit=crop" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8">
-                <h3 class="font-headline text-3xl text-white">Nail Care</h3>
-                <p class="text-white/70 text-sm mt-2 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">View Menu</p>
-            </div>
-        </div>
+        <div onclick="openModal('nail-modal')" class="cursor-pointer group relative block h-[450px] overflow-hidden rounded-2xl shadow-sm">
+    <img 
+        src="{{ asset('Nails_Services.jpg') }}" 
+        class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+    >
+    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6">
+        <h3 class="font-headline text-3xl text-white mb-2">Nail Care</h3>
 
-        <!-- EYELASH -->
-        <div onclick="openModal('eyelash-modal')" class="cursor-pointer group relative block h-[450px] overflow-hidden rounded-2xl bg-surface-container shadow-sm">
-            <img src="https://images.unsplash.com/photo-1583001931046-f9e4313b85ce?q=80&w=800&auto=format&fit=crop" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8">
-                <h3 class="font-headline text-3xl text-white">Eyelashing</h3>
-                <p class="text-white/70 text-sm mt-2 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">View Menu</p>
-            </div>
+        <!-- Persistent frosted pill — always visible -->
+        <div class="flex items-center gap-2 w-fit
+                    bg-white/20 backdrop-blur-md
+                    border border-white/35
+                    text-white text-sm font-medium
+                    px-4 py-1.5 rounded-full
+                    transition-all duration-300
+                    group-hover:bg-white/35 group-hover:border-white/50">
+            <span>View services</span>
+            <span class="text-xs transition-transform duration-300 group-hover:translate-x-0.5">→</span>
         </div>
-
-        <!-- FACIAL -->
-        <div onclick="openModal('facial-modal')" class="cursor-pointer group relative block h-[450px] overflow-hidden rounded-2xl bg-surface-container shadow-sm">
-            <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=800&auto=format&fit=crop" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8">
-                <h3 class="font-headline text-3xl text-white">Facial & Threading</h3>
-                <p class="text-white/70 text-sm mt-2 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">View Menu</p>
-            </div>
-        </div>
-
-        <!-- HAIR -->
-        <div onclick="openModal('hair-modal')" class="cursor-pointer group relative block h-[450px] overflow-hidden rounded-2xl bg-surface-container shadow-sm">
-            <img src="https://images.unsplash.com/photo-1560869713-7d0a29430803?q=80&w=800&auto=format&fit=crop" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8">
-                <h3 class="font-headline text-3xl text-white">Hair Services</h3>
-                <p class="text-white/70 text-sm mt-2 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">View Menu</p>
-            </div>
-        </div>
-
-        <!-- WAXING -->
-        <div onclick="openModal('waxing-modal')" class="cursor-pointer group relative block h-[450px] overflow-hidden rounded-2xl bg-surface-container shadow-sm">
-            <img src="https://images.unsplash.com/photo-1596178065887-1198b6148b2b?q=80&w=800&auto=format&fit=crop" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8">
-                <h3 class="font-headline text-3xl text-white">Waxing</h3>
-                <p class="text-white/70 text-sm mt-2 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">View Menu</p>
-            </div>
-        </div>
-
-        <!-- MASSAGE -->
-        <div onclick="openModal('massage-modal')" class="cursor-pointer group relative block h-[450px] overflow-hidden rounded-2xl bg-surface-container shadow-sm">
-            <img src="https://images.unsplash.com/photo-1544161515-4af6b1d462c2?q=80&w=800&auto=format&fit=crop" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8">
-                <h3 class="font-headline text-3xl text-white">Relaxing Massage</h3>
-                <p class="text-white/70 text-sm mt-2 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">View Menu</p>
-            </div>
-        </div>
-
     </div>
+</div>
+
+<!-- EYELASH -->
+<div onclick="openModal('eyelash-modal')" class="cursor-pointer group relative block h-[450px] overflow-hidden rounded-2xl bg-surface-container shadow-sm">
+    <img src="{{ asset('Eyelashing_Services.jpg') }}" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
+    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6">
+        <h3 class="font-headline text-3xl text-white mb-2">Eyelashing</h3>
+        <div class="flex items-center gap-2 w-fit bg-white/20 backdrop-blur-md border border-white/35 text-white text-sm font-medium px-4 py-1.5 rounded-full transition-all duration-300 group-hover:bg-white/35 group-hover:border-white/50">
+            <span>View services</span>
+            <span class="text-xs transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+        </div>
+    </div>
+</div>
+
+<!-- FACIAL -->
+<div onclick="openModal('facial-modal')" class="cursor-pointer group relative block h-[450px] overflow-hidden rounded-2xl bg-surface-container shadow-sm">
+    <img src="{{ asset('Facial_Services.jpg') }}" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
+    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6">
+        <h3 class="font-headline text-3xl text-white mb-2">Facial & Threading</h3>
+        <div class="flex items-center gap-2 w-fit bg-white/20 backdrop-blur-md border border-white/35 text-white text-sm font-medium px-4 py-1.5 rounded-full transition-all duration-300 group-hover:bg-white/35 group-hover:border-white/50">
+            <span>View services</span>
+            <span class="text-xs transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+        </div>
+    </div>
+</div>
+
+<!-- HAIR -->
+<div onclick="openModal('hair-modal')" class="cursor-pointer group relative block h-[450px] overflow-hidden rounded-2xl bg-surface-container shadow-sm">
+    <img src="{{ asset('Hair_Services.jpg') }}" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
+    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6">
+        <h3 class="font-headline text-3xl text-white mb-2">Hair Services</h3>
+        <div class="flex items-center gap-2 w-fit bg-white/20 backdrop-blur-md border border-white/35 text-white text-sm font-medium px-4 py-1.5 rounded-full transition-all duration-300 group-hover:bg-white/35 group-hover:border-white/50">
+            <span>View services</span>
+            <span class="text-xs transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+        </div>
+    </div>
+</div>
+
+<!-- WAXING -->
+<div onclick="openModal('waxing-modal')" class="cursor-pointer group relative block h-[450px] overflow-hidden rounded-2xl bg-surface-container shadow-sm">
+    <img src="{{ asset('Waxing_Services1.jpg') }}" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
+    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6">
+        <h3 class="font-headline text-3xl text-white mb-2">Waxing</h3>
+        <div class="flex items-center gap-2 w-fit bg-white/20 backdrop-blur-md border border-white/35 text-white text-sm font-medium px-4 py-1.5 rounded-full transition-all duration-300 group-hover:bg-white/35 group-hover:border-white/50">
+            <span>View services</span>
+            <span class="text-xs transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+        </div>
+    </div>
+</div>
+
+<!-- MASSAGE -->
+<div onclick="openModal('massage-modal')" class="cursor-pointer group relative block h-[450px] overflow-hidden rounded-2xl bg-surface-container shadow-sm">
+    <img src="{{ asset('Massage_Services.jpg') }}" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
+    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6">
+        <h3 class="font-headline text-3xl text-white mb-2">Relaxing Massage</h3>
+        <div class="flex items-center gap-2 w-fit bg-white/20 backdrop-blur-md border border-white/35 text-white text-sm font-medium px-4 py-1.5 rounded-full transition-all duration-300 group-hover:bg-white/35 group-hover:border-white/50">
+            <span>View services</span>
+            <span class="text-xs transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+        </div>
+    </div>
+</div>
     {{-- MODALS SECTION --}}
     
     @php

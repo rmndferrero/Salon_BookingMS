@@ -15,11 +15,11 @@
 
         <div class="max-w-4xl z-10">
             <span class="text-secondary font-label tracking-[0.3em] uppercase text-sm mb-6 block">
-                The Curated Sanctuary
+                Experience Sibs Style
             </span>
 
             <h1 class="font-headline text-6xl md:text-8xl text-on-surface leading-tight mb-8">
-                Relax, Unwind, Glow. <br />
+                Elegance in every detail. <br />
             </h1>
 
             <p class="text-on-surface-variant text-lg md:text-xl max-w-lg mb-12 font-light leading-relaxed">
@@ -54,14 +54,14 @@
 
     </section>
 
-    <!-- SERVICES -->
+    <!-- Salon Updates -->
     <section class="py-32 px-8 max-w-screen-2xl mx-auto" id="services">
 
         <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
             <div>
-                <h2 class="font-headline text-5xl text-on-surface">The Services</h2>
+                <h2 class="font-headline text-5xl text-on-surface">What's New</h2>
                 <p class="font-body text-on-surface-variant mt-4 max-w-sm">
-                    Meticulously crafted treatments designed to restore balance and enhance your natural features.
+                    Updates on our space, our services, and our schedule.
                 </p>
             </div>
 
@@ -76,16 +76,16 @@
             <div class="group relative bg-white p-2 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-500 h-[500px]">
                 <div class="h-3/4 rounded-lg overflow-hidden relative">
                     <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAUaatBbDer6-E1joCcLg-IAteUP6t1UdpLutc1Xbj2prunMCYtImRUVvgjXZV9dSfsc_hKO62dckRnv02SK_rY41B3rbt2PciYesV6a2y5-yZ97lKCcC2dNi8I0fJqWRPB2u7_oQY1KQhC-3I8Lw7A9fxGo53Le7CXt4D-UGEBYFCN7hEeM87R_-KtGQZfHC-H_8iD3EGaLbE9Xv35McymnIfhXmbJxEZtYridXM8MOX0k5LQcyvDui3463F_xTVgyQY7e7jd5BI" />
+                         src="{{ asset('salon_update.jpg') }}" />
                 </div>
 
                 <div class="p-6">
                     <div class="flex justify-between items-start mb-2">
-                        <h3 class="font-headline text-2xl text-on-surface">Artisan Lashes</h3>
-                        <span class="text-secondary font-label font-bold">$120+</span>
+                        <h3 class="font-headline text-2xl text-on-surface">03/27/2026</h3>
+                        <span class="text-secondary font-label font-bold">Fresh Start, Familiar Faces.</span>
                     </div>
                     <p class="text-on-surface-variant text-sm font-body">
-                        Custom volume and classic sets.
+                        We are back and better than ever! Book your appointment now for a brand new and improved experience.
                     </p>
                 </div>
             </div>
@@ -94,16 +94,16 @@
             <div class="group relative bg-white p-2 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-500 h-[560px] md:-mt-12">
                 <div class="h-[82%] rounded-lg overflow-hidden relative">
                     <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuYHRJALgiL0RLTaQqgS1Dyhfg0FwsrnMC4O8CRvkxbAkDhnOKxHc_j0mGK4GAuxZ24pocdSjixjsTFRyNHNJv_R16iA-CQumnXNPmeCc6YAa2Mvh_0ygcitaVuQ8I5Kswxdo7Ngncefbk-IAgnZdLxrt_LWjGZz3f46cAcKvCrpimJEgzdW5hFK99S2ZsWi3WQkiYdtM9nfTXB2MeQabtGTAKyItwydj97_sZd1Ac_mUGulYyBrT3eq0xWOVI4wQDSNhREIGkvAk" />
+                         src="{{ asset('salon_update1.jpg') }}" />
                 </div>
 
                 <div class="p-6">
                     <div class="flex justify-between items-start mb-2">
-                        <h3 class="font-headline text-2xl text-on-surface">Couture Nails</h3>
-                        <span class="text-secondary font-label font-bold">$85+</span>
+                        <h3 class="font-headline text-2xl text-on-surface">03/20/2026</h3>
+                        <span class="text-secondary font-label font-bold">Celebrating Together.</span>
                     </div>
                     <p class="text-on-surface-variant text-sm font-body">
-                        Editorial aesthetics and care.
+                        Wishing our wonderful community a peaceful and joyful Eid.
                     </p>
                 </div>
             </div>
@@ -112,34 +112,36 @@
             <div class="group relative bg-white p-2 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-500 h-[500px]">
                 <div class="h-3/4 rounded-lg overflow-hidden relative">
                     <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuCziUI9bAxj1i82T9eped-pdaOTn_LJRXOXEcml_JME-svyrP-v6VQ1ct5-u2e0Fc2cbI6VYoWJfED3-FLmwT5Tv1JQpT0tSHfB-ZruDK5X5apa1BjBgT9bBob7d15-XYiObyhesf0WXkd26u00IVH5rlean-HOk8ALvn0uSHmxZW7LOa-cnISGtIYTnoH7A3KUnfZOZnrQYOO4ZMlsV1B-x29oXzdmQElHVZdEkLfsKsNu6kQfSsl1E2RDetDLItun-alCmrmhvOU" />
+                         src="{{ asset('salon_update3.jpg') }}" />
                 </div>
 
                 <div class="p-6">
                     <div class="flex justify-between items-start mb-2">
-                        <h3 class="font-headline text-2xl text-on-surface">The Ritual Facial</h3>
-                        <span class="text-secondary font-label font-bold">$150+</span>
+                        <h3 class="font-headline text-2xl text-on-surface">02/20/2026</h3>
+                        <span class="text-secondary font-label font-bold">Making Room for More Beauty.</span>
                     </div>
                     <p class="text-on-surface-variant text-sm font-body">
-                        Science-backed dermal therapy.
+                        We are taking a brief pause to enhance our lounge. We will be closed from February 23rd until further notice.
                     </p>
                 </div>
             </div>
 
         </div>
+
     </section>
+
     <!-- AESTHETIC STATEMENT -->
     <section class="py-20 bg-surface-container-low/50">
 
         <div class="max-w-4xl mx-auto text-center px-8">
 
             <span class="material-symbols-outlined text-secondary text-5xl mb-8"
-                style="font-variation-settings: 'FILL' 1;">
+                  style="font-variation-settings: 'FILL' 1;">
                 spa
             </span>
 
             <h2 class="font-headline text-4xl md:text-5xl italic text-on-surface leading-tight">
-                "True beauty is not just a destination, but a curated state of being. We provide the sanctuary; you provide the soul."
+                "True elegance is the harmony of feeling good and looking your best. In a world that never stops moving, we offer you the space to simply be. Your beauty is our craft; your serenity is our purpose."
             </h2>
 
             <div class="mt-8 flex justify-center items-center gap-4">
@@ -173,7 +175,7 @@
                 </p>
 
                 <button class="self-start text-primary font-label font-bold uppercase tracking-tighter border-b-2 border-primary pb-1">
-                    View Full Portfolio
+                    Learn More About Us
                 </button>
 
             </div>
@@ -182,10 +184,10 @@
             <div class="lg:col-span-1 space-y-8">
 
                 <img class="w-full aspect-square object-cover rounded-xl grayscale hover:grayscale-0 transition-all duration-700"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVFuibStSbmf3u10suZrkk79WTWLvU80GU6fmSIqfyD_u0E0p1aNLhUydHCL4CBOaiNRe8e3SF-u0_4uM5XWPzx5JubXjHM9Mbizq0Dv_MpDtw2-Mmh424I_j_72cjGaWSoEY1nMw-xCga_GVlY-xsCAFmSJxokVZ1fdKM_UH01WDbue3N3jh5WalHJkBcdQEhyBBNHSXzS0BOWXIdwtS_cRILtRbrbFALyKMoexd-9jhT-WJSo2iQMNX8FtaYPQ2hLqKuNWkqbpU" />
+                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVFuibStSbmf3u10suZrkk79WTWLvU80GU6fmSIqfyD_u0E0p1aNLhUydHCL4CBOaiNRe8e3SF-u0_4uM5XWPzx5JubXjHM9Mbizq0Dv_MpDtw2-Mmh424I_j_72cjGaWSoEY1nMw-xCga_GVlY-xsCAFmSJxokVZ1fdKM_UH01WDbue3N3jh5WalHJkBcdQEhyBBNHSXzS0BOWXIdwtS_cRILtRbrbFALyKMoexd-9jhT-WJSo2iQMNX8FtaYPQ2hLqKuNWkqbpU" />
 
                 <img class="w-full aspect-[3/4] object-cover rounded-xl shadow-lg"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBULu3O8gSpGYVzZ3escEYFR3NDcjJHAHqNGSIhDkBEtPILn5fDHymK-PC7PKuf4cyys0OH83lAf6S7a_fSxo0WwX2SKpKzW2O13arbk9s1vgEC_Iv5erzsdmwJp2TRN0A6skpTNYXGX0qxyaMOpMfIlAWuLim9gO-fi3h_c-9n5o995bzXrpbaw7sgB7MY8zZjAJzLSg42nkENIEvzkinA-hiXcKVm25nvoDfPKyFu_IlyyWHCrmc2cTTnororxOK1AyKhwa3p8GI" />
+                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuBULu3O8gSpGYVzZ3escEYFR3NDcjJHAHqNGSIhDkBEtPILn5fDHymK-PC7PKuf4cyys0OH83lAf6S7a_fSxo0WwX2SKpKzW2O13arbk9s1vgEC_Iv5erzsdmwJp2TRN0A6skpTNYXGX0qxyaMOpMfIlAWuLim9gO-fi3h_c-9n5o995bzXrpbaw7sgB7MY8zZjAJzLSg42nkENIEvzkinA-hiXcKVm25nvoDfPKyFu_IlyyWHCrmc2cTTnororxOK1AyKhwa3p8GI" />
 
             </div>
 
@@ -193,7 +195,7 @@
             <div class="lg:col-span-1 pt-24">
 
                 <img class="w-full aspect-[2/3] object-cover rounded-xl shadow-lg"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuB485b4C6_uGFb1qFIvskCQArc3VusEAhgycqWpA84x86ej9qry9SV_EA2UzJyscj0vMFdaTWeyRIMKRa6uEN2odxvBPi2DlRq7XzZsdRCde6eET0H_Wm34X256ukZLJyCaABzEj1inCZTVvSkDu0VTu4h6FZ0uR1FdBaXP0CV5tYyCV9PkZnD7GCScQEExkNafLyNtUI3OR0U9VPvI-GuulGBySzqmL35Ad__mHoIKNeJz752vMB49Drugor5YVwK6PcPL-ei4j_0" />
+                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuB485b4C6_uGFb1qFIvskCQArc3VusEAhgycqWpA84x86ej9qry9SV_EA2UzJyscj0vMFdaTWeyRIMKRa6uEN2odxvBPi2DlRq7XzZsdRCde6eET0H_Wm34X256ukZLJyCaABzEj1inCZTVvSkDu0VTu4h6FZ0uR1FdBaXP0CV5tYyCV9PkZnD7GCScQEExkNafLyNtUI3OR0U9VPvI-GuulGBySzqmL35Ad__mHoIKNeJz752vMB49Drugor5YVwK6PcPL-ei4j_0" />
 
             </div>
 
