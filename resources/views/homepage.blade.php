@@ -27,7 +27,7 @@
             </p>
 
             <div class="flex gap-6 items-center">
-                <a href="{{ route('book') }}"
+                <a href="{{ route('services') }}#services-grid"
                    class="bg-gradient-to-r from-primary to-primary-container text-white px-10 py-4 rounded-full font-label font-bold text-lg hover:shadow-2xl hover:shadow-primary/20 transition-all inline-block">
                     Book an Appointment
                 </a>

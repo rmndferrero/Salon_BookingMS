@@ -1,3 +1,7 @@
+@php
+    $categoryServices = \App\Models\Service::where('category', 'Eyelashing')->get();
+@endphp
+
 <section class="py-8 px-4">
     {{-- Header Section --}}
     <div class="mb-12 text-center">
@@ -10,71 +14,38 @@
 
     {{-- Services Grid --}}
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        
-        {{-- Classic --}}
-        <div class="group p-6 bg-surface-container/30 border border-primary/10 rounded-[2rem] hover:bg-white hover:shadow-xl transition-all duration-300">
-            <div class="flex justify-between items-start mb-4">
-                <h4 class="font-headline text-2xl group-hover:text-primary transition-colors">Classic</h4>
-                <span class="font-headline text-2xl text-on-surface">120د.إ</span>
-            </div>
-            <p class="text-sm text-on-surface-variant mb-8 italic leading-relaxed">(Insert Details)</p>
-            <a href="{{ route('book') }}" class="block text-center border-2 border-primary text-primary w-full py-3.5 rounded-2xl text-xs font-bold uppercase tracking-widest hover:bg-primary hover:text-white transition-all">
-                Select
-            </a>
-        </div>
+        @forelse($categoryServices as $service)
+            <div class="group p-6 bg-surface-container/30 border border-primary/10 rounded-[2rem] hover:bg-white hover:shadow-xl transition-all duration-300 relative overflow-hidden">
+                
+                @if($service->is_package)
+                    <div class="absolute top-0 right-0 bg-primary text-white px-5 py-1.5 rounded-bl-2xl text-[10px] font-bold uppercase tracking-widest z-10">
+                        Package
+                    </div>
+                @endif
 
-        {{-- Volume (Highlighted Card) --}}
-        <div class="group p-6 bg-white border-2 border-primary/20 rounded-[2rem] shadow-lg relative overflow-hidden transform hover:-translate-y-1 transition-all duration-300">
-            <div class="absolute top-0 right-0 bg-primary text-white px-5 py-1.5 rounded-bl-2xl text-[10px] font-bold uppercase tracking-widest">
-                Most Popular
-            </div>
-            <div class="flex justify-between items-start mb-4">
-                <h4 class="font-headline text-2xl text-primary">Volume (3D/5D)</h4>
-                <span class="font-headline text-2xl text-on-surface">180/200د.إ</span>
-            </div>
-            <p class="text-sm text-on-surface-variant mb-8 italic leading-relaxed">(Insert Details)</p>
-            <a href="{{ route('book') }}" class="block text-center bg-primary text-white w-full py-4 rounded-2xl text-xs font-bold uppercase tracking-widest hover:shadow-lg transition-all">
-                Book Volume
-            </a>
-        </div>
-
-        {{-- Mega Volume --}}
-        <div class="group p-6 bg-surface-container/30 border border-primary/10 rounded-[2rem] hover:bg-white hover:shadow-xl transition-all duration-300">
-            <div class="flex justify-between items-start mb-4">
-                <h4 class="font-headline text-2xl group-hover:text-primary transition-colors">Mega Volume</h4>
-                <span class="font-headline text-2xl">250د.إ</span>
-            </div>
-            <p class="text-sm text-on-surface-variant mb-8 italic leading-relaxed">(Insert Details)</p>
-            <a href="{{ route('book') }}" class="block text-center border-2 border-primary text-primary w-full py-3.5 rounded-2xl text-xs font-bold uppercase tracking-widest hover:bg-primary hover:text-white transition-all">
-                Select
-            </a>
-        </div>
-
-        {{-- Lash Lift --}}
-        <div class="group p-6 bg-surface-container/30 border border-primary/10 rounded-[2rem] hover:bg-white hover:shadow-xl transition-all duration-300">
-            <div class="flex justify-between items-start mb-4">
-                <h4 class="font-headline text-2xl group-hover:text-primary transition-colors">Lash Lift</h4>
-                <span class="font-headline text-2xl">د.إ70</span>
-            </div>
-            <p class="text-sm text-on-surface-variant mb-8 italic leading-relaxed">(Insert Details)</p>
-            <a href="{{ route('book') }}" class="block text-center border-2 border-primary text-primary w-full py-3.5 rounded-2xl text-xs font-bold uppercase tracking-widest hover:bg-primary hover:text-white transition-all">
-                Select
-            </a>
-        </div>
-
-        {{-- Brow Lamination (Spans 2 columns on desktop for visual balance) --}}
-        <div class="group p-6 bg-surface-container/30 border border-primary/10 rounded-[2rem] hover:bg-white hover:shadow-xl transition-all duration-300 md:col-span-2">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-                <div class="text-center md:text-left">
-                    <h4 class="font-headline text-2xl group-hover:text-primary transition-colors">Brow Lamination</h4>
-                    <p class="text-sm text-on-surface-variant italic">(Insert Details)</p>
+                <div class="flex justify-between items-start mb-4 relative z-0">
+                    <h4 class="font-headline text-2xl group-hover:text-primary transition-colors pr-4">{{ $service->name }}</h4>
+                    <span class="font-headline text-2xl text-nowrap">د.إ{{ number_format($service->price, 0) }}</span>
                 </div>
-                <div class="flex items-center gap-6">
-                    <span class="font-headline text-2xl text-nowrap">د.إ850</span>
-                    <a href="{{ route('book') }}" class="bg-primary text-white px-8 py-3 rounded-2xl text-xs font-bold uppercase tracking-widest hover:scale-105 transition-all">Select Service</a>
-                </div>
+                
+                <p class="text-sm text-on-surface-variant mb-8 leading-relaxed italic">
+                    {{ $service->description ?? 'Experience our premium ' . $service->name . ' service.' }}
+                </p>
+                
+                <button type="button" 
+                    onclick="toggleCartItem(this)"
+                    data-id="{{ $service->id }}" 
+                    data-name="{{ $service->name }}" 
+                    data-price="{{ $service->price }}" 
+                    data-duration="{{ $service->duration_minutes }}"
+                    class="block text-center border-2 border-[#b5106a] text-[#b5106a] w-full py-3.5 rounded-2xl text-xs font-bold uppercase tracking-widest hover:bg-[#b5106a] hover:text-white transition-all select-btn">
+                    Select
+                </button>
             </div>
-        </div>
-
+        @empty
+            <div class="col-span-full text-center py-12 text-on-surface-variant italic">
+                No services are currently available in this category. Please check back soon!
+            </div>
+        @endforelse
     </div>
 </section>

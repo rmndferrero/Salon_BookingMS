@@ -11,11 +11,13 @@ class Service extends Model
 
     protected $fillable = [
         'name',
+        'category',
         'description',
         'price',
+        'duration_minutes', // Added
         'is_package',
     ];
-
+    
     protected function casts(): array
     {
         return [

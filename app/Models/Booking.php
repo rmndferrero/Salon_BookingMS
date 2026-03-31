@@ -6,7 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
 {
-    protected $fillable = ['user_id', 'appointment_date', 'total_price', 'status'];
+    protected $fillable = [
+        'user_id', 
+        'appointment_date', 
+        'start_time', // Added
+        'end_time',   // Added
+        'total_price', 
+        'status'
+    ];
 
     // A booking belongs to a user
     public function user() {
