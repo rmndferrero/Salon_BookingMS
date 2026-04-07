@@ -8,6 +8,19 @@
             </div>
         </header>
 
+        @if(session('error'))
+            <div class="bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-xl mb-8 font-bold text-sm tracking-wide">
+                {{ session('error') }}
+            </div>
+        @endif
+        
+        @if(session('success'))
+            <div class="bg-green-50 border border-green-200 text-green-700 px-6 py-4 rounded-xl mb-8 font-bold text-sm tracking-wide">
+                {{ session('success') }}
+            </div>
+        @endif
+
+
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
             <div class="sibs-card p-8">
                 <p class="text-[11px] font-700 uppercase tracking-wider text-gray-400 mb-2">Today's Bookings</p>

@@ -264,6 +264,57 @@
             }
         }
 
+        // Inside your JavaScript in services.blade.php
+
+        async function fetchAvailableTimes(dateString) {
+            // 1. Get the container where you display the times
+            const timesContainer = document.getElementById('times-grid-container');
+            timesContainer.innerHTML = '<p class="text-gray-500 text-sm animate-pulse">Checking staff schedules...</p>';
+
+            // 2. Extract the IDs from your active shopping cart
+            // (Assuming your cart variable is an array of objects like: [{id: 1, name: 'Hair'}, {id: 2, name: 'Nails'}])
+            const serviceIds = cart.map(item => item.id).join(',');
+
+            // Safety check: if the cart is empty somehow, don't check
+            if (!serviceIds) {
+                timesContainer.innerHTML = '<p class="text-red-500 text-sm">Please select a service first.</p>';
+                return;
+            }
+
+            try {
+                // 3. Hit the new smart API endpoint
+                const response = await fetch(`/api/availability?date=${dateString}&services[]=${serviceIds.split(',').join('&services[]=')}`, {
+            cache: 'no-store' // <--- THIS FORCES A FRESH DATABASE CHECK EVERY TIME
+        });
+                const availableSlots = await response.json();
+
+                timesContainer.innerHTML = ''; // Clear loading text
+
+                if (availableSlots.length === 0) {
+                    timesContainer.innerHTML = '<p class="text-orange-500 text-sm font-bold w-full text-center py-4 bg-orange-50 rounded-xl">No staff available for this sequence of services on this day.</p>';
+                    return;
+                }
+
+                // 4. Build the time buttons (Update this to match your existing button HTML)
+                availableSlots.forEach(time => {
+                    const btn = document.createElement('button');
+                    // Convert "14:00" to "2:00 PM" for display
+                    let [hour, min] = time.split(':');
+                    let ampm = hour >= 12 ? 'PM' : 'AM';
+                    let displayHour = hour % 12 || 12;
+                    
+                    btn.className = 'border border-gray-200 py-2 px-4 rounded-xl text-sm font-bold text-gray-700 hover:border-[#b5106a] hover:text-[#b5106a] transition';
+                    btn.innerText = `${displayHour}:${min} ${ampm}`;
+                    
+                    btn.onclick = () => { selectTime(time); }; // Call your existing selectTime function
+                    timesContainer.appendChild(btn);
+                });
+
+            } catch (error) {
+                console.error("Error fetching times:", error);
+            }
+        }
+
         // --- CALENDAR LOGIC ---
         let selectedDate = null;
         let selectedTime = null;

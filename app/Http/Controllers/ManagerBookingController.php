@@ -42,33 +42,69 @@ class ManagerBookingController extends Controller
     // 2. Confirm a Booking
     public function confirm(Request $request, Booking $booking)
     {
-        // Require the manager to assign an employee to every service
         $request->validate([
             'assignments' => 'required|array',
             'assignments.*' => 'required|exists:employees,id',
         ]);
 
-        // Start calculating the sequential timeline (Option A)
         $currentStartTime = Carbon::parse($booking->appointment_date . ' ' . $booking->start_time);
-
+        
+        // --- PASS 1: DRY RUN CONFLICT CHECK ---
+        $timeline = [];
         foreach ($booking->services as $service) {
             $employeeId = $request->assignments[$service->id];
-            
             $serviceDuration = $service->duration_minutes;
             $serviceEndTime = $currentStartTime->copy()->addMinutes($serviceDuration);
 
-            // Update the Pivot Table with the exact assignment and time
+            // Fetch this specific employee's confirmed shifts for today
+            $empBookings = DB::table('booking_service')
+                ->join('bookings', 'bookings.id', '=', 'booking_service.booking_id')
+                ->where('booking_service.employee_id', $employeeId)
+                ->where('bookings.appointment_date', $booking->appointment_date)
+                ->where('bookings.status', 'confirmed') 
+                ->where('bookings.id', '!=', $booking->id) 
+                ->select('booking_service.service_start_time', 'booking_service.service_end_time')
+                ->get();
+
+            // Safely do the time math using Carbon instead of SQL!
+            $overlap = false;
+            foreach ($empBookings as $eb) {
+                $existingStart = Carbon::parse($eb->service_start_time);
+                $existingEnd = Carbon::parse($eb->service_end_time);
+                
+                // Overlap formula: (Start A < End B) AND (End A > Start B)
+                if ($currentStartTime < $existingEnd && $serviceEndTime > $existingStart) {
+                    $overlap = true;
+                    break;
+                }
+            }
+
+            if ($overlap) {
+                $emp = Employee::find($employeeId);
+                return redirect()->back()->with('error', "Cannot assign {$emp->first_name}. They are already booked with another client between {$currentStartTime->format('h:i A')} and {$serviceEndTime->format('h:i A')}.");
+            }
+
+            // If safe, save to our temporary timeline array
+            $timeline[] = [
+                'service_id' => $service->id,
+                'employee_id' => $employeeId,
+                'start' => $currentStartTime->format('H:i:s'),
+                'end' => $serviceEndTime->format('H:i:s')
+            ];
+
+            $currentStartTime = $serviceEndTime; // Move clock forward for the next service
+        }
+
+        // --- PASS 2: ACTUAL DATABASE UPDATE ---
+        foreach ($timeline as $slot) {
             DB::table('booking_service')
                 ->where('booking_id', $booking->id)
-                ->where('service_id', $service->id)
+                ->where('service_id', $slot['service_id'])
                 ->update([
-                    'employee_id' => $employeeId,
-                    'service_start_time' => $currentStartTime->format('H:i:s'),
-                    'service_end_time' => $serviceEndTime->format('H:i:s'),
+                    'employee_id' => $slot['employee_id'],
+                    'service_start_time' => $slot['start'],
+                    'service_end_time' => $slot['end'],
                 ]);
-
-            // Move the start clock forward for the next service in the loop!
-            $currentStartTime = $serviceEndTime; 
         }
 
         $booking->update(['status' => 'confirmed']);
@@ -79,7 +115,6 @@ class ManagerBookingController extends Controller
     // 3. Decline a Booking
     public function decline(Booking $booking)
     {
-        // Changing it to 'declined' instantly removes it from the Javascript Calendar API
         $booking->update(['status' => 'declined']);
         return redirect()->back()->with('success', 'Booking declined. The calendar time slot is now free.');
     }
