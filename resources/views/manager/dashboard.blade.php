@@ -1,61 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sibs Command Center</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
-    <style>
-        body { font-family: 'Manrope', sans-serif; background-color: #fcfcfc; }
-        /* Matching the sidebar to your brand magenta */
-        .bg-sibs-pink { background-color: #b5106a; }
-        .text-sibs-pink { color: #b5106a; }
-        .border-sibs-pink { border-color: #b5106a; }
-        /* Soft shadow and radius from your screenshots */
-        .sibs-card { 
-            background: white; 
-            border: 1px solid #f3f3f3; 
-            border-radius: 1.5rem; 
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); 
-        }
-        .sidebar-link-active { background: rgba(255,255,255,0.15); border-left: 4px solid white; }
-    </style>
-</head>
-<body class="flex min-h-screen text-[#1a1c1c]">
+@extends('layouts.manager')
 
-    <aside class="w-64 bg-sibs-pink text-white flex flex-col fixed h-full z-50">
-        <div class="p-8">
-            <h2 class="text-2xl font-800 tracking-tighter uppercase">Sibs <span class="font-light opacity-80 text-sm block tracking-widest uppercase">Admin</span></h2>
-        </div>
-        
-        <nav class="flex-1 px-4 space-y-2">
-            <a href="{{ route('manager.dashboard') }}" class="flex items-center gap-3 p-4 rounded-xl sidebar-link-active transition-all">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-                <span class="font-bold text-sm">Dashboard</span>
-            </a>
-            <a href="{{ route('manager.services.index') }}" class="flex items-center gap-3 p-4 rounded-xl hover:bg-white/10 transition-all opacity-80 hover:opacity-100">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-                <span class="font-semibold text-sm">Services</span>
-            </a>
-        </nav>
-
-        <div class="p-6 border-t border-white/10">
-            <div class="flex items-center gap-3 mb-6">
-                <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center font-bold text-xs">
-                    {{ substr(Auth::user()->first_name, 0, 1) }}
-                </div>
-                <span class="text-xs font-bold truncate">{{ Auth::user()->first_name }}</span>
-            </div>
-            <form action="{{ route('logout') }}" method="POST">
-                @csrf
-                <button class="w-full bg-white/10 hover:bg-white hover:text-sibs-pink py-3 rounded-xl text-[10px] font-800 uppercase tracking-widest transition-all">Logout</button>
-            </form>
-        </div>
-    </aside>
-
-    <main class="flex-1 ml-64 p-10">
-        
+@section('content')      
         <header class="flex justify-between items-center mb-10">
             <div>
                 <h1 class="text-3xl font-800 tracking-tight">Manager Dashboard</h1>
@@ -83,35 +28,68 @@
         <div class="space-y-10">
             <section>
                 <h2 class="text-xl font-800 mb-6 px-2">Needs Approval</h2>
-                <div class="sibs-card p-8 min-h-[120px] flex items-center justify-center">
-                    @forelse($pendingBookings as $booking)
-                        <div class="w-full flex flex-col md:flex-row justify-between items-center border-b border-gray-50 pb-6 mb-6 last:border-0 last:pb-0 last:mb-0">
-                            <div class="text-center md:text-left mb-4 md:mb-0">
-                                <p class="text-sibs-pink font-800 text-sm tracking-wide">
-                                    {{ \Carbon\Carbon::parse($booking->appointment_date)->format('D, M d, Y') }} @ {{ \Carbon\Carbon::parse($booking->start_time)->format('h:i A') }}
-                                </p>
-                                <h3 class="text-xl font-800 mt-1">{{ $booking->user->first_name }} {{ $booking->user->last_name }}</h3>
-                                <div class="flex gap-2 mt-3">
-                                    @foreach($booking->services as $service)
-                                        <span class="bg-gray-100 text-gray-500 text-[9px] font-bold px-3 py-1 rounded-full uppercase">{{ $service->name }}</span>
-                                    @endforeach
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-4">
-                                <form action="{{ route('manager.bookings.decline', $booking->id) }}" method="POST">
-                                    @csrf
-                                    <button class="px-6 py-2 border border-gray-200 text-gray-400 rounded-lg text-[10px] font-800 uppercase tracking-widest hover:border-red-500 hover:text-red-500 transition-all">Decline</button>
-                                </form>
-                                <form action="{{ route('manager.bookings.confirm', $booking->id) }}" method="POST">
-                                    @csrf
-                                    <button class="px-8 py-2 bg-sibs-pink text-white rounded-lg text-[10px] font-800 uppercase tracking-widest shadow-lg shadow-[#b5106a]/20 hover:scale-105 transition-all">Confirm</button>
-                                </form>
-                            </div>
+                <div class="bg-white rounded-xl shadow-sm border border-orange-200 p-6 mb-12">
+            @forelse($pendingBookings as $booking)
+                <div class="border-b border-gray-100 pb-6 mb-6 last:border-0 last:pb-0 last:mb-0">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <p class="font-bold text-lg text-orange-600">
+                                {{ \Carbon\Carbon::parse($booking->appointment_date)->format('D, M d, Y') }} at {{ \Carbon\Carbon::parse($booking->start_time)->format('h:i A') }}
+                            </p>
+                            <p class="font-bold text-[#1a1c1c] text-xl mt-1">{{ $booking->user->first_name }} {{ $booking->user->last_name }}</p>
+                            <p class="text-gray-500 text-sm">📞 {{ $booking->user->phone_number }}</p>
                         </div>
-                    @empty
-                        <p class="text-gray-400 text-sm italic font-medium">No pending requests at the moment. You're all caught up!</p>
-                    @endforelse
+                        <div class="text-right hidden md:block">
+                            <span class="block text-xs text-gray-400 uppercase tracking-widest">Total</span>
+                            <span class="font-bold text-lg">د.إ{{ number_format($booking->total_price, 2) }}</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-orange-50 rounded-lg p-4 border border-orange-100">
+                        <form action="{{ route('manager.bookings.confirm', $booking->id) }}" method="POST">
+                            @csrf
+                            <h4 class="text-xs font-bold text-orange-800 uppercase tracking-widest mb-3">Assign Staff (Sequential Order)</h4>
+                            
+                            <div class="space-y-3 mb-4">
+                                @foreach($booking->services as $service)
+                                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-2">
+                                        <span class="text-sm font-semibold text-gray-700">
+                                            {{ $service->name }} <span class="text-xs text-gray-400 font-normal">({{ $service->duration_minutes }}m)</span>
+                                        </span>
+                                        
+                                        <select name="assignments[{{ $service->id }}]" required class="border-orange-200 rounded p-1.5 text-sm outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 bg-white min-w-[200px]">
+                                            <option value="">Select Employee...</option>
+                                            @foreach($employees as $employee)
+                                                {{-- Smart Filter: Only show employees who have this service category in their JSON array --}}
+                                                @if(is_array($employee->can_do) && in_array($service->category, $employee->can_do))
+                                                    <option value="{{ $employee->id }}">{{ $employee->first_name }} {{ $employee->last_name }}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                @endforeach
+                            </div>
+
+                            <div class="flex justify-end gap-3 mt-4 pt-4 border-t border-orange-100">
+                                <button type="button" onclick="document.getElementById('decline-form-{{ $booking->id }}').submit();" class="bg-white border border-gray-300 text-gray-600 hover:bg-gray-50 px-6 py-2 rounded font-bold text-sm uppercase tracking-wider transition">
+                                    Decline
+                                </button>
+                                
+                                <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-2 rounded font-bold text-sm uppercase tracking-wider transition shadow-lg shadow-orange-500/30">
+                                    Confirm & Assign
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <form id="decline-form-{{ $booking->id }}" action="{{ route('manager.bookings.decline', $booking->id) }}" method="POST" class="hidden">
+                            @csrf
+                        </form>
+                    </div>
                 </div>
+            @empty
+                <p class="text-gray-500 text-sm italic text-center py-4">No pending requests at the moment. You're all caught up!</p>
+            @endforelse
+        </div>
             </section>
 
             <section>
@@ -138,7 +116,4 @@
                 </div>
             </section>
         </div>
-    </main>
-
-</body>
-</html>
+@endsection

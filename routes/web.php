@@ -5,6 +5,7 @@ use App\Http\Controllers\BookingAuthController;
 use App\Http\Controllers\ManagerServiceController;
 use App\Http\Controllers\CustomerBookingController;
 use App\Http\Controllers\ManagerBookingController;
+use App\Http\Controllers\ManagerEmployeeController;
 
 Route::get('/', function () {
     return view('homepage');
@@ -49,6 +50,9 @@ Route::middleware(['auth', 'manager'])->group(function () {
     Route::post('/manager/services', [ManagerServiceController::class, 'store'])->name('manager.services.store');
     Route::put('/manager/services/{service}', [ManagerServiceController::class, 'update'])->name('manager.services.update');
     Route::delete('/manager/services/{service}', [ManagerServiceController::class, 'destroy'])->name('manager.services.destroy');
+
+    Route::get('/manager/employees', [ManagerEmployeeController::class, 'index'])->name('manager.employees.index');
+    Route::post('/manager/employees', [ManagerEmployeeController::class, 'store'])->name('manager.employees.store');
 });
 
 // --- BOOKING ROUTES (Publicly accessible) ---

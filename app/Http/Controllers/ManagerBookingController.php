@@ -6,20 +6,20 @@ use App\Models\Booking;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Models\Employee;
+use Illuminate\Support\Facades\DB;
 
 class ManagerBookingController extends Controller
 {
     // 1. Load the Dashboard with Data
     public function dashboard()
     {
-        // Fetch all requests waiting for approval
         $pendingBookings = Booking::with(['user', 'services'])
             ->where('status', 'pending')
             ->orderBy('appointment_date')
             ->orderBy('start_time')
             ->get();
             
-        // Fetch confirmed upcoming appointments
         $confirmedBookings = Booking::with(['user', 'services'])
             ->where('status', 'confirmed')
             ->where('appointment_date', '>=', now()->toDateString())
@@ -27,21 +27,53 @@ class ManagerBookingController extends Controller
             ->orderBy('start_time')
             ->get();
 
-        // Calculate Stats for the top cards
         $todayBookingsCount = Booking::where('status', 'confirmed')
             ->where('appointment_date', now()->toDateString())
             ->count();
             
         $pendingCount = $pendingBookings->count();
 
-        return view('manager.dashboard', compact('pendingBookings', 'confirmedBookings', 'todayBookingsCount', 'pendingCount'));
+        // NEW: Fetch all active employees to pass to the view
+        $employees = Employee::where('is_active', true)->get();
+
+        return view('manager.dashboard', compact('pendingBookings', 'confirmedBookings', 'todayBookingsCount', 'pendingCount', 'employees'));
     }
 
     // 2. Confirm a Booking
-    public function confirm(Booking $booking)
+    public function confirm(Request $request, Booking $booking)
     {
+        // Require the manager to assign an employee to every service
+        $request->validate([
+            'assignments' => 'required|array',
+            'assignments.*' => 'required|exists:employees,id',
+        ]);
+
+        // Start calculating the sequential timeline (Option A)
+        $currentStartTime = Carbon::parse($booking->appointment_date . ' ' . $booking->start_time);
+
+        foreach ($booking->services as $service) {
+            $employeeId = $request->assignments[$service->id];
+            
+            $serviceDuration = $service->duration_minutes;
+            $serviceEndTime = $currentStartTime->copy()->addMinutes($serviceDuration);
+
+            // Update the Pivot Table with the exact assignment and time
+            DB::table('booking_service')
+                ->where('booking_id', $booking->id)
+                ->where('service_id', $service->id)
+                ->update([
+                    'employee_id' => $employeeId,
+                    'service_start_time' => $currentStartTime->format('H:i:s'),
+                    'service_end_time' => $serviceEndTime->format('H:i:s'),
+                ]);
+
+            // Move the start clock forward for the next service in the loop!
+            $currentStartTime = $serviceEndTime; 
+        }
+
         $booking->update(['status' => 'confirmed']);
-        return redirect()->back()->with('success', 'Booking confirmed! The customer slot is officially secured.');
+
+        return redirect()->back()->with('success', 'Booking confirmed and employees securely assigned!');
     }
 
     // 3. Decline a Booking
