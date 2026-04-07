@@ -32,9 +32,15 @@
                     {{ $service->description ?? 'Experience our premium ' . $service->name . ' service.' }}
                 </p>
                 
-                <a href="{{ route('book') }}" class="block text-center border-2 border-primary text-primary w-full py-3.5 rounded-2xl text-xs font-bold uppercase tracking-widest hover:bg-primary hover:text-white transition-all">
+                <button type="button" 
+                    onclick="toggleCartItem(this)"
+                    data-id="{{ $service->id }}" 
+                    data-name="{{ $service->name }}" 
+                    data-price="{{ $service->price }}" 
+                    data-duration="{{ $service->duration_minutes }}"
+                    class="block text-center border-2 border-[#b5106a] text-[#b5106a] w-full py-3.5 rounded-2xl text-xs font-bold uppercase tracking-widest hover:bg-[#b5106a] hover:text-white transition-all select-btn">
                     Select
-                </a>
+                </button>
             </div>
         @empty
             <div class="col-span-full text-center py-12 text-on-surface-variant italic">
