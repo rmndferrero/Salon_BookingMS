@@ -51,8 +51,14 @@ Route::middleware(['auth', 'manager'])->group(function () {
     Route::put('/manager/services/{service}', [ManagerServiceController::class, 'update'])->name('manager.services.update');
     Route::delete('/manager/services/{service}', [ManagerServiceController::class, 'destroy'])->name('manager.services.destroy');
 
+    // Existing Staff Management Routes
     Route::get('/manager/employees', [ManagerEmployeeController::class, 'index'])->name('manager.employees.index');
     Route::post('/manager/employees', [ManagerEmployeeController::class, 'store'])->name('manager.employees.store');
+    
+    // NEW: Edit, Update, and Delete Routes
+    Route::get('/manager/employees/{employee}/edit', [ManagerEmployeeController::class, 'edit'])->name('manager.employees.edit');
+    Route::put('/manager/employees/{employee}', [ManagerEmployeeController::class, 'update'])->name('manager.employees.update');
+    Route::delete('/manager/employees/{employee}', [ManagerEmployeeController::class, 'destroy'])->name('manager.employees.destroy');
 });
 
 // --- BOOKING ROUTES (Publicly accessible) ---

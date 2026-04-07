@@ -39,4 +39,43 @@ class ManagerEmployeeController extends Controller
 
         return redirect()->back()->with('success', 'New staff member successfully added!');
     }
+
+    // 1. Show the Edit Form
+    public function edit(Employee $employee)
+    {
+        // Get all unique categories for the checkboxes
+        $categories = \App\Models\Service::select('category')->distinct()->pluck('category');
+        return view('manager.employees-edit', compact('employee', 'categories'));
+    }
+
+    // 2. Process the Update
+    public function update(Request $request, Employee $employee)
+    {
+        $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'can_do' => 'nullable|array', // Nullable in case they uncheck all boxes
+            'can_do.*' => 'string'
+        ]);
+
+        $employee->update([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            // If they uncheck all boxes, $request->can_do is null, so we default to an empty array []
+            'can_do' => $request->can_do ?? [], 
+            // The HTML checkbox only sends data if it is checked
+            'is_active' => $request->has('is_active'), 
+        ]);
+
+        return redirect()->route('manager.employees.index')->with('success', 'Employee profile updated successfully!');
+    }
+
+    // 3. Process the Delete
+    public function destroy(Employee $employee)
+    {
+        $employeeName = $employee->first_name;
+        $employee->delete();
+        
+        return redirect()->route('manager.employees.index')->with('success', "$employeeName has been permanently removed from the system.");
+    }
 }
