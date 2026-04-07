@@ -69,10 +69,10 @@ class ManagerBookingController extends Controller
             // Safely do the time math using Carbon instead of SQL!
             $overlap = false;
             foreach ($empBookings as $eb) {
-                $existingStart = Carbon::parse($eb->service_start_time);
-                $existingEnd = Carbon::parse($eb->service_end_time);
+                // FIX: We must combine the appointment date with the pivot time!
+                $existingStart = Carbon::parse($booking->appointment_date . ' ' . $eb->service_start_time);
+                $existingEnd = Carbon::parse($booking->appointment_date . ' ' . $eb->service_end_time);
                 
-                // Overlap formula: (Start A < End B) AND (End A > Start B)
                 if ($currentStartTime < $existingEnd && $serviceEndTime > $existingStart) {
                     $overlap = true;
                     break;

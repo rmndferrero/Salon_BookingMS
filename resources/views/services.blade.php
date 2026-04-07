@@ -266,52 +266,84 @@
 
         // Inside your JavaScript in services.blade.php
 
-        async function fetchAvailableTimes(dateString) {
-            // 1. Get the container where you display the times
-            const timesContainer = document.getElementById('times-grid-container');
-            timesContainer.innerHTML = '<p class="text-gray-500 text-sm animate-pulse">Checking staff schedules...</p>';
-
-            // 2. Extract the IDs from your active shopping cart
-            // (Assuming your cart variable is an array of objects like: [{id: 1, name: 'Hair'}, {id: 2, name: 'Nails'}])
-            const serviceIds = cart.map(item => item.id).join(',');
-
-            // Safety check: if the cart is empty somehow, don't check
-            if (!serviceIds) {
-                timesContainer.innerHTML = '<p class="text-red-500 text-sm">Please select a service first.</p>';
-                return;
+        async function generateCalendarGrid() {
+            const container = document.getElementById('calendar-container');
+            container.innerHTML = `<div class="flex items-center justify-center h-full text-[#b5106a] font-bold tracking-widest uppercase animate-pulse">Calculating Staff Capacity...</div>`;
+            
+            let dates = [];
+            let startDay = new Date();
+            startDay.setDate(startDay.getDate() + 1); // Start tomorrow
+            
+            for(let i=0; i<7; i++) {
+                let d = new Date(startDay);
+                d.setDate(startDay.getDate() + i);
+                dates.push(d);
             }
 
+            const startDateString = dates[0].toISOString().split('T')[0];
+            const endDateString = dates[6].toISOString().split('T')[0];
+            const serviceIds = cart.map(item => item.id).join(',');
+
             try {
-                // 3. Hit the new smart API endpoint
-                const response = await fetch(`/api/availability?date=${dateString}&services[]=${serviceIds.split(',').join('&services[]=')}`, {
-            cache: 'no-store' // <--- THIS FORCES A FRESH DATABASE CHECK EVERY TIME
-        });
-                const availableSlots = await response.json();
-
-                timesContainer.innerHTML = ''; // Clear loading text
-
-                if (availableSlots.length === 0) {
-                    timesContainer.innerHTML = '<p class="text-orange-500 text-sm font-bold w-full text-center py-4 bg-orange-50 rounded-xl">No staff available for this sequence of services on this day.</p>';
-                    return;
-                }
-
-                // 4. Build the time buttons (Update this to match your existing button HTML)
-                availableSlots.forEach(time => {
-                    const btn = document.createElement('button');
-                    // Convert "14:00" to "2:00 PM" for display
-                    let [hour, min] = time.split(':');
-                    let ampm = hour >= 12 ? 'PM' : 'AM';
-                    let displayHour = hour % 12 || 12;
-                    
-                    btn.className = 'border border-gray-200 py-2 px-4 rounded-xl text-sm font-bold text-gray-700 hover:border-[#b5106a] hover:text-[#b5106a] transition';
-                    btn.innerText = `${displayHour}:${min} ${ampm}`;
-                    
-                    btn.onclick = () => { selectTime(time); }; // Call your existing selectTime function
-                    timesContainer.appendChild(btn);
+                // FETCH FROM THE SMART API
+                const response = await fetch(`/api/availability?start_date=${startDateString}&end_date=${endDateString}&services[]=${serviceIds.split(',').join('&services[]=')}`, { cache: 'no-store' });
+                // availableTimes will look like: {"2026-04-08": ["10:00", "10:30"], "2026-04-09": []}
+                const availableTimes = await response.json(); 
+                
+                let html = `<div class="overflow-x-auto"><table class="w-full bg-white rounded-xl shadow-sm border border-gray-100 min-w-[800px]">`;
+                html += `<thead><tr class="bg-[#b5106a] text-white"><th class="p-4 text-left font-headline">Time</th>`;
+                
+                dates.forEach(d => {
+                    const dayName = d.toLocaleDateString('en-US', { weekday: 'short' });
+                    const dayNum = d.getDate();
+                    html += `<th class="p-4 text-center border-l border-pink-700"><span class="block text-[10px] uppercase tracking-widest">${dayName}</span><span class="text-xl font-bold">${dayNum}</span></th>`;
                 });
+                html += `</tr></thead><tbody>`;
 
+                for(let hour = 10; hour <= 21; hour++) {
+                    for(let mins of ['00', '30']) {
+                        const timeString = `${hour.toString().padStart(2, '0')}:${mins}`;
+                        const timeLabel = formatTimeLabel(hour, mins);
+                        
+                        html += `<tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">`;
+                        html += `<td class="p-3 text-sm font-bold text-gray-400 whitespace-nowrap">${timeLabel}</td>`;
+                        
+                        dates.forEach(d => {
+                            const dateString = d.toISOString().split('T')[0];
+                            const dayOfWeek = d.getDay(); 
+                            
+                            // Check closed hours
+                            let isClosed = false;
+                            if ([1, 2, 3, 4].includes(dayOfWeek) && hour >= 21) isClosed = true;
+
+                            // THE SMART CHECK: Did the API say this time is available for this date?
+                            let isAvailable = false;
+                            if (availableTimes[dateString] && availableTimes[dateString].includes(timeString)) {
+                                isAvailable = true;
+                            }
+
+                            if (isClosed) {
+                                html += `<td class="p-2 border-l border-gray-100 bg-gray-100"></td>`;
+                            } else if (!isAvailable) {
+                                // CAPACITY FULL: Show gray booked slot
+                                html += `<td class="p-2 border-l border-gray-100"><div class="bg-gray-100 text-gray-400 text-xs font-bold text-center py-2 rounded uppercase tracking-widest cursor-not-allowed opacity-60">Full</div></td>`;
+                            } else {
+                                // AVAILABLE: Show Pink Clickable Button
+                                html += `<td class="p-2 border-l border-gray-100 text-center">
+                                            <button type="button" onclick="selectSlot('${dateString}', '${timeString}', this)" class="w-full py-2 text-xs font-bold text-[#b5106a] bg-pink-50 hover:bg-[#b5106a] hover:text-white rounded transition-colors time-slot-btn">
+                                                Select
+                                            </button>
+                                         </td>`;
+                            }
+                        });
+                        html += `</tr>`;
+                    }
+                }
+                html += `</tbody></table></div>`;
+                container.innerHTML = html;
             } catch (error) {
-                console.error("Error fetching times:", error);
+                console.error("API Fetch Error:", error);
+                container.innerHTML = `<div class="text-center py-20 text-red-500 font-bold">Error calculating capacity. Please refresh.</div>`;
             }
         }
 
@@ -339,87 +371,6 @@
             resetSelection();
         }
 
-        async function generateCalendarGrid() {
-            console.log("Generating grid starting from tomorrow...");
-            const container = document.getElementById('calendar-container');
-            
-            let dates = [];
-            let startDay = new Date();
-            
-            // MAGIC LINE: Push the starting date forward by 1 day (Tomorrow)
-            startDay.setDate(startDay.getDate() + 1); 
-            
-            for(let i=0; i<7; i++) {
-                let d = new Date(startDay);
-                d.setDate(startDay.getDate() + i);
-                dates.push(d);
-            }
-            // ... the rest of the function stays exactly the same!
-
-            const startDate = dates[0].toISOString().split('T')[0];
-            const endDate = dates[6].toISOString().split('T')[0];
-
-            try {
-                const response = await fetch(`/api/availability?start_date=${startDate}&end_date=${endDate}`);
-                const bookedSlots = await response.json();
-                
-                let html = `<div class="overflow-x-auto"><table class="w-full bg-white rounded-xl shadow-sm border border-gray-100 min-w-[800px]">`;
-                html += `<thead><tr class="bg-[#b5106a] text-white"><th class="p-4 text-left font-headline">Time</th>`;
-                
-                dates.forEach(d => {
-                    const dayName = d.toLocaleDateString('en-US', { weekday: 'short' });
-                    const dayNum = d.getDate();
-                    html += `<th class="p-4 text-center border-l border-pink-700"><span class="block text-[10px] uppercase tracking-widest">${dayName}</span><span class="text-xl font-bold">${dayNum}</span></th>`;
-                });
-                html += `</tr></thead><tbody>`;
-
-                const now = new Date();
-                for(let hour = 10; hour <= 21; hour++) {
-                    for(let mins of ['00', '30']) {
-                        const timeString = `${hour.toString().padStart(2, '0')}:${mins}`;
-                        const timeLabel = formatTimeLabel(hour, mins);
-                        
-                        html += `<tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">`;
-                        html += `<td class="p-3 text-sm font-bold text-gray-400 whitespace-nowrap">${timeLabel}</td>`;
-                        
-                        dates.forEach(d => {
-                            const dateString = d.toISOString().split('T')[0];
-                            const dayOfWeek = d.getDay(); 
-                            
-                            let isClosed = false;
-                            if ([1, 2, 3, 4].includes(dayOfWeek) && hour >= 21) isClosed = true;
-
-                            let isPast = false;
-                            if (d.toDateString() === now.toDateString()) {
-                                if (hour < now.getHours() || (hour === now.getHours() && parseInt(mins) <= now.getMinutes())) {
-                                    isPast = true;
-                                }
-                            }
-
-                            let isBooked = bookedSlots.some(b => b.appointment_date === dateString && b.start_time <= timeString + ':00' && b.end_time > timeString + ':00');
-
-                            if (isClosed || isPast) {
-                                html += `<td class="p-2 border-l border-gray-100 bg-gray-100"></td>`;
-                            } else if (isBooked) {
-                                html += `<td class="p-2 border-l border-gray-100"><div class="bg-gray-200 text-gray-400 text-xs text-center py-2 rounded">Booked</div></td>`;
-                            } else {
-                                html += `<td class="p-2 border-l border-gray-100 text-center">
-                                            <button type="button" onclick="selectSlot('${dateString}', '${timeString}', this)" class="w-full py-2 text-xs font-bold text-[#b5106a] bg-pink-50 hover:bg-[#b5106a] hover:text-white rounded transition-colors time-slot-btn">
-                                                Select
-                                            </button>
-                                         </td>`;
-                            }
-                        });
-                        html += `</tr>`;
-                    }
-                }
-                html += `</tbody></table></div>`;
-                container.innerHTML = html;
-            } catch (error) {
-                console.error("API Fetch Error:", error); // DEBUG LOG
-                container.innerHTML = `<div class="text-center py-20 text-red-500 font-bold">Error loading schedule. Make sure your API route exists!</div>`;
-            }
-        }
 
         function selectSlot(date, time, btnElement) {
             document.querySelectorAll('.time-slot-btn').forEach(btn => {
