@@ -37,7 +37,77 @@
                 <span class="text-5xl font-800 text-sibs-pink tracking-tighter">{{ \App\Models\Service::count() }}</span>
             </div>
         </div>
+        <section class="mb-12">
+            <h2 class="text-xl font-800 mb-6 px-2">Calendar</h2>
+            
+            <div class="bg-white rounded-[2rem] shadow-sm border border-gray-100 p-6 overflow-x-auto custom-scrollbar">
+                <div class="min-w-[1000px] grid grid-cols-7 gap-4">
+                    
+                    @php
+                        $startDate = now();
+                    @endphp
 
+                    @for($i = 0; $i < 7; $i++)
+                        @php
+                            $currentDate = $startDate->copy()->addDays($i);
+                            $dateString = $currentDate->toDateString();
+                            
+                            // Filter our existing master list for this specific column's day
+                            $dayBookings = $allUpcomingBookings->where('appointment_date', $dateString);
+                        @endphp
+
+                        <div class="flex flex-col">
+                            <div class="text-center mb-4">
+                                <p class="text-xs font-bold uppercase tracking-widest {{ $i === 0 ? 'text-[#b5106a]' : 'text-gray-400' }}">
+                                    {{ $i === 0 ? 'Today' : $currentDate->format('D') }}
+                                </p>
+                                <p class="text-2xl font-headline font-bold {{ $i === 0 ? 'text-[#b5106a]' : 'text-[#1a1c1c]' }}">
+                                    {{ $currentDate->format('d') }}
+                                </p>
+                            </div>
+
+                            <div class="space-y-3 flex-1 bg-gray-50 rounded-2xl p-3 border {{ $i === 0 ? 'border-pink-100 bg-pink-50/30' : 'border-gray-100' }} min-h-[300px]">
+                                @forelse($dayBookings as $booking)
+                                    <div class="bg-white p-3 rounded-xl border border-green-200 shadow-sm hover:shadow-md hover:border-[#b5106a] transition-all cursor-default group relative">
+                                        
+                                        <div class="flex justify-between items-start mb-2">
+                                            <p class="font-bold text-[#b5106a] text-xs">{{ \Carbon\Carbon::parse($booking->start_time)->format('h:i A') }}</p>
+                                            <span class="w-2 h-2 rounded-full bg-green-400"></span>
+                                        </div>
+                                        <p class="font-bold text-[#1a1c1c] text-[12px] leading-tight truncate">
+                                            {{ $booking->user->first_name }} {{ substr($booking->user->last_name, 0, 1) }}.
+                                        </p>
+
+                                        <div class="flex flex-wrap gap-1 mt-2">
+                                            @foreach($booking->services as $service)
+                                                @php 
+                                                    $emp = $employees->firstWhere('id', $service->pivot->employee_id); 
+                                                @endphp
+                                                <span class="text-[9px] bg-gray-50 border border-gray-100 text-gray-600 px-1.5 py-0.5 rounded font-bold">
+                                                    {{ $service->name }} <span class="text-gray-400">({{ $emp ? substr($emp->first_name, 0, 3) : '...' }})</span>
+                                                </span>
+                                            @endforeach
+                                        </div>
+
+                                        <div class="absolute inset-0 bg-[#1a1c1c]/95 text-white p-3 rounded-xl opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-10 flex flex-col justify-center backdrop-blur-sm">
+                                            <p class="text-[10px] font-bold uppercase tracking-widest text-pink-300 mb-1">Full Details</p>
+                                            <p class="text-xs font-bold mb-1">{{ $booking->user->first_name }} {{ $booking->user->last_name }}</p>
+                                            <p class="text-[10px] text-gray-300">📞 {{ $booking->user->phone_number }}</p>
+                                            <p class="text-[10px] text-gray-300 mt-1">Total: د.إ{{ number_format($booking->total_price, 2) }}</p>
+                                        </div>
+                                    </div>
+                                @empty
+                                    <div class="flex items-center justify-center h-full text-gray-300 text-[10px] font-bold uppercase tracking-widest text-center opacity-50">
+                                        No<br>Bookings
+                                    </div>
+                                @endforelse
+                            </div>
+                        </div>
+                    @endfor
+
+                </div>
+            </div>
+        </section>
         <div class="space-y-10">
             <section>
                 <h2 class="text-xl font-800 mb-6 px-2">Needs Approval</h2>
@@ -141,13 +211,23 @@
                             </div>
                         </div>
 
-                        <form action="{{ route('manager.bookings.complete', $booking->id) }}" method="POST" onsubmit="return confirm('Mark this appointment as completed?');">
-                            @csrf
-                            <button type="submit" class="bg-white border border-green-200 text-green-600 hover:bg-green-50 px-4 py-2 rounded-lg font-bold text-xs uppercase tracking-wider transition-colors shadow-sm flex items-center gap-2">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                Complete
-                            </button>
-                        </form>
+                        <div class="flex items-center gap-2 mt-4 md:mt-0">
+                            <form action="{{ route('manager.bookings.cancel', $booking->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to cancel this appointment? The customer will lose this time slot.');">
+                                @csrf
+                                <button type="submit" class="bg-white border border-red-200 text-red-500 hover:bg-red-50 px-4 py-2 rounded-lg font-bold text-xs uppercase tracking-wider transition-colors shadow-sm flex items-center gap-1.5">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                    Cancel
+                                </button>
+                            </form>
+
+                            <form action="{{ route('manager.bookings.complete', $booking->id) }}" method="POST" onsubmit="return confirm('Mark this appointment as completed?');">
+                                @csrf
+                                <button type="submit" class="bg-white border border-green-200 text-green-600 hover:bg-green-50 px-4 py-2 rounded-lg font-bold text-xs uppercase tracking-wider transition-colors shadow-sm flex items-center gap-1.5">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    Complete
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 @empty
                     <div class="text-center py-8">
@@ -159,7 +239,7 @@
 
         <section>
             <div class="flex justify-between items-end mb-6 px-2">
-                <h2 class="text-xl font-800 text-gray-400">Recently Declined</h2>
+                <h2 class="text-xl font-800 px-2">Recently Declined</h2>
                 <button onclick="document.getElementById('declined-modal').classList.remove('hidden')" class="text-xs font-bold text-[#b5106a] hover:underline uppercase tracking-widest">
                     Show All Declined →
                 </button>
@@ -259,13 +339,23 @@
                                 </div>
                             </div>
 
+                        <div class="flex items-center gap-2 mt-4 md:mt-0">
+                            <form action="{{ route('manager.bookings.cancel', $booking->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to cancel this appointment? The customer will lose this time slot.');">
+                                @csrf
+                                <button type="submit" class="bg-white border border-red-200 text-red-500 hover:bg-red-50 px-4 py-2 rounded-lg font-bold text-xs uppercase tracking-wider transition-colors shadow-sm flex items-center gap-1.5">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                    Cancel
+                                </button>
+                            </form>
+
                             <form action="{{ route('manager.bookings.complete', $booking->id) }}" method="POST" onsubmit="return confirm('Mark this appointment as completed?');">
                                 @csrf
-                                <button type="submit" class="bg-white border border-green-200 text-green-600 hover:bg-green-50 px-5 py-2.5 rounded-lg font-bold text-xs uppercase tracking-wider transition-colors shadow-sm flex items-center gap-2">
+                                <button type="submit" class="bg-white border border-green-200 text-green-600 hover:bg-green-50 px-4 py-2 rounded-lg font-bold text-xs uppercase tracking-wider transition-colors shadow-sm flex items-center gap-1.5">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                                     Complete
                                 </button>
                             </form>
+                        </div>
 
                         </div>
                     @empty
