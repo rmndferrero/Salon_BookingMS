@@ -5,6 +5,7 @@ use App\Http\Controllers\BookingAuthController;
 use App\Http\Controllers\ManagerServiceController;
 use App\Http\Controllers\CustomerBookingController;
 use App\Http\Controllers\ManagerBookingController;
+use App\Http\Controllers\ManagerEmployeeController;
 
 Route::get('/', function () {
     return view('homepage');
@@ -43,12 +44,22 @@ Route::middleware(['auth', 'manager'])->group(function () {
     // NEW: Booking Action Routes
     Route::post('/manager/bookings/{booking}/confirm', [ManagerBookingController::class, 'confirm'])->name('manager.bookings.confirm');
     Route::post('/manager/bookings/{booking}/decline', [ManagerBookingController::class, 'decline'])->name('manager.bookings.decline');
+    Route::post('/manager/bookings/{booking}/complete', [\App\Http\Controllers\ManagerBookingController::class, 'complete'])->name('manager.bookings.complete');
     
     // Existing Service Management Routes
     Route::get('/manager/services', [ManagerServiceController::class, 'index'])->name('manager.services.index');
     Route::post('/manager/services', [ManagerServiceController::class, 'store'])->name('manager.services.store');
     Route::put('/manager/services/{service}', [ManagerServiceController::class, 'update'])->name('manager.services.update');
     Route::delete('/manager/services/{service}', [ManagerServiceController::class, 'destroy'])->name('manager.services.destroy');
+
+    // Existing Staff Management Routes
+    Route::get('/manager/employees', [ManagerEmployeeController::class, 'index'])->name('manager.employees.index');
+    Route::post('/manager/employees', [ManagerEmployeeController::class, 'store'])->name('manager.employees.store');
+    
+    // NEW: Edit, Update, and Delete Routes
+    Route::get('/manager/employees/{employee}/edit', [ManagerEmployeeController::class, 'edit'])->name('manager.employees.edit');
+    Route::put('/manager/employees/{employee}', [ManagerEmployeeController::class, 'update'])->name('manager.employees.update');
+    Route::delete('/manager/employees/{employee}', [ManagerEmployeeController::class, 'destroy'])->name('manager.employees.destroy');
 });
 
 // --- BOOKING ROUTES (Publicly accessible) ---

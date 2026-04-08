@@ -6,7 +6,7 @@
 <section class="py-8 px-4">
     {{-- Header Section --}}
     <div class="mb-12 text-center">
-        <h2 class="font-headline text-4xl text-on-surface">Nail Care Menu</h2>
+        <h2 class="font-headline text-4xl text-on-surface">Nails</h2>
         <div class="w-16 h-1 bg-primary mx-auto mt-4 rounded-full"></div>
         <p class="text-on-surface-variant mt-4 font-body italic max-w-lg mx-auto">
             Indulge in our signature hand and foot treatments.

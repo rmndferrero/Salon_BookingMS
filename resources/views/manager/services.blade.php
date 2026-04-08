@@ -1,59 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Services | Sibs Command Center</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
-    <style>
-        body { font-family: 'Manrope', sans-serif; background-color: #fcfcfc; }
-        .bg-sibs-pink { background-color: #b5106a; }
-        .text-sibs-pink { color: #b5106a; }
-        .sibs-card { 
-            background: white; 
-            border: 1px solid #f3f3f3; 
-            border-radius: 1.5rem; 
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); 
-        }
-        .sidebar-link-active { background: rgba(255,255,255,0.15); border-left: 4px solid white; }
-        input, select, textarea { border-radius: 0.75rem !important; }
-    </style>
-</head>
-<body class="flex min-h-screen text-[#1a1c1c]">
+@extends('layouts.manager')
 
-    <aside class="w-64 bg-sibs-pink text-white flex flex-col fixed h-full z-50 shadow-2xl">
-        <div class="p-8">
-            <h2 class="text-2xl font-800 tracking-tighter uppercase">Sibs <span class="font-light opacity-80 text-sm block tracking-widest uppercase">Admin</span></h2>
-        </div>
-        
-        <nav class="flex-1 px-4 space-y-2">
-            <a href="{{ route('manager.dashboard') }}" class="flex items-center gap-3 p-4 rounded-xl hover:bg-white/10 transition-all opacity-80 hover:opacity-100">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-                <span class="font-bold text-sm">Dashboard</span>
-            </a>
-            <a href="{{ route('manager.services.index') }}" class="flex items-center gap-3 p-4 rounded-xl sidebar-link-active transition-all">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-                <span class="font-bold text-sm">Services</span>
-            </a>
-        </nav>
-
-        <div class="p-6 border-t border-white/10">
-            <div class="flex items-center gap-3 mb-6">
-                <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center font-bold text-xs">
-                    {{ substr(Auth::user()->first_name, 0, 1) }}
-                </div>
-                <span class="text-xs font-bold truncate">{{ Auth::user()->first_name }}</span>
-            </div>
-            <form action="{{ route('logout') }}" method="POST">
-                @csrf
-                <button class="w-full bg-white/10 hover:bg-white hover:text-sibs-pink py-3 rounded-xl text-[10px] font-800 uppercase tracking-widest transition-all">Logout</button>
-            </form>
-        </div>
-    </aside>
-
-    <main class="flex-1 ml-64 p-10">
-        
+@section('content')     
         <header class="flex justify-between items-center mb-10">
             <div>
                 <h1 class="text-4xl font-800 tracking-tight">Service Menu</h1>
@@ -173,7 +120,4 @@
                 </div>
             </div>
         </div>
-    </main>
-
-</body>
-</html>
+@endsection

@@ -21,7 +21,9 @@ class Booking extends Model
     }
 
     // A booking can have many services
-    public function services() {
-        return $this->belongsToMany(Service::class);
+    public function services()
+    {
+        return $this->belongsToMany(Service::class, 'booking_service')
+                    ->withPivot('employee_id', 'service_start_time', 'service_end_time');
     }
 }

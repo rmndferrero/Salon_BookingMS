@@ -6,7 +6,8 @@ use App\Models\Service;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon; // Don't forget this import for time math!
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class CustomerBookingController extends Controller
 {
@@ -16,34 +17,135 @@ class CustomerBookingController extends Controller
         return view('booking', compact('services'));
     }
 
-    // --- THE MISSING CALENDAR API ENDPOINT ---
+    // 1. The API endpoint for the Javascript Calendar
     public function getAvailability(Request $request)
     {
-        $request->validate([
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after_or_equal:start_date',
-        ]);
+        $startDate = $request->query('start_date');
+        $endDate = $request->query('end_date');
+        $serviceIds = $request->query('services', []); 
 
-        // Fetch all bookings within this week that are NOT cancelled
-        $bookings = Booking::whereBetween('appointment_date', [$request->start_date, $request->end_date])
-            ->whereIn('status', ['pending', 'confirmed'])
-            ->get(['appointment_date', 'start_time', 'end_time']);
+        if (!$startDate || !$endDate || empty($serviceIds)) {
+            return response()->json([]); 
+        }
 
-        return response()->json($bookings);
+        $results = [];
+        $currentDate = Carbon::parse($startDate);
+        $finalDate = Carbon::parse($endDate);
+
+        // Loop through all 7 days and run the Math Engine for each
+        while ($currentDate <= $finalDate) {
+            $dateString = $currentDate->format('Y-m-d');
+            // We call the private Math Engine we built earlier!
+            $results[$dateString] = $this->calculateAvailability($dateString, $serviceIds);
+            $currentDate->addDay();
+        }
+
+        // Returns an array like: {"2026-04-08": ["10:00", "10:30"], "2026-04-09": ["14:00"]}
+        return response()->json($results); 
     }
 
-    // --- THE UPGRADED STORE METHOD ---
+    // 2. THE MATH ENGINE (Now extracted so the Vault Door can use it safely)
+    private function calculateAvailability($date, $serviceIds)
+    {
+        $allServices = Service::whereIn('id', $serviceIds)->get()->keyBy('id');
+        $services = collect($serviceIds)->map(function($id) use ($allServices) {
+            return $allServices[$id] ?? null;
+        })->filter(); 
+
+        $dayOfWeek = Carbon::parse($date)->dayOfWeek;
+        $openTime = Carbon::parse($date . ' 10:00:00');
+        $closeTime = Carbon::parse($date . (in_array($dayOfWeek, [0, 5, 6]) ? ' 22:00:00' : ' 21:00:00'));
+
+        $employees = \App\Models\Employee::where('is_active', true)->get();
+        $categoryCapacity = [];
+        foreach ($employees as $emp) {
+            if (is_array($emp->can_do)) {
+                foreach ($emp->can_do as $cat) {
+                    $categoryCapacity[$cat] = ($categoryCapacity[$cat] ?? 0) + 1;
+                }
+            }
+        }
+
+        $bookings = Booking::where('appointment_date', $date)
+            ->whereIn('status', ['pending', 'confirmed'])
+            ->get();
+
+        // FIX: Bypass Laravel's eager loading collapse by fetching the raw pivot records!
+        // This guarantees that if a cart has 3 Haircuts, the math engine simulates 3 Haircuts.
+        $pivotRecords = DB::table('booking_service')
+            ->join('services', 'services.id', '=', 'booking_service.service_id')
+            ->whereIn('booking_service.booking_id', $bookings->pluck('id'))
+            ->select('booking_service.booking_id', 'services.category', 'services.duration_minutes')
+            ->get()
+            ->groupBy('booking_id');
+
+        $availableSlots = [];
+        $currentTime = $openTime->copy();
+
+        while ($currentTime < $closeTime) {
+            $candidateStartTime = $currentTime->copy();
+            $isValid = true;
+            $virtualClock = $candidateStartTime->copy();
+
+            foreach ($services as $service) {
+                $serviceStart = $virtualClock->copy();
+                $serviceEnd = $virtualClock->copy()->addMinutes($service->duration_minutes);
+
+                if ($serviceEnd > $closeTime) {
+                    $isValid = false; break; 
+                }
+
+                $cat = $service->category;
+                $maxCapacity = $categoryCapacity[$cat] ?? 0;
+
+                if ($maxCapacity == 0) {
+                    $isValid = false; break; 
+                }
+
+                $busyCount = 0;
+                foreach ($bookings as $b) {
+                    $bClock = Carbon::parse($b->appointment_date . ' ' . $b->start_time);
+                    $bServices = $pivotRecords->get($b->id, []); // Pull the exact un-collapsed sequence
+                    
+                    foreach ($bServices as $bService) {
+                        $bServiceStart = $bClock->copy();
+                        $bServiceEnd = $bClock->copy()->addMinutes($bService->duration_minutes);
+
+                        if ($bService->category === $cat) {
+                            if ($bServiceStart < $serviceEnd && $bServiceEnd > $serviceStart) {
+                                $busyCount++;
+                            }
+                        }
+                        $bClock = $bServiceEnd; 
+                    }
+                }
+
+                if ($busyCount >= $maxCapacity) {
+                    $isValid = false; break; 
+                }
+
+                $virtualClock = $serviceEnd; 
+            }
+
+            if ($isValid) {
+                $availableSlots[] = $candidateStartTime->format('H:i'); 
+            }
+
+            $currentTime->addMinutes(30); 
+        }
+
+        return $availableSlots;
+    }
+
     public function store(Request $request)
     {
-        // 1. Base Validation
         $rules = [
             'services' => 'required|array',
             'services.*' => 'exists:services,id',
             'appointment_date' => 'required|date',
-            'start_time' => 'required|date_format:H:i', // Catch the time from JS!
+            'start_time' => 'required|date_format:H:i', 
         ];
 
-        // 2. Validate Guests
         if (!Auth::check()) {
             $rules = array_merge($rules, [
                 'first_name' => 'required|string|max:255',
@@ -54,11 +156,19 @@ class CustomerBookingController extends Controller
 
         $request->validate($rules);
 
-        // 3. Setup User / Guest
+        // --- THE VAULT DOOR FIX ---
+        // Safely ask the internal math engine directly instead of mocking an HTTP Request
+        $availableSlots = $this->calculateAvailability($request->appointment_date, $request->services);
+        $requestedTimeFormatted = Carbon::parse($request->start_time)->format('H:i');
+        
+        if (!in_array($requestedTimeFormatted, $availableSlots)) {
+            return redirect()->back()->with('error', 'Sorry, this time slot is no longer available. Please select another time.');
+        }
+
+        // ... Create User ...
         $user = Auth::user();
         if (!$user) {
             $cleanPhone = preg_replace('/[^0-9+]/', '', $request->phone_number);
-            
             $user = \App\Models\User::firstOrCreate(
                 ['phone_number' => $cleanPhone],
                 [
@@ -69,16 +179,15 @@ class CustomerBookingController extends Controller
             );
         }
 
-        // 4. Calculate Time & Price Math
-        $selectedServices = Service::whereIn('id', $request->services)->get();
+        $selectedServices = collect($request->services)->map(function($id) {
+            return Service::find($id);
+        });
+        
         $totalPrice = $selectedServices->sum('price');
         $totalDuration = $selectedServices->sum('duration_minutes'); 
-
-        // Magic: Calculate the exact end time!
         $startTime = Carbon::parse($request->appointment_date . ' ' . $request->start_time);
         $endTime = $startTime->copy()->addMinutes($totalDuration);
 
-        // 5. Save the Booking
         $booking = Booking::create([
             'user_id' => $user->id,
             'appointment_date' => $request->appointment_date,
