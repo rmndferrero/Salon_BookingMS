@@ -105,28 +105,179 @@
         </div>
             </section>
 
-            <section>
-                <h2 class="text-xl font-800 mb-6 px-2">Upcoming Confirmed Appointments</h2>
-                <div class="sibs-card p-8 min-h-[120px] flex flex-col items-center justify-center">
-                    @forelse($confirmedBookings as $booking)
-                        <div class="w-full flex justify-between items-center py-4 border-b border-gray-50 last:border-0">
-                            <div class="flex items-center gap-4">
-                                <div class="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center text-green-600">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                </div>
-                                <div>
-                                    <p class="font-800 text-sm">{{ $booking->user->first_name }} {{ $booking->user->last_name }}</p>
-                                    <p class="text-[10px] text-gray-400 font-700 uppercase tracking-tight">
-                                        {{ \Carbon\Carbon::parse($booking->appointment_date)->format('M d') }} at {{ \Carbon\Carbon::parse($booking->start_time)->format('h:i A') }}
-                                    </p>
+            <section class="mb-12">
+            <div class="flex justify-between items-end mb-6 px-2">
+                <h2 class="text-xl font-800">Upcoming Appointments <span class="text-xs font-normal text-gray-400 ml-2">(Next 48 Hours)</span></h2>
+                <button onclick="document.getElementById('upcoming-modal').classList.remove('hidden')" class="text-xs font-bold text-[#b5106a] hover:underline uppercase tracking-widest">
+                    Show All Upcoming →
+                </button>
+            </div>
+            
+            <div class="sibs-card p-6 min-h-[120px] flex flex-col">
+                @forelse($confirmedBookings as $booking)
+                    <div class="w-full flex flex-col md:flex-row justify-between items-start md:items-center py-5 border-b border-gray-100 last:border-0 gap-4">
+                        
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-green-50 flex items-center justify-center text-green-600 flex-shrink-0 mt-1">
+                                <span class="font-bold text-sm">{{ \Carbon\Carbon::parse($booking->appointment_date)->format('d') }}</span>
+                            </div>
+                            <div>
+                                <p class="font-800 text-lg">{{ $booking->user->first_name }} {{ $booking->user->last_name }}</p>
+                                <p class="text-[11px] text-gray-500 font-700 uppercase tracking-wide mb-2">
+                                    {{ \Carbon\Carbon::parse($booking->appointment_date)->format('M d, Y') }} at {{ \Carbon\Carbon::parse($booking->start_time)->format('h:i A') }}
+                                </p>
+                                
+                                <div class="flex flex-wrap gap-2">
+                                    @foreach($booking->services as $service)
+                                        @php 
+                                            // Find the employee assigned to this specific service pivot
+                                            $emp = $employees->firstWhere('id', $service->pivot->employee_id); 
+                                        @endphp
+                                        <span class="text-[10px] text-gray-600 bg-gray-50 px-2.5 py-1 rounded-md border border-gray-200 font-bold tracking-wide">
+                                            {{ $service->name }} <span class="text-[#b5106a]">({{ $emp ? $emp->first_name : 'Unassigned' }})</span>
+                                        </span>
+                                    @endforeach
                                 </div>
                             </div>
-                            <span class="text-[10px] font-800 text-green-600 bg-green-50 px-3 py-1 rounded-full uppercase">Confirmed</span>
+                        </div>
+
+                        <form action="{{ route('manager.bookings.complete', $booking->id) }}" method="POST" onsubmit="return confirm('Mark this appointment as completed?');">
+                            @csrf
+                            <button type="submit" class="bg-white border border-green-200 text-green-600 hover:bg-green-50 px-4 py-2 rounded-lg font-bold text-xs uppercase tracking-wider transition-colors shadow-sm flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                Complete
+                            </button>
+                        </form>
+                    </div>
+                @empty
+                    <div class="text-center py-8">
+                        <p class="text-gray-400 text-sm italic font-medium">No upcoming appointments scheduled for the next 2 days.</p>
+                    </div>
+                @endforelse
+            </div>
+        </section>
+
+        <section>
+            <div class="flex justify-between items-end mb-6 px-2">
+                <h2 class="text-xl font-800 text-gray-400">Recently Declined</h2>
+                <button onclick="document.getElementById('declined-modal').classList.remove('hidden')" class="text-xs font-bold text-[#b5106a] hover:underline uppercase tracking-widest">
+                    Show All Declined →
+                </button>
+            </div>
+            
+            <div class="sibs-card p-6">
+                @forelse($recentDeclinedBookings as $booking)
+                    <div class="flex justify-between items-center py-3 border-b border-gray-50 last:border-0 opacity-75 grayscale hover:grayscale-0 transition-all">
+                        <div>
+                            <p class="font-bold text-sm text-gray-700">{{ $booking->user->first_name }} {{ $booking->user->last_name }}</p>
+                            <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">
+                                {{ \Carbon\Carbon::parse($booking->appointment_date)->format('M d') }} • {{ $booking->services->pluck('name')->join(', ') }}
+                            </p>
+                        </div>
+                        <span class="text-[9px] font-bold text-red-500 bg-red-50 px-2 py-1 rounded uppercase tracking-widest">Declined</span>
+                    </div>
+                @empty
+                    <p class="text-gray-400 text-sm italic text-center py-4">No declined bookings.</p>
+                @endforelse
+            </div>
+        </section>
+    </div>
+
+    <div id="declined-modal" class="fixed inset-0 bg-[#1a1c1c]/80 z-[100] hidden flex items-center justify-center backdrop-blur-sm transition-opacity p-4 md:p-8">
+        <div class="bg-white w-full max-w-4xl h-[80vh] rounded-[2rem] shadow-2xl flex flex-col overflow-hidden relative">
+            
+            <div class="p-6 md:p-8 border-b border-gray-100 flex justify-between items-center bg-white z-10">
+                <div>
+                    <h2 class="font-headline text-3xl text-[#1a1c1c]">Declined Bookings History</h2>
+                    <p class="text-gray-500 text-sm mt-1">A complete log of all rejected appointment requests.</p>
+                </div>
+                <button onclick="document.getElementById('declined-modal').classList.add('hidden')" class="text-gray-400 hover:text-[#b5106a] text-4xl leading-none">&times;</button>
+            </div>
+
+            <div class="flex-1 overflow-auto bg-gray-50 p-6 md:p-8">
+                <div class="space-y-4">
+                    @forelse($allDeclinedBookings as $booking)
+                        <div class="bg-white p-5 rounded-xl border border-red-100 shadow-sm flex justify-between items-center">
+                            <div>
+                                <p class="font-bold text-lg">{{ $booking->user->first_name }} {{ $booking->user->last_name }}</p>
+                                <p class="text-xs text-gray-500 font-bold uppercase tracking-widest mt-1">
+                                    Requested for: <span class="text-red-500">{{ \Carbon\Carbon::parse($booking->appointment_date)->format('M d, Y') }} at {{ \Carbon\Carbon::parse($booking->start_time)->format('h:i A') }}</span>
+                                </p>
+                                <p class="text-sm text-gray-600 mt-2">
+                                    <span class="font-bold">Services:</span> {{ $booking->services->pluck('name')->join(', ') }}
+                                </p>
+                            </div>
+                            <div class="text-right hidden md:block">
+                                <p class="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Declined On</p>
+                                <p class="text-sm font-bold text-gray-700">{{ $booking->updated_at->format('M d, Y') }}</p>
+                            </div>
                         </div>
                     @empty
-                        <p class="text-gray-400 text-sm italic font-medium">No upcoming appointments scheduled yet.</p>
+                        <div class="text-center py-20 text-gray-400 font-bold">Your history is clean. No declined bookings found.</div>
                     @endforelse
                 </div>
-            </section>
+            </div>
         </div>
+    </div>
+
+    <div id="upcoming-modal" class="fixed inset-0 bg-[#1a1c1c]/80 z-[100] hidden flex items-center justify-center backdrop-blur-sm transition-opacity p-4 md:p-8">
+        <div class="bg-white w-full max-w-5xl h-[85vh] rounded-[2rem] shadow-2xl flex flex-col overflow-hidden relative">
+            
+            <div class="p-6 md:p-8 border-b border-gray-100 flex justify-between items-center bg-white z-10">
+                <div>
+                    <h2 class="font-headline text-3xl text-[#1a1c1c]">All Upcoming Appointments</h2>
+                    <p class="text-gray-500 text-sm mt-1">Your complete master schedule for all confirmed future bookings.</p>
+                </div>
+                <button onclick="document.getElementById('upcoming-modal').classList.add('hidden')" class="text-gray-400 hover:text-[#b5106a] text-4xl leading-none">&times;</button>
+            </div>
+
+            <div class="flex-1 overflow-auto bg-gray-50 p-6 md:p-8">
+                <div class="space-y-4">
+                    @forelse($allUpcomingBookings as $booking)
+                        <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4 hover:border-pink-200 transition-colors">
+                            
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-pink-50 flex items-center justify-center text-[#b5106a] flex-shrink-0 mt-1 border border-pink-100">
+                                    <span class="font-bold text-sm">{{ \Carbon\Carbon::parse($booking->appointment_date)->format('d') }}</span>
+                                </div>
+                                <div>
+                                    <p class="font-800 text-lg">{{ $booking->user->first_name }} {{ $booking->user->last_name }}</p>
+                                    <p class="text-[11px] text-gray-500 font-700 uppercase tracking-wide mb-3">
+                                        {{ \Carbon\Carbon::parse($booking->appointment_date)->format('D, M d, Y') }} at {{ \Carbon\Carbon::parse($booking->start_time)->format('h:i A') }}
+                                    </p>
+                                    
+                                    <div class="flex flex-wrap gap-2">
+                                        @foreach($booking->services as $service)
+                                            @php 
+                                                $emp = $employees->firstWhere('id', $service->pivot->employee_id); 
+                                            @endphp
+                                            <span class="text-[10px] text-gray-600 bg-gray-50 px-2.5 py-1 rounded-md border border-gray-200 font-bold tracking-wide">
+                                                {{ $service->name }} <span class="text-[#b5106a]">({{ $emp ? $emp->first_name : 'Unassigned' }})</span>
+                                            </span>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+
+                            <form action="{{ route('manager.bookings.complete', $booking->id) }}" method="POST" onsubmit="return confirm('Mark this appointment as completed?');">
+                                @csrf
+                                <button type="submit" class="bg-white border border-green-200 text-green-600 hover:bg-green-50 px-5 py-2.5 rounded-lg font-bold text-xs uppercase tracking-wider transition-colors shadow-sm flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    Complete
+                                </button>
+                            </form>
+
+                        </div>
+                    @empty
+                        <div class="text-center py-20">
+                            <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4 text-gray-400">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            </div>
+                            <p class="text-gray-500 font-bold">No upcoming appointments scheduled yet.</p>
+                        </div>
+                    @endforelse
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

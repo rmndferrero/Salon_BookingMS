@@ -14,18 +14,39 @@ class ManagerBookingController extends Controller
     // 1. Load the Dashboard with Data
     public function dashboard()
     {
+        // The Sweeper: Auto-complete past confirmed bookings
+        Booking::where('status', 'confirmed')
+            ->where('appointment_date', '<', now()->toDateString())
+            ->update(['status' => 'completed']);
+
         $pendingBookings = Booking::with(['user', 'services'])
             ->where('status', 'pending')
             ->orderBy('appointment_date')
             ->orderBy('start_time')
             ->get();
             
+        // Dashboard snapshot (Today + Tomorrow + Day After)
         $confirmedBookings = Booking::with(['user', 'services'])
+            ->where('status', 'confirmed')
+            ->whereBetween('appointment_date', [now()->toDateString(), now()->addDays(2)->toDateString()])
+            ->orderBy('appointment_date')
+            ->orderBy('start_time')
+            ->get();
+
+        // NEW: Fetch ALL upcoming confirmed bookings for the modal
+        $allUpcomingBookings = Booking::with(['user', 'services'])
             ->where('status', 'confirmed')
             ->where('appointment_date', '>=', now()->toDateString())
             ->orderBy('appointment_date')
             ->orderBy('start_time')
             ->get();
+
+        $allDeclinedBookings = Booking::with(['user', 'services'])
+            ->where('status', 'declined')
+            ->orderBy('updated_at', 'desc')
+            ->get();
+            
+        $recentDeclinedBookings = $allDeclinedBookings->take(5);
 
         $todayBookingsCount = Booking::where('status', 'confirmed')
             ->where('appointment_date', now()->toDateString())
@@ -33,10 +54,13 @@ class ManagerBookingController extends Controller
             
         $pendingCount = $pendingBookings->count();
 
-        // NEW: Fetch all active employees to pass to the view
-        $employees = Employee::where('is_active', true)->get();
+        $employees = \App\Models\Employee::all(); 
 
-        return view('manager.dashboard', compact('pendingBookings', 'confirmedBookings', 'todayBookingsCount', 'pendingCount', 'employees'));
+        // Don't forget to add $allUpcomingBookings to the compact() array!
+        return view('manager.dashboard', compact(
+            'pendingBookings', 'confirmedBookings', 'allUpcomingBookings', 'todayBookingsCount', 
+            'pendingCount', 'employees', 'recentDeclinedBookings', 'allDeclinedBookings'
+        ));
     }
 
     // 2. Confirm a Booking
@@ -117,5 +141,11 @@ class ManagerBookingController extends Controller
     {
         $booking->update(['status' => 'declined']);
         return redirect()->back()->with('success', 'Booking declined. The calendar time slot is now free.');
+    }
+
+    public function complete(Booking $booking)
+    {
+        $booking->update(['status' => 'completed']);
+        return redirect()->back()->with('success', 'Appointment successfully marked as completed!');
     }
 }

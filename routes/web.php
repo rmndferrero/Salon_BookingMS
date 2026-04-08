@@ -44,6 +44,7 @@ Route::middleware(['auth', 'manager'])->group(function () {
     // NEW: Booking Action Routes
     Route::post('/manager/bookings/{booking}/confirm', [ManagerBookingController::class, 'confirm'])->name('manager.bookings.confirm');
     Route::post('/manager/bookings/{booking}/decline', [ManagerBookingController::class, 'decline'])->name('manager.bookings.decline');
+    Route::post('/manager/bookings/{booking}/complete', [\App\Http\Controllers\ManagerBookingController::class, 'complete'])->name('manager.bookings.complete');
     
     // Existing Service Management Routes
     Route::get('/manager/services', [ManagerServiceController::class, 'index'])->name('manager.services.index');
