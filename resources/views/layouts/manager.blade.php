@@ -47,6 +47,14 @@
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                 <span class="font-semibold text-sm">Staff Management</span>
             </a>
+
+            <a href="{{ route('manager.announcements.index') }}" 
+                class="flex items-center gap-3 p-4 rounded-xl transition-all {{ request()->routeIs('manager.announcements.*') ? 'sidebar-link-active' : 'hover:bg-white/10 opacity-80 hover:opacity-100' }}">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.167H3.382a.75.75 0 01-.73-.96l.733-2.152a.75.75 0 01.73-.539h2.088l2.147-6.167a1.76 1.76 0 013.417.592zM15.817 7.893a7.5 7.5 0 010 8.214M18.913 5.483a12.008 12.008 0 010 13.034" />
+                </svg>
+                <span class="font-semibold text-sm">Announcements</span>
+            </a>
         </nav>
 
         <div class="p-6 border-t border-white/10">
