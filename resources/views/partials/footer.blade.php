@@ -15,10 +15,10 @@
             <div>
                 <h4 class="text-xs font-bold uppercase tracking-widest text-[#b5106a] mb-6">Navigation</h4>
                 <ul class="space-y-4">
-                    <li><a class="text-stone-500 text-sm hover:text-[#b5106a] transition-colors" href="/#services">Services</a></li>
-                    <li><a class="text-stone-500 text-sm hover:text-[#b5106a] transition-colors" href="/#gallery">Gallery</a></li>
-                    <li><a class="text-stone-500 text-sm hover:text-[#b5106a] transition-colors" href="/#about">About</a></li>
-                    <li><a class="text-stone-500 text-sm hover:text-[#b5106a] transition-colors" href="/#contact">Contact</a></li>
+                    <li><a href="{{ url('/services') }}">Services</a></li>
+                    <li><a href="{{ url('/gallery') }}">Gallery</a></li>
+                    <li><a href="{{ url('/about') }}">About</a></li>
+                    <li><a href="{{ url('/contact') }}">Contact</a></li>
                 </ul>
             </div>
             
