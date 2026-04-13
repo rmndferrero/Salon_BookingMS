@@ -84,6 +84,15 @@ Route::middleware(['auth', 'manager'])->group(function () {
     Route::post('/manager/settings/blackout/preview', [\App\Http\Controllers\ManagerSettingsController::class, 'previewBlackout']);
     Route::post('/manager/settings/blackout', [\App\Http\Controllers\ManagerSettingsController::class, 'storeBlackout'])->name('manager.blackout.store');
     Route::delete('/manager/settings/blackout/{blackoutDate}', [\App\Http\Controllers\ManagerSettingsController::class, 'destroyBlackout'])->name('manager.blackout.destroy');
+
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/my-bookings', [\App\Http\Controllers\ProfileController::class, 'bookings'])->name('customer.bookings');
+    Route::post('/my-bookings/{booking}/cancel', [\App\Http\Controllers\ProfileController::class, 'cancelBooking'])->name('customer.bookings.cancel');
+
+    Route::get('/my-info', [\App\Http\Controllers\ProfileController::class, 'info'])->name('customer.info');
+    Route::put('/my-info', [\App\Http\Controllers\ProfileController::class, 'updateInfo'])->name('customer.info.update');
 });
 
 // --- BOOKING ROUTES (Publicly accessible) ---
