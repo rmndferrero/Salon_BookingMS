@@ -55,79 +55,36 @@
     </section>
 
     <!-- Salon Updates -->
-    <section class="py-32 px-8 max-w-screen-2xl mx-auto" id="services">
+   <section class="py-32 px-8 max-w-screen-2xl mx-auto" id="services">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+            @forelse($announcements as $index => $announcement)
+                <div class="group relative bg-white p-2 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-500 
+                    {{ $index === 1 ? 'md:-mt-12' : '' }} h-auto">
+                    
+                    <div class="aspect-[4/5] rounded-lg overflow-hidden relative">
+                        <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                            src="{{ asset('storage/' . $announcement->image_path) }}" 
+                            alt="{{ $announcement->title }}" />
+                    </div>
 
-        <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
-            <div>
-                <h2 class="font-headline text-5xl text-on-surface">What's New</h2>
-                <p class="font-body text-on-surface-variant mt-4 max-w-sm">
-                    Updates on our space, our services, and our schedule.
-                </p>
-            </div>
-
-            <div>
-                <span class="text-secondary font-headline italic text-4xl">01—03</span>
-            </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-headline text-2xl text-on-surface">
+                                {{ $announcement->created_at->format('m/d/Y') }}
+                            </h3>
+                            <span class="text-secondary font-label font-bold text-right ml-4">
+                                {{ $announcement->title }}
+                            </span>
+                        </div>
+                        <p class="text-on-surface-variant text-sm font-body leading-relaxed">
+                            {{ $announcement->content }}
+                        </p>
+                    </div>
+                </div>
+            @empty
+                <p class="col-span-3 text-center text-on-surface-variant italic">No recent updates. Check back soon!</p>
+            @endforelse
         </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-
-            <!-- CARD 1 -->
-            <div class="group relative bg-white p-2 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-500 h-[500px]">
-                <div class="h-3/4 rounded-lg overflow-hidden relative">
-                    <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                         src="{{ asset('salon_update.jpg') }}" />
-                </div>
-
-                <div class="p-6">
-                    <div class="flex justify-between items-start mb-2">
-                        <h3 class="font-headline text-2xl text-on-surface">03/27/2026</h3>
-                        <span class="text-secondary font-label font-bold">Fresh Start, Familiar Faces.</span>
-                    </div>
-                    <p class="text-on-surface-variant text-sm font-body">
-                        We are back and better than ever! Book your appointment now for a brand new and improved experience.
-                    </p>
-                </div>
-            </div>
-
-            <!-- CARD 2 -->
-            <div class="group relative bg-white p-2 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-500 h-[560px] md:-mt-12">
-                <div class="h-[82%] rounded-lg overflow-hidden relative">
-                    <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                         src="{{ asset('salon_update1.jpg') }}" />
-                </div>
-
-                <div class="p-6">
-                    <div class="flex justify-between items-start mb-2">
-                        <h3 class="font-headline text-2xl text-on-surface">03/20/2026</h3>
-                        <span class="text-secondary font-label font-bold">Celebrating Together.</span>
-                    </div>
-                    <p class="text-on-surface-variant text-sm font-body">
-                        Wishing our wonderful community a peaceful and joyful Eid.
-                    </p>
-                </div>
-            </div>
-
-            <!-- CARD 3 -->
-            <div class="group relative bg-white p-2 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-500 h-[500px]">
-                <div class="h-3/4 rounded-lg overflow-hidden relative">
-                    <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                         src="{{ asset('salon_update3.jpg') }}" />
-                </div>
-
-                <div class="p-6">
-                    <div class="flex justify-between items-start mb-2">
-                        <h3 class="font-headline text-2xl text-on-surface">02/20/2026</h3>
-                        <span class="text-secondary font-label font-bold">Making Room for More Beauty.</span>
-                    </div>
-                    <p class="text-on-surface-variant text-sm font-body">
-                        We are taking a brief pause to enhance our lounge. We will be closed from February 23rd until further notice.
-                    </p>
-                </div>
-            </div>
-
-        </div>
-
     </section>
 
     <!-- AESTHETIC STATEMENT -->

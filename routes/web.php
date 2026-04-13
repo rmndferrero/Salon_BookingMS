@@ -6,6 +6,8 @@ use App\Http\Controllers\ManagerServiceController;
 use App\Http\Controllers\CustomerBookingController;
 use App\Http\Controllers\ManagerBookingController;
 use App\Http\Controllers\ManagerEmployeeController;
+use App\Http\Controllers\AnnouncementController;
+use App\Models\Announcement;
 
 Route::get('/', function () {
     return view('homepage');
@@ -34,6 +36,22 @@ Route::get('/login', function () {
 Route::get('/register', function () {
     return view('register');
 })->name('register');
+
+// --- ANNOUNCEMENT ROUTE ---//
+
+Route::get('/', function () {
+    $announcements = Announcement::latest()->take(3)->get();
+
+    return view('homepage', compact('announcements'));
+})->name('homepage');
+
+Route::middleware(['auth', 'manager'])->group(function () {
+    Route::get('/manager/announcements', [AnnouncementController::class, 'index'])->name('manager.announcements.index');
+    Route::post('/manager/announcements', [AnnouncementController::class, 'store'])->name('manager.announcements.store');
+    Route::get('/manager/announcements/{announcement}/edit', [AnnouncementController::class, 'edit'])->name('manager.announcements.edit');
+    Route::put('/manager/announcements/{announcement}', [AnnouncementController::class, 'update'])->name('manager.announcements.update');
+    Route::delete('/manager/announcements/{announcement}', [AnnouncementController::class, 'destroy'])->name('manager.announcements.destroy');
+});
 
 // --- Manager Routes ---
 Route::middleware(['auth', 'manager'])->group(function () {

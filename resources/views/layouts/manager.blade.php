@@ -21,6 +21,10 @@
         }
         .sidebar-link-active { background: rgba(255,255,255,0.15); border-left: 4px solid white; }
     </style>
+
+    <!-- AlpineJs -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
 </head>
 <body class="flex min-h-screen text-[#1a1c1c]">
 
@@ -52,6 +56,13 @@
                class="flex items-center gap-3 p-4 rounded-xl transition-all {{ request()->routeIs('manager.settings') ? 'sidebar-link-active' : 'hover:bg-white/10 opacity-80 hover:opacity-100' }}">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                 <span class="font-semibold text-sm">Settings</span>
+                
+            <a href="{{ route('manager.announcements.index') }}" 
+                class="flex items-center gap-3 p-4 rounded-xl transition-all {{ request()->routeIs('manager.announcements.*') ? 'sidebar-link-active' : 'hover:bg-white/10 opacity-80 hover:opacity-100' }}">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.167H3.382a.75.75 0 01-.73-.96l.733-2.152a.75.75 0 01.73-.539h2.088l2.147-6.167a1.76 1.76 0 013.417.592zM15.817 7.893a7.5 7.5 0 010 8.214M18.913 5.483a12.008 12.008 0 010 13.034" />
+                </svg>
+                <span class="font-semibold text-sm">Announcements</span>
             </a>
         </nav>
 
