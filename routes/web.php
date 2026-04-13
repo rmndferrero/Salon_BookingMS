@@ -63,6 +63,7 @@ Route::middleware(['auth', 'manager'])->group(function () {
     Route::post('/manager/bookings/{booking}/confirm', [ManagerBookingController::class, 'confirm'])->name('manager.bookings.confirm');
     Route::post('/manager/bookings/{booking}/decline', [ManagerBookingController::class, 'decline'])->name('manager.bookings.decline');
     Route::post('/manager/bookings/{booking}/complete', [\App\Http\Controllers\ManagerBookingController::class, 'complete'])->name('manager.bookings.complete');
+    Route::post('/manager/bookings/{booking}/cancel', [\App\Http\Controllers\ManagerBookingController::class, 'cancel'])->name('manager.bookings.cancel');
     
     // Existing Service Management Routes
     Route::get('/manager/services', [ManagerServiceController::class, 'index'])->name('manager.services.index');
@@ -73,11 +74,25 @@ Route::middleware(['auth', 'manager'])->group(function () {
     // Existing Staff Management Routes
     Route::get('/manager/employees', [ManagerEmployeeController::class, 'index'])->name('manager.employees.index');
     Route::post('/manager/employees', [ManagerEmployeeController::class, 'store'])->name('manager.employees.store');
-    
     // NEW: Edit, Update, and Delete Routes
     Route::get('/manager/employees/{employee}/edit', [ManagerEmployeeController::class, 'edit'])->name('manager.employees.edit');
     Route::put('/manager/employees/{employee}', [ManagerEmployeeController::class, 'update'])->name('manager.employees.update');
     Route::delete('/manager/employees/{employee}', [ManagerEmployeeController::class, 'destroy'])->name('manager.employees.destroy');
+
+    // Settings & Blackout Dates
+    Route::get('/manager/settings', [\App\Http\Controllers\ManagerSettingsController::class, 'index'])->name('manager.settings');
+    Route::post('/manager/settings/blackout/preview', [\App\Http\Controllers\ManagerSettingsController::class, 'previewBlackout']);
+    Route::post('/manager/settings/blackout', [\App\Http\Controllers\ManagerSettingsController::class, 'storeBlackout'])->name('manager.blackout.store');
+    Route::delete('/manager/settings/blackout/{blackoutDate}', [\App\Http\Controllers\ManagerSettingsController::class, 'destroyBlackout'])->name('manager.blackout.destroy');
+
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/my-bookings', [\App\Http\Controllers\ProfileController::class, 'bookings'])->name('customer.bookings');
+    Route::post('/my-bookings/{booking}/cancel', [\App\Http\Controllers\ProfileController::class, 'cancelBooking'])->name('customer.bookings.cancel');
+
+    Route::get('/my-info', [\App\Http\Controllers\ProfileController::class, 'info'])->name('customer.info');
+    Route::put('/my-info', [\App\Http\Controllers\ProfileController::class, 'updateInfo'])->name('customer.info.update');
 });
 
 // --- BOOKING ROUTES (Publicly accessible) ---

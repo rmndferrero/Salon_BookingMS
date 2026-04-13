@@ -56,6 +56,15 @@ class CustomerBookingController extends Controller
         $openTime = Carbon::parse($date . ' 10:00:00');
         $closeTime = Carbon::parse($date . (in_array($dayOfWeek, [0, 5, 6]) ? ' 22:00:00' : ' 21:00:00'));
 
+        // --- CHECK FOR BLACKOUT DATES ---
+        $isBlackout = \App\Models\BlackoutDate::where('start_date', '<=', $date)
+            ->where('end_date', '>', $date) // FIXED: Now uses '>' instead of '>='
+            ->exists();
+            
+        if ($isBlackout) {
+            return []; // Instantly return an empty array!
+        }
+
         $employees = \App\Models\Employee::where('is_active', true)->get();
         $categoryCapacity = [];
         foreach ($employees as $emp) {

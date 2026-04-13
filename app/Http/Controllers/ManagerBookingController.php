@@ -148,4 +148,11 @@ class ManagerBookingController extends Controller
         $booking->update(['status' => 'completed']);
         return redirect()->back()->with('success', 'Appointment successfully marked as completed!');
     }
+
+    // NEW: Manually Cancel a Booking
+    public function cancel(Booking $booking)
+    {
+        $booking->update(['status' => 'cancelled']);
+        return redirect()->back()->with('success', 'Appointment successfully cancelled.');
+    }
 }
