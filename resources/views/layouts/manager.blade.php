@@ -21,6 +21,10 @@
         }
         .sidebar-link-active { background: rgba(255,255,255,0.15); border-left: 4px solid white; }
     </style>
+
+    <!-- AlpineJs -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
 </head>
 <body class="flex min-h-screen text-[#1a1c1c]">
 
