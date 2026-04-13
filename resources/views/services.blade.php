@@ -10,7 +10,7 @@
         padding-top: 20px;
         padding-bottom: 80px;
     }
-    /* Pink theme para sa navigation buttons */
+    
     .swiper-button-next, .swiper-button-prev {
         color: #b5106a !important;
         background: rgba(255, 255, 255, 0.9);
