@@ -55,14 +55,13 @@
     </section>
 
     <!-- Salon Updates -->
-    <section class="py-32 px-8 max-w-screen-2xl mx-auto" id="services">
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+   <section class="py-32 px-8 max-w-screen-2xl mx-auto" id="services">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
             @forelse($announcements as $index => $announcement)
                 <div class="group relative bg-white p-2 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-500 
-                    {{ $index === 1 ? 'h-[560px] md:-mt-12' : 'h-[500px]' }}">
+                    {{ $index === 1 ? 'md:-mt-12' : '' }} h-auto">
                     
-                    <div class="{{ $index === 1 ? 'h-[82%]' : 'h-3/4' }} rounded-lg overflow-hidden relative">
+                    <div class="aspect-[4/5] rounded-lg overflow-hidden relative">
                         <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                             src="{{ asset('storage/' . $announcement->image_path) }}" 
                             alt="{{ $announcement->title }}" />
@@ -77,8 +76,8 @@
                                 {{ $announcement->title }}
                             </span>
                         </div>
-                        <p class="text-on-surface-variant text-sm font-body">
-                            {{ Str::limit($announcement->content, 100) }}
+                        <p class="text-on-surface-variant text-sm font-body leading-relaxed">
+                            {{ $announcement->content }}
                         </p>
                     </div>
                 </div>
@@ -86,7 +85,6 @@
                 <p class="col-span-3 text-center text-on-surface-variant italic">No recent updates. Check back soon!</p>
             @endforelse
         </div>
-
     </section>
 
     <!-- AESTHETIC STATEMENT -->

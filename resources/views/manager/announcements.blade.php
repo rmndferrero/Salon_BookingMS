@@ -25,9 +25,33 @@
                         <input type="text" name="title" required class="w-full border-gray-100 rounded-xl p-3 bg-gray-50 outline-none focus:border-sibs-pink focus:ring-1 focus:ring-sibs-pink">
                     </div>
 
-                    <div>
-                        <label class="text-[11px] font-700 uppercase tracking-wider text-gray-400 block mb-2">Content</label>
-                        <textarea name="content" rows="4" required class="w-full border-gray-100 rounded-xl p-3 bg-gray-50 outline-none focus:border-sibs-pink focus:ring-1 focus:ring-sibs-pink"></textarea>
+                    <div x-data="{ content: '', limit: 400 }" class="w-full">
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="text-[11px] font-bold uppercase tracking-wider text-gray-400 block">
+                                Content
+                            </label>
+                        </div>
+                        
+                        <div class="relative">
+                            <textarea 
+                                name="content" 
+                                rows="6" 
+                                required 
+                                x-model="content"
+                                maxlength="400"
+                                placeholder="Type your announcement..."
+                                class="w-full border-gray-100 rounded-xl p-4 pb-12 bg-gray-50 outline-none transition-all duration-300
+                                    focus:border-primary focus:ring-1 focus:ring-primary text-sm text-on-surface resize-none shadow-sm"
+                                :class="content.length >= limit ? 'border-error ring-1 ring-error' : ''"
+                            ></textarea>
+
+                            <div class="absolute bottom-4 right-4 pointer-events-none">
+                                <span class="text-[10px] font-bold tracking-widest transition-colors duration-200"
+                                    :class="content.length >= limit ? 'text-error' : 'text-gray-400'">
+                                    <span x-text="content.length">0</span>/<span x-text="limit">400</span>
+                                </span>
+                            </div>
+                        </div>
                     </div>
 
                     <div>
