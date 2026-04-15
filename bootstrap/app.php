@@ -3,7 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use App\Http\Middleware\ManagerMiddleware; // Import it here
+use App\Http\Middleware\ManagerMiddleware;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -12,9 +12,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        // Register the alias
         $middleware->alias([
-            'manager' => ManagerMiddleware::class,
+            'manager' => \App\Http\Middleware\ManagerMiddleware::class,
+            'customer' => \App\Http\Middleware\CustomerMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

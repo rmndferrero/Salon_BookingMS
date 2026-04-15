@@ -9,26 +9,29 @@ use App\Http\Controllers\ManagerEmployeeController;
 use App\Http\Controllers\AnnouncementController;
 use App\Models\Announcement;
 
-Route::get('/', function () {
-    return view('homepage');
-})->name('homepage');
+// --- PUBLIC & CUSTOMER ROUTES (Managers Blocked) ---
+Route::middleware(['customer'])->group(function () {
+    
+    Route::get('/', function () {
+        $announcements = \App\Models\Announcement::latest()->take(3)->get();
+        return view('homepage', compact('announcements'));
+    })->name('homepage');
 
-Route::get('/about', function () {
-    return view('about');
-})->name('about');
+    Route::get('/about', function () {
+        return view('about');
+    })->name('about');
 
-Route::get('/services', function () {
-    return view('services');
-})->name('services');
+    Route::get('/services', function () {
+        return view('services');
+    })->name('services');
 
-Route::get('/contact', function () {
-    return view('contact');
-})->name('contact');
+    Route::get('/contact', function () {
+        return view('contact');
+    })->name('contact');
 
-Route::get('/book', function () {
-    return view('booking');
-})->name('book');
+    Route::get('/book', [\App\Http\Controllers\CustomerBookingController::class, 'index'])->name('book');
 
+});
 Route::get('/login', function () {
     return view('login');
 })->name('login');
@@ -38,12 +41,6 @@ Route::get('/register', function () {
 })->name('register');
 
 // --- ANNOUNCEMENT ROUTE ---//
-
-Route::get('/', function () {
-    $announcements = Announcement::latest()->take(3)->get();
-
-    return view('homepage', compact('announcements'));
-})->name('homepage');
 
 Route::middleware(['auth', 'manager'])->group(function () {
     Route::get('/manager/announcements', [AnnouncementController::class, 'index'])->name('manager.announcements.index');
@@ -90,7 +87,7 @@ Route::middleware(['auth', 'manager'])->group(function () {
 
 });
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'customer'])->group(function () {
     Route::get('/my-bookings', [\App\Http\Controllers\ProfileController::class, 'bookings'])->name('customer.bookings');
     Route::post('/my-bookings/{booking}/cancel', [\App\Http\Controllers\ProfileController::class, 'cancelBooking'])->name('customer.bookings.cancel');
 
