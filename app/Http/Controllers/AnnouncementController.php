@@ -8,71 +8,87 @@ use Illuminate\Support\Facades\Storage;
 
 class AnnouncementController extends Controller
 {
+    /**
+     * Display a listing of the announcements.
+     */
     public function index()
     {
         $announcements = Announcement::latest()->get();
         return view('manager.announcements', compact('announcements'));
     }
 
+    /**
+     * Store a newly created announcement.
+     */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'image' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
+        $request->validate([
+            'title'   => 'required|string|max:255',
+            'content' => 'required|string|max:400', // Matches your Alpine.js limit
+            'image'   => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('announcements', 'public');
-            $validated['image_path'] = $path;
-        }
+        // Handle Image Upload
+        $path = $request->file('image')->store('announcements', 'public');
+
+        // Logic: If there are currently less than 3 announcements, 
+        // make this new one "featured" (Live) by default.
+        $currentCount = Announcement::count();
+        $isFeatured = $currentCount < 3;
 
         Announcement::create([
-            'title' => $validated['title'],
-            'content' => $validated['content'],
-            'image_path' => $validated['image_path'],
+            'title'       => $request->title,
+            'content'     => $request->content,
+            'image_path'  => $path,
+            'is_featured' => $isFeatured,
         ]);
 
-        return back()->with('success', 'New announcement posted successfully!');
+        return back()->with('success', 'Announcement published successfully!');
     }
 
-    // --- NEW: EDIT METHOD ---
+    /**
+     * Show the form for editing the specified announcement.
+     */
     public function edit(Announcement $announcement)
     {
         return view('manager.announcements_edit', compact('announcement'));
     }
 
-    // --- NEW: UPDATE METHOD ---
+    /**
+     * Update the specified announcement.
+     */
     public function update(Request $request, Announcement $announcement)
     {
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'title'   => 'required|string|max:255',
+            'content' => 'required|string|max:400',
+            'image'   => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
         $imagePath = $announcement->image_path;
 
         if ($request->hasFile('image')) {
-            // Delete the old image file to save space
-            Storage::disk('public')->delete($announcement->image_path);
-            // Store the new one
+            // Remove old image
+            if ($announcement->image_path) {
+                Storage::disk('public')->delete($announcement->image_path);
+            }
             $imagePath = $request->file('image')->store('announcements', 'public');
         }
 
         $announcement->update([
-            'title' => $validated['title'],
-            'content' => $validated['content'],
+            'title'      => $validated['title'],
+            'content'    => $validated['content'],
             'image_path' => $imagePath,
         ]);
 
         return redirect()->route('manager.announcements.index')->with('success', 'Announcement updated successfully!');
     }
 
-    // --- NEW: DELETE METHOD ---
+    /**
+     * Remove the specified announcement.
+     */
     public function destroy(Announcement $announcement)
     {
-        // Delete the image file from the storage folder
         if ($announcement->image_path) {
             Storage::disk('public')->delete($announcement->image_path);
         }
@@ -80,5 +96,22 @@ class AnnouncementController extends Controller
         $announcement->delete();
 
         return back()->with('success', 'Announcement deleted successfully!');
+    }
+
+    /**
+     * Update the featured (Live) status for the feed.
+     */
+    public function updateFeatured(Request $request)
+    {
+        Announcement::query()->update(['is_featured' => false]);
+
+        if ($request->has('featured_ids')) {
+            $selectedIds = array_slice($request->featured_ids, 0, 3);
+            
+            Announcement::whereIn('id', $selectedIds)
+                ->update(['is_featured' => true]);
+        }
+
+        return back()->with('success', 'Homepage feed updated successfully.');
     }
 }

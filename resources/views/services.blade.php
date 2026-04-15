@@ -212,7 +212,18 @@
                         <div class="flex-1 w-full grid grid-cols-1 md:grid-cols-3 gap-3">
                             <input type="text" name="first_name" placeholder="First Name" required class="border-b-2 border-gray-200 focus:border-[#b5106a] outline-none p-2 bg-transparent text-sm">
                             <input type="text" name="last_name" placeholder="Last Name" required class="border-b-2 border-gray-200 focus:border-[#b5106a] outline-none p-2 bg-transparent text-sm">
-                            <input type="text" name="phone_number" placeholder="Phone Number" required class="border-b-2 border-gray-200 focus:border-[#b5106a] outline-none p-2 bg-transparent text-sm">
+                            <input 
+                                type="text" 
+                                name="phone_number" 
+                                placeholder="Phone Number" 
+                                required 
+                                maxlength="11"
+                                minlength="11"
+                                pattern="\d{11}"
+                                title="Please enter exactly 11 digits"
+                                oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                                class="border-b-2 border-gray-200 focus:border-[#b5106a] outline-none p-2 bg-transparent text-sm"
+                            >
                         </div>
                         @endguest
 

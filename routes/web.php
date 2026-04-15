@@ -53,6 +53,9 @@ Route::middleware(['auth', 'manager'])->group(function () {
     Route::delete('/manager/announcements/{announcement}', [AnnouncementController::class, 'destroy'])->name('manager.announcements.destroy');
 });
 
+Route::post('/manager/announcements/update-featured', [AnnouncementController::class, 'updateFeatured'])
+     ->name('manager.announcements.update-featured');
+
 // --- Manager Routes ---
 Route::middleware(['auth', 'manager'])->group(function () {
     

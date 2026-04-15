@@ -16,7 +16,7 @@
                 <h4 class="text-xs font-bold uppercase tracking-widest text-[#b5106a] mb-6">Navigation</h4>
                 <ul class="space-y-4">
                     <li><a class="text-stone-500 text-sm hover:text-[#b5106a] transition-colors" href="{{ url('/services') }}">Services</a></li>
-                    <li><a class="text-stone-500 text-sm hover:text-[#b5106a] transition-colors" href="{{ url('/gallery') }}">Gallery</a></li>
+                    <li><a class="text-stone-500 text-sm hover:text-[#b5106a] transition-colors" href="{{ url('/') }}#gallery">Gallery</a></li>
                     <li><a class="text-stone-500 text-sm hover:text-[#b5106a] transition-colors" href="{{ url('/about') }}">About</a></li>
                     <li><a class="text-stone-500 text-sm hover:text-[#b5106a] transition-colors" href="{{ url('/contact') }}">Contact</a></li>
                 </ul>

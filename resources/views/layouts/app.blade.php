@@ -108,6 +108,11 @@
             document.getElementById('registerModal').classList.toggle('hidden');
         }
 
+        function switchToRegister() {
+            document.getElementById('loginModal').classList.add('hidden');
+            document.getElementById('registerModal').classList.remove('hidden');
+        }
+
         function switchToLogin() {
             document.getElementById('registerModal').classList.add('hidden');
             document.getElementById('loginModal').classList.remove('hidden');
@@ -122,10 +127,17 @@
         });
 
         document.addEventListener('DOMContentLoaded', function() {
+            
             @if(old('first_name'))
-                document.getElementById('registerModal').classList.remove('hidden');
-            @elseif($errors->has('phone_number') || $errors->has('password'))
-                document.getElementById('loginModal').classList.remove('hidden');
+                switchToRegister();
+            
+            
+            @elseif($errors->has('first_name') || $errors->has('last_name'))
+                switchToRegister();
+
+           
+            @elseif($errors->any())
+                switchToLogin();
             @endif
         });
     </script>

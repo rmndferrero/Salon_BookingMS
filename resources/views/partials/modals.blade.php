@@ -107,11 +107,23 @@
                         <label for="reg_phone_number" class="block font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">
                             Phone Number
                         </label>
-                        <input type="text" id="reg_phone_number" name="phone_number" value="{{ old('phone_number') }}"
-                            class="w-full bg-surface-container-low border-none rounded-full px-6 py-3 focus:ring-2 focus:ring-primary/20 outline-none font-body text-sm" required>
-                        @error('phone_number')
-                            <span class="text-error text-[10px] mt-1 block">{{ $message }}</span>
-                        @enderror
+                        <input 
+                                type="text" 
+                                id="reg_phone_number" 
+                                name="phone_number" 
+                                value="{{ old('phone_number') }}"
+                                required 
+                                maxlength="11"
+                                minlength="11"
+                                pattern="\d{11}"
+                                title="Please enter exactly 11 digits"
+                                oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                                placeholder=""
+                                class="w-full bg-surface-container-low border-none rounded-full px-6 py-3 focus:ring-2 focus:ring-primary/20 outline-none font-body text-sm"
+                            >
+                            @error('phone_number')
+                                <span class="text-error text-[10px] mt-1 block">{{ $message }}</span>
+                            @enderror
                     </div>
 
                     <div>
