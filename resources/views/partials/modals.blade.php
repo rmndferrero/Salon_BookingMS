@@ -59,48 +59,43 @@
     <!-- LOGIN MODAL -->
 
     <!-- REGISTER MODAL -->
-    <div id="registerModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-black/60 backdrop-blur-sm px-4">
+   <div id="registerModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-black/60 backdrop-blur-sm px-4">
         <div class="bg-white w-full max-w-md rounded-3xl overflow-hidden shadow-2xl transform transition-all max-h-[90vh] overflow-y-auto">
             <div class="p-8 relative">
-
                 <button onclick="toggleRegisterModal()" class="absolute top-6 right-6 text-on-surface-variant hover:text-primary transition-colors">
                     <span class="material-symbols-outlined">close</span>
                 </button>
-
                 <div class="text-center mb-8">
                     <h2 class="font-headline text-3xl text-on-surface mb-2">Create an Account</h2>
                     <p class="font-body text-on-surface-variant text-sm">
                         Join the Sibs Collective for a curated beauty experience.
                     </p>
                 </div>
-
                 <form action="{{ route('register') }}" method="POST" class="space-y-4">
                     @csrf
-
                     <div class="grid grid-cols-2 gap-4">
-
                         <div>
                             <label for="reg_first_name" class="block font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">
                                 First Name
                             </label>
                             <input type="text" id="reg_first_name" name="first_name" value="{{ old('first_name') }}"
-                                class="w-full bg-surface-container-low border-none rounded-full px-6 py-3 focus:ring-2 focus:ring-primary/20 outline-none font-body text-sm" required>
+                                class="w-full bg-surface-container-low border-none rounded-full px-6 py-3 focus:ring-2 focus:ring-primary/20 outline-none font-body text-sm" required
+                                oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')">
                             @error('first_name')
                                 <span class="text-error text-[10px] mt-1 block">{{ $message }}</span>
                             @enderror
                         </div>
-
                         <div>
                             <label for="reg_last_name" class="block font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">
                                 Last Name
                             </label>
                             <input type="text" id="reg_last_name" name="last_name" value="{{ old('last_name') }}"
-                                class="w-full bg-surface-container-low border-none rounded-full px-6 py-3 focus:ring-2 focus:ring-primary/20 outline-none font-body text-sm" required>
+                                class="w-full bg-surface-container-low border-none rounded-full px-6 py-3 focus:ring-2 focus:ring-primary/20 outline-none font-body text-sm" required
+                                oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')">
                             @error('last_name')
                                 <span class="text-error text-[10px] mt-1 block">{{ $message }}</span>
                             @enderror
                         </div>
-
                     </div>
 
                     <div>

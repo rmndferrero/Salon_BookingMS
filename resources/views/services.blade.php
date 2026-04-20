@@ -9,8 +9,9 @@
         padding-top: 20px;
         padding-bottom: 80px;
     }
-    
-    .swiper-button-next, .swiper-button-prev {
+
+    .swiper-button-next,
+    .swiper-button-prev {
         color: #b5106a !important;
         background: rgba(255, 255, 255, 0.9);
         width: 50px;
@@ -18,10 +19,13 @@
         border-radius: 50%;
         box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
-    .swiper-button-next:after, .swiper-button-prev:after {
+
+    .swiper-button-next:after,
+    .swiper-button-prev:after {
         font-size: 20px;
         font-weight: bold;
     }
+
     .swiper-pagination-bullet-active {
         background: #b5106a !important;
     }
@@ -29,23 +33,23 @@
 
 <main class="pt-32 pb-20 px-8 max-w-screen-2xl mx-auto">
 
+    {{-- HEADER --}}
     <div class="text-center max-w-3xl mx-auto mb-20">
         <span class="text-[#b5106a] font-bold tracking-[0.3em] uppercase text-xs mb-4 block">
             The Selection
         </span>
-
         <h1 class="font-headline text-5xl md:text-6xl mb-6">
             Our Specialized Care
         </h1>
-
         <p class="text-gray-600 font-light text-lg">
             Discover a curated collection of beauty treatments designed to rejuvenate your spirit and enhance your natural glow.
         </p>
     </div>
 
+    {{-- SWIPER CAROUSEL --}}
     <div class="swiper servicesSwiper">
         <div class="swiper-wrapper">
-            
+
             <div class="swiper-slide">
                 <div onclick="openModal('nail-modal')" class="cursor-pointer group relative block h-[450px] overflow-hidden rounded-2xl shadow-sm">
                     <img src="{{ asset('Nails_Services.jpg') }}" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
@@ -130,27 +134,39 @@
         <div class="swiper-button-prev"></div>
     </div>
 
-    {{-- MODALS SECTION --}}
+    {{-- MODALS --}}
     @php
         $menus = [
-            ['id' => 'nail-modal', 'partial' => 'partials.nail-menu'],
+            ['id' => 'nail-modal',    'partial' => 'partials.nail-menu'],
             ['id' => 'eyelash-modal', 'partial' => 'partials.eyelash-menu'],
-            ['id' => 'facial-modal', 'partial' => 'partials.facial-menu'],
-            ['id' => 'hair-modal', 'partial' => 'partials.hair-menu'],
-            ['id' => 'waxing-modal', 'partial' => 'partials.waxing-menu'],
+            ['id' => 'facial-modal',  'partial' => 'partials.facial-menu'],
+            ['id' => 'hair-modal',    'partial' => 'partials.hair-menu'],
+            ['id' => 'waxing-modal',  'partial' => 'partials.waxing-menu'],
             ['id' => 'massage-modal', 'partial' => 'partials.massage-menu'],
         ];
     @endphp
 
     @foreach($menus as $menu)
-    <div id="{{ $menu['id'] }}" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4" onclick="closeModal('{{ $menu['id'] }}')">
-        <div class="bg-white rounded-[2rem] max-w-4xl w-full max-h-[90vh] overflow-y-auto relative shadow-2xl" onclick="event.stopPropagation()">
-            <button onclick="closeModal('{{ $menu['id'] }}')" class="absolute top-6 right-8 text-4xl text-gray-400 hover:text-[#b5106a] transition-colors">&times;</button>
-            <div class="p-4">
-                @include($menu['partial'])
+        <div
+            id="{{ $menu['id'] }}"
+            class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+            onclick="closeModal('{{ $menu['id'] }}')"
+        >
+            <div
+                class="bg-white rounded-[2rem] max-w-4xl w-full max-h-[90vh] overflow-y-auto relative shadow-2xl"
+                onclick="event.stopPropagation()"
+            >
+                <button
+                    onclick="closeModal('{{ $menu['id'] }}')"
+                    class="absolute top-6 right-8 text-4xl text-gray-400 hover:text-[#b5106a] transition-colors"
+                >
+                    &times;
+                </button>
+                <div class="p-4">
+                    @include($menu['partial'])
+                </div>
             </div>
         </div>
-    </div>
     @endforeach
 
     {{-- FLOATING CART --}}
@@ -158,7 +174,7 @@
         <div class="max-w-7xl mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
             <div class="flex items-center gap-6 text-[#1a1c1c]">
                 <div>
-                    <span id="cart-count" class="font-headline text-xl font-bold">0</span> 
+                    <span id="cart-count" class="font-headline text-xl font-bold">0</span>
                     <span class="text-sm text-gray-500 uppercase tracking-widest">Services</span>
                 </div>
                 <div class="w-px h-8 bg-gray-300"></div>
@@ -172,7 +188,10 @@
                     <span id="cart-price" class="font-bold text-[#b5106a] text-lg">د.إ0.00</span>
                 </div>
             </div>
-            <button onclick="openCalendarModal()" class="w-full md:w-auto bg-[#b5106a] text-white px-10 py-4 rounded-full font-bold uppercase tracking-widest hover:scale-105 transition-transform shadow-lg shadow-pink-500/30">
+            <button
+                onclick="openCalendarModal()"
+                class="w-full md:w-auto bg-[#b5106a] text-white px-10 py-4 rounded-full font-bold uppercase tracking-widest hover:scale-105 transition-transform shadow-lg shadow-pink-500/30"
+            >
                 Choose Time →
             </button>
         </div>
@@ -181,6 +200,8 @@
     {{-- CALENDAR MODAL --}}
     <div id="calendar-modal" class="fixed inset-0 bg-[#1a1c1c]/80 z-[100] hidden flex items-center justify-center backdrop-blur-sm transition-opacity">
         <div class="bg-white w-full max-w-6xl h-[90vh] md:h-[85vh] rounded-[2rem] shadow-2xl flex flex-col overflow-hidden relative">
+
+            {{-- Modal Header --}}
             <div class="p-6 md:p-8 border-b border-gray-100 flex justify-between items-center bg-white z-10">
                 <div>
                     <h2 class="font-headline text-3xl text-[#1a1c1c]">Select a Time</h2>
@@ -189,19 +210,21 @@
                 <button onclick="closeCalendarModal()" class="text-gray-400 hover:text-[#b5106a] text-4xl leading-none">&times;</button>
             </div>
 
+            {{-- Calendar Grid --}}
             <div class="flex-1 overflow-auto bg-gray-50 p-4 md:p-8 relative" id="calendar-container">
                 <div class="flex items-center justify-center h-full text-gray-400 font-bold tracking-widest uppercase animate-pulse">
                     Fetching Availability...
                 </div>
             </div>
 
+            {{-- Checkout Form --}}
             <div class="p-6 border-t border-gray-100 bg-white">
                 <form id="checkout-form" action="{{ route('booking.store') }}" method="POST">
                     @csrf
                     <div id="hidden-services-inputs"></div>
                     <input type="hidden" name="appointment_date" id="input_appointment_date">
                     <input type="hidden" name="start_time" id="input_start_time">
-                    
+
                     <div class="flex flex-col md:flex-row justify-between items-center gap-6">
                         <div class="text-[#1a1c1c] w-full md:w-auto">
                             <span class="text-sm text-gray-500 block uppercase tracking-widest font-bold text-[10px]">Selected Slot:</span>
@@ -209,30 +232,50 @@
                         </div>
 
                         @guest
-                        <div class="flex-1 w-full grid grid-cols-1 md:grid-cols-3 gap-3">
-                            <input type="text" name="first_name" placeholder="First Name" required class="border-b-2 border-gray-200 focus:border-[#b5106a] outline-none p-2 bg-transparent text-sm">
-                            <input type="text" name="last_name" placeholder="Last Name" required class="border-b-2 border-gray-200 focus:border-[#b5106a] outline-none p-2 bg-transparent text-sm">
-                            <input 
-                                type="text" 
-                                name="phone_number" 
-                                placeholder="Phone Number" 
-                                required 
-                                maxlength="11"
-                                minlength="11"
-                                pattern="\d{11}"
-                                title="Please enter exactly 11 digits"
-                                oninput="this.value = this.value.replace(/[^0-9]/g, '');"
-                                class="border-b-2 border-gray-200 focus:border-[#b5106a] outline-none p-2 bg-transparent text-sm"
-                            >
-                        </div>
+                            <div class="flex-1 w-full grid grid-cols-1 md:grid-cols-3 gap-3">
+                                <input
+                                    type="text"
+                                    name="first_name"
+                                    placeholder="First Name"
+                                    required
+                                    class="border-b-2 border-gray-200 focus:border-[#b5106a] outline-none p-2 bg-transparent text-sm"
+                                    oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
+                                >
+                                <input
+                                    type="text"
+                                    name="last_name"
+                                    placeholder="Last Name"
+                                    required
+                                    class="border-b-2 border-gray-200 focus:border-[#b5106a] outline-none p-2 bg-transparent text-sm"
+                                    oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
+                                >
+                                <input
+                                    type="text"
+                                    name="phone_number"
+                                    placeholder="Phone Number"
+                                    required
+                                    maxlength="11"
+                                    minlength="11"
+                                    pattern="\d{11}"
+                                    title="Please enter exactly 11 digits"
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                                    class="border-b-2 border-gray-200 focus:border-[#b5106a] outline-none p-2 bg-transparent text-sm"
+                                >
+                            </div>
                         @endguest
 
-                        <button type="submit" id="confirm-booking-btn" disabled class="w-full md:w-auto bg-gray-300 text-gray-500 px-10 py-4 rounded-full font-bold uppercase tracking-widest transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+                        <button
+                            type="submit"
+                            id="confirm-booking-btn"
+                            disabled
+                            class="w-full md:w-auto bg-gray-300 text-gray-500 px-10 py-4 rounded-full font-bold uppercase tracking-widest transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
                             Confirm
                         </button>
                     </div>
                 </form>
             </div>
+
         </div>
     </div>
 
@@ -240,30 +283,32 @@
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
-    // --- CAROUSEL & MODAL LOGIC ---
-    document.addEventListener('DOMContentLoaded', function() {
-        new Swiper(".servicesSwiper", {
+    // -----------------------------------------------------------------------
+    // CAROUSEL & MODAL
+    // -----------------------------------------------------------------------
+    document.addEventListener('DOMContentLoaded', function () {
+        new Swiper('.servicesSwiper', {
             slidesPerView: 1,
             spaceBetween: 30,
             loop: true,
             pagination: {
-                el: ".swiper-pagination",
+                el: '.swiper-pagination',
                 clickable: true,
             },
             navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
             },
             breakpoints: {
-                768: { slidesPerView: 2 },
+                768:  { slidesPerView: 2 },
                 1024: { slidesPerView: 3 },
-            }
+            },
         });
     });
 
     function openModal(id) {
         const modal = document.getElementById(id);
-        if(modal) {
+        if (modal) {
             modal.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
         }
@@ -271,19 +316,21 @@
 
     function closeModal(id) {
         const modal = document.getElementById(id);
-        if(modal) {
+        if (modal) {
             modal.classList.add('hidden');
             document.body.style.overflow = 'auto';
         }
     }
 
-    // --- CART LOGIC ---
+    // -----------------------------------------------------------------------
+    // CART
+    // -----------------------------------------------------------------------
     let cart = [];
 
     function toggleCartItem(button) {
-        const id = button.getAttribute('data-id');
-        const name = button.getAttribute('data-name');
-        const price = parseFloat(button.getAttribute('data-price'));
+        const id       = button.getAttribute('data-id');
+        const name     = button.getAttribute('data-name');
+        const price    = parseFloat(button.getAttribute('data-price'));
         const duration = parseInt(button.getAttribute('data-duration'));
 
         const existingIndex = cart.findIndex(item => item.id === id);
@@ -299,121 +346,147 @@
             button.classList.remove('text-[#b5106a]');
             button.classList.add('bg-[#b5106a]', 'text-white');
         }
+
         updateCartUI();
     }
 
     function updateCartUI() {
         const floatingCart = document.getElementById('floating-cart');
+
         if (cart.length === 0) {
             floatingCart.classList.add('translate-y-full');
-        } else {
-            floatingCart.classList.remove('translate-y-full');
-            let totalDuration = 0;
-            let totalPrice = 0;
-
-            cart.forEach(item => {
-                totalDuration += item.duration;
-                totalPrice += item.price;
-            });
-
-            document.getElementById('cart-count').innerText = cart.length;
-            
-            if (totalDuration >= 60) {
-                let hours = Math.floor(totalDuration / 60);
-                let mins = totalDuration % 60;
-                document.getElementById('cart-duration').innerText = mins > 0 ? `${hours} hr ${mins} mins` : `${hours} hr`;
-            } else {
-                document.getElementById('cart-duration').innerText = `${totalDuration} mins`;
-            }
-            document.getElementById('cart-price').innerText = `د.إ${totalPrice.toFixed(2)}`;
+            return;
         }
+
+        floatingCart.classList.remove('translate-y-full');
+
+        let totalDuration = 0;
+        let totalPrice    = 0;
+
+        cart.forEach(item => {
+            totalDuration += item.duration;
+            totalPrice    += item.price;
+        });
+
+        document.getElementById('cart-count').innerText = cart.length;
+
+        if (totalDuration >= 60) {
+            const hours = Math.floor(totalDuration / 60);
+            const mins  = totalDuration % 60;
+            document.getElementById('cart-duration').innerText = mins > 0
+                ? `${hours} hr ${mins} mins`
+                : `${hours} hr`;
+        } else {
+            document.getElementById('cart-duration').innerText = `${totalDuration} mins`;
+        }
+
+        document.getElementById('cart-price').innerText = `د.إ${totalPrice.toFixed(2)}`;
     }
 
-    // --- CALENDAR LOGIC ---
+    // -----------------------------------------------------------------------
+    // CALENDAR
+    // -----------------------------------------------------------------------
     let selectedDate = null;
     let selectedTime = null;
 
     async function generateCalendarGrid() {
         const container = document.getElementById('calendar-container');
-        container.innerHTML = `<div class="flex items-center justify-center h-full text-[#b5106a] font-bold tracking-widest uppercase animate-pulse">Calculating Staff Capacity...</div>`;
-        
-        let dates = [];
-        let startDay = new Date();
-        startDay.setDate(startDay.getDate() + 1); // Start tomorrow
-        
-        for(let i=0; i<7; i++) {
-            let d = new Date(startDay);
+        container.innerHTML = `
+            <div class="flex items-center justify-center h-full text-[#b5106a] font-bold tracking-widest uppercase animate-pulse">
+                Calculating Staff Capacity...
+            </div>`;
+
+        const dates    = [];
+        const startDay = new Date();
+        startDay.setDate(startDay.getDate() + 1);
+
+        for (let i = 0; i < 7; i++) {
+            const d = new Date(startDay);
             d.setDate(startDay.getDate() + i);
             dates.push(d);
         }
 
         const startDateString = dates[0].toISOString().split('T')[0];
-        const endDateString = dates[6].toISOString().split('T')[0];
-        const serviceIds = cart.map(item => item.id).join(',');
+        const endDateString   = dates[6].toISOString().split('T')[0];
+        const servicesQuery   = cart.map(i => `services[]=${i.id}`).join('&');
 
         try {
-            const response = await fetch(`/api/availability?start_date=${startDateString}&end_date=${endDateString}&services[]=${cart.map(i=>i.id).join('&services[]=')}`, { cache: 'no-store' });
-            const availableTimes = await response.json(); 
-            
+            const response       = await fetch(`/api/availability?start_date=${startDateString}&end_date=${endDateString}&${servicesQuery}`, { cache: 'no-store' });
+            const availableTimes = await response.json();
+
             let html = `<div class="overflow-x-auto"><table class="w-full bg-white rounded-xl shadow-sm border border-gray-100 min-w-[800px]">`;
             html += `<thead><tr class="bg-[#b5106a] text-white"><th class="p-4 text-left font-headline">Time</th>`;
-            
+
             dates.forEach(d => {
                 const dayName = d.toLocaleDateString('en-US', { weekday: 'short' });
-                const dayNum = d.getDate();
-                html += `<th class="p-4 text-center border-l border-white/10"><span class="block text-[10px] uppercase tracking-widest">${dayName}</span><span class="text-xl font-bold">${dayNum}</span></th>`;
+                const dayNum  = d.getDate();
+                html += `
+                    <th class="p-4 text-center border-l border-white/10">
+                        <span class="block text-[10px] uppercase tracking-widest">${dayName}</span>
+                        <span class="text-xl font-bold">${dayNum}</span>
+                    </th>`;
             });
+
             html += `</tr></thead><tbody>`;
 
-            for(let hour = 10; hour <= 21; hour++) {
-                for(let mins of ['00', '30']) {
+            for (let hour = 10; hour <= 21; hour++) {
+                for (const mins of ['00', '30']) {
                     const timeString = `${hour.toString().padStart(2, '0')}:${mins}`;
-                    const timeLabel = formatTimeLabel(hour, mins);
-                    
+                    const timeLabel  = formatTimeLabel(hour, mins);
+
                     html += `<tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">`;
                     html += `<td class="p-3 text-sm font-bold text-gray-400 whitespace-nowrap">${timeLabel}</td>`;
-                    
+
                     dates.forEach(d => {
                         const dateString = d.toISOString().split('T')[0];
-                        const dayOfWeek = d.getDay(); 
-                        
-                        let isClosed = false;
-                        if ([1, 2, 3, 4].includes(dayOfWeek) && hour >= 21) isClosed = true;
+                        const dayOfWeek  = d.getDay();
 
-                        let isAvailable = false;
-                        if (availableTimes[dateString] && availableTimes[dateString].includes(timeString)) {
-                            isAvailable = true;
-                        }
+                        const isClosed    = [1, 2, 3, 4].includes(dayOfWeek) && hour >= 21;
+                        const isAvailable = availableTimes[dateString]?.includes(timeString) ?? false;
 
                         if (isClosed) {
                             html += `<td class="p-2 border-l border-gray-100 bg-gray-100"></td>`;
                         } else if (!isAvailable) {
-                            html += `<td class="p-2 border-l border-gray-100"><div class="bg-gray-100 text-gray-400 text-xs font-bold text-center py-2 rounded uppercase tracking-widest cursor-not-allowed opacity-60">Full</div></td>`;
+                            html += `
+                                <td class="p-2 border-l border-gray-100">
+                                    <div class="bg-gray-100 text-gray-400 text-xs font-bold text-center py-2 rounded uppercase tracking-widest cursor-not-allowed opacity-60">Full</div>
+                                </td>`;
                         } else {
-                            html += `<td class="p-2 border-l border-gray-100 text-center">
-                                        <button type="button" onclick="selectSlot('${dateString}', '${timeString}', this)" class="w-full py-2 text-xs font-bold text-[#b5106a] bg-pink-50 hover:bg-[#b5106a] hover:text-white rounded transition-colors time-slot-btn">
-                                            Select
-                                        </button>
-                                     </td>`;
+                            html += `
+                                <td class="p-2 border-l border-gray-100 text-center">
+                                    <button
+                                        type="button"
+                                        onclick="selectSlot('${dateString}', '${timeString}', this)"
+                                        class="w-full py-2 text-xs font-bold text-[#b5106a] bg-pink-50 hover:bg-[#b5106a] hover:text-white rounded transition-colors time-slot-btn"
+                                    >
+                                        Select
+                                    </button>
+                                </td>`;
                         }
                     });
+
                     html += `</tr>`;
                 }
             }
+
             html += `</tbody></table></div>`;
             container.innerHTML = html;
+
         } catch (error) {
-            console.error("API Fetch Error:", error);
+            console.error('API Fetch Error:', error);
             container.innerHTML = `<div class="text-center py-20 text-red-500 font-bold">Error calculating capacity. Please refresh.</div>`;
         }
     }
 
     function openCalendarModal() {
         if (cart.length === 0) return;
-        let totalCartDuration = cart.reduce((sum, item) => sum + item.duration, 0);
-        document.getElementById('modal-duration-text').innerText = `Your services will take approximately ${totalCartDuration} minutes.`;
+
+        const totalCartDuration = cart.reduce((sum, item) => sum + item.duration, 0);
+        document.getElementById('modal-duration-text').innerText =
+            `Your services will take approximately ${totalCartDuration} minutes.`;
+
         document.getElementById('calendar-modal').classList.remove('hidden');
-        document.body.style.overflow = 'hidden'; 
+        document.body.style.overflow = 'hidden';
         generateCalendarGrid();
     }
 
@@ -437,14 +510,17 @@
         selectedDate = date;
         selectedTime = time;
 
-        const dateObj = new Date(date);
+        const dateObj       = new Date(date);
         const formattedDate = dateObj.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
-        
-        document.getElementById('selected-slot-text').innerText = `${formattedDate} at ${formatTimeLabel(parseInt(time.split(':')[0]), time.split(':')[1])}`;
+
+        document.getElementById('selected-slot-text').innerText =
+            `${formattedDate} at ${formatTimeLabel(parseInt(time.split(':')[0]), time.split(':')[1])}`;
+
         document.getElementById('input_appointment_date').value = selectedDate;
-        document.getElementById('input_start_time').value = selectedTime;
-        
-        document.getElementById('hidden-services-inputs').innerHTML = cart.map(item => `<input type="hidden" name="services[]" value="${item.id}">`).join('');
+        document.getElementById('input_start_time').value       = selectedTime;
+
+        document.getElementById('hidden-services-inputs').innerHTML =
+            cart.map(item => `<input type="hidden" name="services[]" value="${item.id}">`).join('');
 
         const confirmBtn = document.getElementById('confirm-booking-btn');
         confirmBtn.disabled = false;
@@ -456,6 +532,7 @@
         selectedDate = null;
         selectedTime = null;
         document.getElementById('selected-slot-text').innerText = 'Please pick a time';
+
         const confirmBtn = document.getElementById('confirm-booking-btn');
         confirmBtn.disabled = true;
         confirmBtn.classList.add('bg-gray-300', 'text-gray-500');
@@ -463,8 +540,8 @@
     }
 
     function formatTimeLabel(hour, mins) {
-        let ampm = hour >= 12 ? 'PM' : 'AM';
-        let h = hour % 12 || 12;
+        const ampm = hour >= 12 ? 'PM' : 'AM';
+        const h    = hour % 12 || 12;
         return `${h}:${mins} ${ampm}`;
     }
 </script>
