@@ -35,7 +35,7 @@
                         </div>
                         <div>
                             <label class="block text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-1">Re-opens On</label>
-                            <p class="text-[9px] text-gray-400 mb-2">Salon resumes normal hours</p>
+                            <p class="text-[9px] text-gray-400 mb-2">Day operations resume</p>
                             <input type="date" name="end_date" id="end_date" required min="{{ now()->addDay()->toDateString() }}" class="w-full border border-gray-200 rounded-lg p-3 text-sm focus:border-[#b5106a] outline-none transition-colors">
                         </div>
                     </div>
@@ -62,7 +62,7 @@
                             <p class="font-bold text-[#b5106a] text-lg">
                                 {{ \Carbon\Carbon::parse($blackout->start_date)->format('M d, Y') }} 
                                 @if($blackout->start_date !== $blackout->end_date)
-                                    <span class="text-gray-400 font-normal mx-1">until</span> {{ \Carbon\Carbon::parse($blackout->end_date)->format('M d, Y') }}
+                                    <span class="text-gray-400 font-normal mx-1"><br>Until<br></span>{{ \Carbon\Carbon::parse($blackout->end_date)->format('M d, Y') }}
                                 @endif
                             </p>
                             <p class="text-sm text-gray-500 font-medium mt-1">{{ $blackout->reason ?? 'No reason provided' }}</p>

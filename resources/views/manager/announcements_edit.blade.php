@@ -1,18 +1,20 @@
 @extends('layouts.manager')
 
 @section('content')
-    <header class="mb-10">
+<div class="p-4 md:p-8 max-w-7xl mx-auto w-full">
+    
+    <header class="mb-10 max-w-2xl mx-auto">
         <a href="{{ route('manager.announcements.index') }}" class="text-sibs-pink text-xs font-800 uppercase tracking-widest hover:underline mb-2 block">
             ← Back to Feed
         </a>
         <h1 class="text-3xl font-800 tracking-tight text-[#1a1c1c]">Edit Announcement</h1>
     </header>
 
-    <div class="max-w-2xl">
+    <div class="max-w-2xl mx-auto">
         <div class="sibs-card p-8">
             <form action="{{ route('manager.announcements.update', $announcement->id) }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                 @csrf
-                @method('PUT') {{-- This is crucial for updating --}}
+                @method('PUT')
 
                 <div>
                     <label class="text-[11px] font-700 uppercase tracking-wider text-gray-400 block mb-2">Headline</label>
@@ -45,4 +47,5 @@
             </form>
         </div>
     </div>
+</div>
 @endsection

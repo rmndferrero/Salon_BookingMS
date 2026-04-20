@@ -1,6 +1,7 @@
 @extends('layouts.manager')
 
 @section('content')
+<div class="p-4 md:p-8 max-w-7xl mx-auto w-full">
     <header class="flex justify-between items-center mb-10">
         <div>
             <h1 class="text-3xl font-800 tracking-tight text-[#1a1c1c]">Announcements</h1>
@@ -74,11 +75,11 @@
                 @csrf
                 <div class="space-y-4">
                     @foreach($announcements as $announcement)
-                        <div class="sibs-card p-4 flex gap-6 items-center transition-all {{ $announcement->is_featured ? 'ring-2 ring-sibs-pink' : 'opacity-80' }}">
+                        <div class="sibs-card p-4 flex gap-4 sm:gap-6 items-center transition-all {{ $announcement->is_featured ? 'ring-2 ring-sibs-pink' : 'opacity-80' }}">
                             
                             {{-- Checkbox logic: Only show if > 3 announcements exist --}}
                             @if($announcements->count() > 3)
-                                <div class="flex items-center pl-2">
+                                <div class="flex items-center pl-2 flex-shrink-0">
                                     <input type="checkbox" 
                                            name="featured_ids[]" 
                                            value="{{ $announcement->id }}"
@@ -89,19 +90,19 @@
                                 </div>
                             @endif
 
-                            <img src="{{ asset('storage/' . $announcement->image_path) }}" class="w-20 h-20 rounded-2xl object-cover shadow-sm">
+                            <img src="{{ asset('storage/' . $announcement->image_path) }}" class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover shadow-sm flex-shrink-0">
                             
-                            <div class="flex-1">
-                                <div class="flex items-center gap-2">
-                                    <h3 class="font-bold text-[#1a1c1c]">{{ $announcement->title }}</h3>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <h3 class="font-bold text-[#1a1c1c] break-words">{{ $announcement->title }}</h3>
                                     @if($announcement->is_featured)
-                                        <span class="bg-pink-100 text-sibs-pink text-[9px] font-900 px-2 py-0.5 rounded-full uppercase tracking-tighter">Live</span>
+                                        <span class="bg-pink-100 text-sibs-pink text-[9px] font-900 px-2 py-0.5 rounded-full uppercase tracking-tighter whitespace-nowrap">Live</span>
                                     @endif
                                 </div>
-                                <p class="text-xs text-gray-500 mt-1">{{ Str::limit($announcement->content, 100) }}</p>
+                                <p class="text-xs text-gray-500 mt-1 break-words">{{ Str::limit($announcement->content, 100) }}</p>
                             </div>
                             
-                            <div class="flex items-center gap-4 pr-2">
+                            <div class="flex items-center gap-3 sm:gap-4 pr-2 flex-shrink-0">
                                 <a href="{{ route('manager.announcements.edit', $announcement->id) }}" class="text-gray-400 hover:text-blue-500 transition-colors">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
                                 </a>
@@ -111,7 +112,7 @@
                                 </button>
                             </div>
                         </div>
-                    @endforeach
+                    @endforeach     
                 </div>
             </form>
 
@@ -124,4 +125,5 @@
             @endforeach
         </div>
     </div>
+</div>
 @endsection

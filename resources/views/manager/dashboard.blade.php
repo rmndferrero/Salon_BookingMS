@@ -1,6 +1,7 @@
 @extends('layouts.manager')
 
 @section('content')      
+<div class="p-4 md:p-8 max-w-7xl mx-auto w-full">
         <header class="flex justify-between items-center mb-10">
             <div>
                 <h1 class="text-3xl font-800 tracking-tight">Manager Dashboard</h1>
@@ -135,15 +136,14 @@
                             
                             <div class="space-y-3 mb-4">
                                 @foreach($booking->services as $service)
-                                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-2">
+                                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
                                         <span class="text-sm font-semibold text-gray-700">
                                             {{ $service->name }} <span class="text-xs text-gray-400 font-normal">({{ $service->duration_minutes }}m)</span>
                                         </span>
                                         
-                                        <select name="assignments[{{ $service->id }}]" required class="border-orange-200 rounded p-1.5 text-sm outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 bg-white min-w-[200px]">
+                                        <select name="assignments[{{ $service->id }}]" required class="w-full md:w-auto md:min-w-[200px] border-orange-200 rounded p-2 text-sm outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 bg-white">
                                             <option value="">Select Employee...</option>
                                             @foreach($employees as $employee)
-                                                {{-- Smart Filter: Only show employees who have this service category in their JSON array --}}
                                                 @if(is_array($employee->can_do) && in_array($service->category, $employee->can_do))
                                                     <option value="{{ $employee->id }}">{{ $employee->first_name }} {{ $employee->last_name }}</option>
                                                 @endif
@@ -153,12 +153,12 @@
                                 @endforeach
                             </div>
 
-                            <div class="flex justify-end gap-3 mt-4 pt-4 border-t border-orange-100">
-                                <button type="button" onclick="document.getElementById('decline-form-{{ $booking->id }}').submit();" class="bg-white border border-gray-300 text-gray-600 hover:bg-gray-50 px-6 py-2 rounded font-bold text-sm uppercase tracking-wider transition">
+                            <div class="flex flex-col sm:flex-row justify-end gap-3 mt-4 pt-4 border-t border-orange-100">
+                                <button type="button" onclick="document.getElementById('decline-form-{{ $booking->id }}').submit();" class="w-full sm:w-auto bg-white border border-gray-300 text-gray-600 hover:bg-gray-50 px-6 py-3 sm:py-2 rounded font-bold text-sm uppercase tracking-wider transition text-center">
                                     Decline
                                 </button>
                                 
-                                <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-2 rounded font-bold text-sm uppercase tracking-wider transition shadow-lg shadow-orange-500/30">
+                                <button type="submit" class="w-full sm:w-auto bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 sm:py-2 rounded font-bold text-sm uppercase tracking-wider transition shadow-lg shadow-orange-500/30 text-center">
                                     Confirm & Assign
                                 </button>
                             </div>
@@ -177,7 +177,7 @@
 
             <section class="mb-12">
             <div class="flex justify-between items-end mb-6 px-2">
-                <h2 class="text-xl font-800">Upcoming Appointments <span class="text-xs font-normal text-gray-400 ml-2">(Next 48 Hours)</span></h2>
+                <h2 class="text-xl font-800">Upcoming Appointments</h2>
                 <button onclick="document.getElementById('upcoming-modal').classList.remove('hidden')" class="text-xs font-bold text-[#b5106a] hover:underline uppercase tracking-widest">
                     Show All Upcoming →
                 </button>
@@ -370,4 +370,5 @@
             </div>
         </div>
     </div>
+</div>
 @endsection
