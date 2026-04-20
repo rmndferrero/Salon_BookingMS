@@ -80,16 +80,19 @@
                         </div>
 
                         <div>
-                            <div class="flex items-center gap-5 mb-6">
-                                <div class="w-16 h-16 rounded-full bg-gradient-to-br from-pink-50 to-pink-100 text-[#b5106a] flex items-center justify-center font-headline text-3xl shadow-inner border border-white">
+                            <div class="flex items-center gap-4 sm:gap-5 mb-6">
+                                
+                                <div class="w-16 h-16 flex-shrink-0 rounded-full bg-gradient-to-br from-pink-50 to-pink-100 text-[#b5106a] flex items-center justify-center font-headline text-3xl shadow-inner border border-white">
                                     {{ substr($employee->first_name, 0, 1) }}
                                 </div>
-                                <div>
-                                    <h4 class="font-headline text-2xl font-bold text-[#1a1c1c] group-hover:text-[#b5106a] transition-colors">
+                                
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-headline text-xl sm:text-2xl font-bold text-[#1a1c1c] group-hover:text-[#b5106a] transition-colors truncate">
                                         {{ $employee->first_name }}
                                     </h4>
-                                    <p class="text-gray-400 text-sm font-bold tracking-wide">{{ $employee->last_name }}</p>
+                                    <p class="text-gray-400 text-sm font-bold tracking-wide truncate">{{ $employee->last_name }}</p>
                                 </div>
+
                             </div>
                             
                             <div>
